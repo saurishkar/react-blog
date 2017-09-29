@@ -1,0 +1,24 @@
+{
+  "name": "react-ecommerce-app",
+  "version": "1.0.0",
+  "description": "a simple ecommerce app with react and firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/saurishkar/react-ecommerce-app.git"
+  },
+  "keywords": [
+    "react",
+    "ecommerce",
+    "firebase"
+  ],
+  "author": "Saurish Kar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saurishkar/react-ecommerce-app/issues"
+  },
+  "homepage": "https://github.com/saurishkar/react-ecommerce-app#readme"
+}
