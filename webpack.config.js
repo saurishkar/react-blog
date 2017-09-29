@@ -7,9 +7,13 @@ module.exports = {
 	entry: './src/index.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js'
+		filename: 'bundle.js',
+		publicPath: '/'
 	},
 	devtool: 'inline-source-maps',
+	devServer: {
+		contentBase: './dist'
+	},
 	module: {
 		rules: [
 			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
