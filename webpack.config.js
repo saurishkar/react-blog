@@ -7,22 +7,22 @@ module.exports = {
 	entry: './src/index.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js',
-		publicPath: '/'
+		filename: 'bundle.js'
 	},
 	devtool: 'inline-source-maps',
 	devServer: {
-		contentBase: './dist'
+		contentBase: './dist',
+		historyApiFallback: true,
 	},
 	module: {
 		rules: [
-			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+			{ test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
 			{ test: /\.css$/, use: ['style-loader', 'css-loader']},
 			{ test: /\.(png|jpg|gif|svg)/, use: ['file-loader']},
 		]
 	},
 	plugins: [
-		new HtmlWebpackPlugin(),
+		new HtmlWebpackPlugin({ title: 'React Ecommerce App', template: './src/assets/index.html'}),
 		new CleanWebpackPlugin(['dist'])
 	]
 };
