@@ -8,16 +8,23 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers/index';
 import App from './components/app';
 import Create from './components/admin/create';
+import Index from './components/admin/index';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(reducers)}>
 		<BrowserRouter>
-			<Switch>
-				<Route path="/" component={App} />
-				<Route path="/admin/create" component={Create}/>
-			</Switch>
+			<div>
+				<Switch>
+					
+					<App prefix="/home">
+						<Route path="/create" component={Create} />
+						<Route path="/admin" component={Index} />
+					</App>
+
+				</Switch>	
+			</div>
 		</BrowserRouter>
 	</Provider>
 	,document.querySelector('.container'));
