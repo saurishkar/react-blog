@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+
+
+import Create from './create';
 
 class Index extends Component {
 	constructor(props) {
@@ -7,11 +10,13 @@ class Index extends Component {
 	}
 
 	render() {
+		const url=`${this.props.match.url}/create`;
+		// console.log(url);
 		return (
 			<div>
-				<p>Welcome to admin index page</p>
-				<Link to="/create">Create</Link>
-				{this.props.children}
+				<h3>Hello</h3>
+				<Link to={url} className="btn btn-info align-right">Create a New Post</Link>
+				<Route path={url} component={Create} />	
 			</div>
 		);
 	}

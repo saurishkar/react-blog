@@ -1,3 +1,10 @@
-body{
-	background: url('../images/ecommerce.jpg');
+
+.content{
+	height:400px;
+}
+li{
+	margin: 15px;
+}
+.align-right{
+	float:right;
 }
