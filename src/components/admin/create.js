@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field} from 'redux-form';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import NavbarMain from '../partials/navbar_main';
+import { AddPost } from '../../actions/posts';
 
 class Create extends Component {
 	constructor(props) {
@@ -9,10 +11,12 @@ class Create extends Component {
 	}
 
 	renderInput(props) {
+		// console.log(props.meta.error.name);
 		return (
 			<div>
 				<label htmlFor={props.label}>{props.label}</label>
-				<input className="form-control" type={props.type} placeholder={props.placeholder}/>
+				<input className={`form-control ${ props.meta.error && props.meta.touched ? 'error':''}`} type="text" placeholder={props.placeholder} {...props.input}/>
+				<span className="text-danger">{props.meta.touched && props.meta.error}</span>
 			</div>
 		);
 	}
@@ -21,46 +25,75 @@ class Create extends Component {
 		return (
 			<div>
 				<label htmlFor={props.label}>{props.label}</label>
-				<textarea className="form-control content" type={props.type} placeholder={props.placeholder}/>
+				<textarea className={`form-control content ${ props.meta.error && props.meta.touched? 'error':''}`} type="text" placeholder={props.placeholder} {...props.input}/>
+				<span className="text-danger">{props.meta.touched && props.meta.error}</span>
 			</div>
 		);
 	}
-	
-	render() {
-		const required = value => value? '': 'Required';
-		const maxLength15 = value => value.length<=15 ? '':'Max Length is 15';
-		const minLength5 = value => value.length>=5 ? '':'Min Length is 5';
-		return (
-			<div>
-				<div className="container">
-					<h2 className="text-center">Create a Blog Post</h2>
-					<form className="form-group">
-						<div className="row">
-							<div className="col-sm-6">
-								<Field 
-									type="text"
-									label="Post Title"
-									component={this.renderInput}
-									placeholder="Post Title"
-									name="title"
-								/>
-								<Field
-									type="text"
-									label="Post Content"
-									component={this.renderTextarea}
-									placeholder="Post Content"
-									name="content"
-								/>
-							</div>
-						</div>
 
-					</form>
-				</div>
+	handleFormSubmit(values){
+
+		console.log('Form Submitted', values);
+		this.props.AddPost(values);
+	}
+
+	render() {
+		const { handleSubmit } = this.props;
+		return (
+			<div className="container form">
+				<form className="form-group" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+					<div className="row">
+						<div className="col-sm-6">
+							<Field 
+								label="Post Title"
+								placeholder="Post Title"
+								name="title"
+								component={this.renderInput}
+							/><br />
+							<Field
+								label="Post Content"
+								placeholder="Post Content"
+								name="content"
+								component={this.renderTextarea}
+							/>
+						</div>
+					</div><br />
+					<div className="btn-group">
+						<button className="btn btn-danger" type="submit">Add</button>
+						<a className="btn btn-default" onClick={this.props.onButtonClick}>Cancel</a>
+					</div>
+				</form>
 			</div>
 		);
 	}
 }
 
+function validate(values) {
+	// console.log(values);
+	const errors ={} ; // redux-form will check for this object for any added properties and return them
+	// as errors if present on submission of the form
+    
+	if (!values.title) {
+		errors.title = 'Title is Required';
+	}
+
+	if (!values.content) {
+		errors.content = 'Post Content is Required';
+	}
+
+	return errors;
+}
+
+function mapStateToProps({posts}) {
+	return {posts};
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({AddPost}, dispatch);
+}
+
 export default reduxForm({
+	validate: validate,
 	form: 'postCreateForm'
-})(Create);
+})(
+	connect(mapStateToProps, mapDispatchToProps)(Create));

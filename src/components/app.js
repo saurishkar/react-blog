@@ -8,6 +8,11 @@ import Index from './admin/index';
 class App extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			posts: [],
+			comments: []
+		};
 	}
 
 	render() {
