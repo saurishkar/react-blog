@@ -30,3 +30,11 @@ th{
 table tr td{
 	padding:20px;
 }
+p{
+	font-size: 15px;
+	padding:10px;
+}
+
+.btn-group{
+	margin:auto;
+}
