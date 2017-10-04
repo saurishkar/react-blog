@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
-import { Collapse } from 'react-bootstrap';
+import { Collapse, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import Create from './create';
@@ -10,15 +10,30 @@ class Index extends Component {
 		super(props);
 
 		this.state = {
-			isOpen: false
+			isOpen: false,
+			showDeleteModal: false
 		};
 
 		this.handleButtonClick = this.handleButtonClick.bind(this);
+		this.closeDeleteModal = this.closeDeleteModal.bind(this);
+		this.showDeleteModal = this.showDeleteModal.bind(this);
 	}
 
 	handleButtonClick() {
 		this.setState({
 			isOpen: !this.state.isOpen
+		});
+	}
+
+	closeDeleteModal() {
+		this.setState({
+			showDeleteModal: false
+		});
+	}
+
+	showDeleteModal() {
+		this.setState({
+			showDeleteModal: true
 		});
 	}
 
@@ -34,7 +49,8 @@ class Index extends Component {
 					<td>
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm">Edit</div>
-							<div className="btn btn-danger btn-sm">Delete</div>
+							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal()}>Delete</div>
+							<div className="btn btn-info btn-sm">View</div>
 						</div>
 					</td>
 				</tr>
@@ -63,6 +79,22 @@ class Index extends Component {
 						</tbody>
 					</table>
 				}
+				<div>
+					<Modal show={this.state.showDeleteModal} onHide={this.closeDeleteModal}>
+						<Modal.Header closeButton>
+							<h4 className="text-center">Delete Post</h4>
+						</Modal.Header>
+						<Modal.Body>
+							<p className="text-center">Are you sure you want to <span className="text-danger">Delete</span> this post ?</p>
+						</Modal.Body>
+						<Modal.Footer>
+							<div className="btn-group">
+								<button className="btn btn-danger">Delete</button>
+								<button className="btn btn-default" onClick={()=>this.closeDeleteModal()}>Cancel</button>
+							</div>
+						</Modal.Footer>
+					</Modal>
+				</div>
 			</div>
 		);
 	}
