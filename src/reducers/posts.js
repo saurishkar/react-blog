@@ -1,9 +1,9 @@
 const ADD_POST = 'ADD_POST';
 
-const PostsReducer = (state = {}, action) => {
+const PostsReducer = (state = { posts: [], comments: []}, action) => {
 	switch(action.type) {
-	case ADD_POST: return state['posts'].assign(action.payload);
-
+	case ADD_POST: return {posts: [...state.posts, action.payload], comments: state.comments};
+	
 	default: return state;
 	}
 };

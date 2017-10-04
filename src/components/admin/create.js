@@ -35,6 +35,8 @@ class Create extends Component {
 
 		console.log('Form Submitted', values);
 		this.props.AddPost(values);
+		this.props.reset();
+		setTimeout(this.props.onButtonClick, 2000);
 	}
 
 	render() {

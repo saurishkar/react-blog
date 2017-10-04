@@ -19,3 +19,14 @@ textarea{
 .error{
 	border: 1px solid red;
 }
+table{
+	margin:20px;
+	padding:20px;
+}
+th{
+	color:darkblue;
+	padding:20px;
+}
+table tr td{
+	padding:20px;
+}
