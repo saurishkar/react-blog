@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import Create from './create';
 import {DeletePost} from '../../actions/posts';
+import DeleteModal from '../partials/confirmation_modal';
 
 class Index extends Component {
 	constructor(props) {
@@ -94,22 +95,11 @@ class Index extends Component {
 					</table>
 					: <h4 className="text-center">No Data Available</h4>
 				}
-				<div>
-					<Modal show={this.state.showDeleteModal} onHide={this.closeDeleteModal}>
-						<Modal.Header closeButton>
-							<h4 className="text-center">Delete Post</h4>
-						</Modal.Header>
-						<Modal.Body>
-							<p className="text-center">Are you sure you want to <span className="text-danger">Delete</span> this post ?</p>
-						</Modal.Body>
-						<Modal.Footer>
-							<div className="btn-group">
-								<button className="btn btn-danger" onClick={() => this.deletePost()}>Delete</button>
-								<button className="btn btn-default" onClick={() => this.closeDeleteModal()}>Cancel</button>
-							</div>
-						</Modal.Footer>
-					</Modal>
-				</div>
+
+				<DeleteModal 
+					showDeleteModal={this.state.showDeleteModal}
+					closeDeleteModal={this.closeDeleteModal}
+					deletePost = {this.deletePost} />
 			</div>
 		);
 	}
