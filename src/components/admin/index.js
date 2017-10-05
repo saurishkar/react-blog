@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Create from './create';
-import {DeletePost} from '../../actions/posts';
-import DeleteModal from '../partials/confirmation_modal';
+import {DeletePost, UpdatePost} from '../../actions/posts';
+import {DeleteModal, EditModal} from '../partials/confirmation_modal';
 
 class Index extends Component {
 	constructor(props) {
@@ -15,13 +15,17 @@ class Index extends Component {
 		this.state = {
 			isOpen: false,
 			showDeleteModal: false,
+			showEditModal: false,
 			selectedPost: null
+
 		};
 
 		this.handleButtonClick = this.handleButtonClick.bind(this);
 		this.closeDeleteModal = this.closeDeleteModal.bind(this);
 		this.showDeleteModal = this.showDeleteModal.bind(this);
 		this.deletePost = this.deletePost.bind(this);
+		this.closeEditModal = this.closeEditModal.bind(this);
+		this.showEditModal = this.showEditModal.bind(this);
 	}
 
 	handleButtonClick() {
@@ -32,7 +36,15 @@ class Index extends Component {
 
 	closeDeleteModal() {
 		this.setState({
-			showDeleteModal: false
+			showDeleteModal: false,
+			selectedPost: null
+		});
+	}
+
+	closeEditModal() {
+		this.setState({
+			showEditModal: false,
+			selectedPost: null
 		});
 	}
 
@@ -43,12 +55,27 @@ class Index extends Component {
 		});
 	}
 
+	showEditModal(index) {
+		this.setState({
+			showEditModal: true,
+			selectedPost: index
+		});
+	}
+
 	deletePost() {
 		// console.log(this.props);
 		this.props.DeletePost(this.state.selectedPost);
 		this.setState({
 			selectedPost: null,
 			showDeleteModal: false
+		});
+	}
+
+	updatePost() {
+		this.props.UpdatePost(this.state.selectedPost);
+		this.setState({
+			selectedPost: null,
+			showEditModal: false
 		});
 	}
 
@@ -63,7 +90,7 @@ class Index extends Component {
 					<td>{new Date(Date.now()).toLocaleString()}</td>
 					<td>
 						<div className="btn-group">
-							<div className="btn btn-warning btn-sm">Edit</div>
+							<div className="btn btn-warning btn-sm" onClick={()=>this.showEditModal(index)}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(index)}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
@@ -100,13 +127,17 @@ class Index extends Component {
 					showDeleteModal={this.state.showDeleteModal}
 					closeDeleteModal={this.closeDeleteModal}
 					deletePost = {this.deletePost} />
+				<EditModal
+					showEditModal={this.state.showEditModal}
+					closeEditModal={this.closeEditModal}
+					updatePost={this.updatePost} />
 			</div>
 		);
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost }, dispatch);
+	return bindActionCreators({ DeletePost, UpdatePost }, dispatch);
 }
 
 function mapStateToProps(state) {
