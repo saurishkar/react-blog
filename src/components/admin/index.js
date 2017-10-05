@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import Create from './create';
 import {DeletePost, UpdatePost} from '../../actions/posts';
-import {DeleteModal, EditModal} from '../partials/confirmation_modal';
+import DeleteModal  from '../partials/confirmation_modal';
+import EditModal from './edit';
 
 class Index extends Component {
 	constructor(props) {
@@ -25,7 +26,6 @@ class Index extends Component {
 		this.showDeleteModal = this.showDeleteModal.bind(this);
 		this.deletePost = this.deletePost.bind(this);
 		this.closeEditModal = this.closeEditModal.bind(this);
-		this.showEditModal = this.showEditModal.bind(this);
 	}
 
 	handleButtonClick() {
@@ -34,16 +34,16 @@ class Index extends Component {
 		});
 	}
 
-	closeDeleteModal() {
+	closeEditModal() {
 		this.setState({
-			showDeleteModal: false,
+			showEditModal: false,
 			selectedPost: null
 		});
 	}
 
-	closeEditModal() {
+	closeDeleteModal() {
 		this.setState({
-			showEditModal: false,
+			showDeleteModal: false,
 			selectedPost: null
 		});
 	}
@@ -71,16 +71,7 @@ class Index extends Component {
 		});
 	}
 
-	updatePost() {
-		this.props.UpdatePost(this.state.selectedPost);
-		this.setState({
-			selectedPost: null,
-			showEditModal: false
-		});
-	}
-
 	render() {
-		// console.log(this.props);
 		const renderPosts = this.props.posts.map((elem, index) => {
 			return (
 				<tr key={index}>
@@ -90,7 +81,7 @@ class Index extends Component {
 					<td>{new Date(Date.now()).toLocaleString()}</td>
 					<td>
 						<div className="btn-group">
-							<div className="btn btn-warning btn-sm" onClick={()=>this.showEditModal(index)}>Edit</div>
+							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(index)}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
@@ -98,6 +89,7 @@ class Index extends Component {
 				</tr>
 			);
 		});
+		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
 		return (
 			<div>
 				<button className="btn btn-info align-right" onClick={this.handleButtonClick}>Create a New Post</button>
@@ -126,11 +118,13 @@ class Index extends Component {
 				<DeleteModal 
 					showDeleteModal={this.state.showDeleteModal}
 					closeDeleteModal={this.closeDeleteModal}
-					deletePost = {this.deletePost} />
+					deletePost = {this.deletePost}
+				/>
 				<EditModal
 					showEditModal={this.state.showEditModal}
-					closeEditModal={this.closeEditModal}
-					updatePost={this.updatePost} />
+					index = {this.state.selectedPost}
+					closeEditModal = {this.closeEditModal}
+				/>
 			</div>
 		);
 	}
