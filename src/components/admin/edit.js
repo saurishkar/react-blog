@@ -47,6 +47,13 @@ class EditModal extends Component {
 		this.props.reset();
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
+		{
+			this.props.initialize(this.props.posts[nextProps.index]);
+		}
+	}
+
 	render() {
 		const { handleSubmit } = this.props;
 		// console.log('Receiving', this.props.post);
@@ -99,8 +106,8 @@ function validate(values) {
 	return errors;
 }
 
-function mapStateToProps(state, ownProps) {
-	// console.log('mapStateToProps');
+function mapStateToProps(state) {
+	return state.posts;
 }
 
 function mapDispatchToProps(dispatch) {

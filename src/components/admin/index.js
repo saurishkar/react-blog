@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Create from './create';
-import {DeletePost, UpdatePost} from '../../actions/posts';
+import {DeletePost} from '../../actions/posts';
 import DeleteModal  from '../partials/confirmation_modal';
 import EditModal from './edit';
 
@@ -131,7 +131,7 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost, UpdatePost }, dispatch);
+	return bindActionCreators({ DeletePost}, dispatch);
 }
 
 function mapStateToProps(state) {
