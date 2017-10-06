@@ -13,10 +13,11 @@ class NavbarMain extends React.Component {
 						<a href="#">Learn To React</a>
 					</Navbar.Brand>
 				</Navbar.Header>
-				<ul className="navbar-nav list-unstyled">
+				<ul className="list-unstyled navbar-nav">
 					<li className="nav-item"><Link to="/">Home</Link></li>
 					<li className="nav-item"><Link to="/about">About</Link></li>
 					<li className="nav-item"><Link to="/blog">Blog Post</Link></li>
+					<li className="nav-item align-right"><a onClick={()=>this.props.showLoginModal()}>Login</a></li>
 				</ul>
 			</Navbar>
 		);
