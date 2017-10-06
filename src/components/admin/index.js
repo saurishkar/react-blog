@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import Create from './create';
 import {DeletePost} from '../../actions/posts';
+import DeleteModal  from '../partials/confirmation_modal';
+import EditModal from './edit';
 
 class Index extends Component {
 	constructor(props) {
@@ -14,13 +16,16 @@ class Index extends Component {
 		this.state = {
 			isOpen: false,
 			showDeleteModal: false,
+			showEditModal: false,
 			selectedPost: null
+
 		};
 
 		this.handleButtonClick = this.handleButtonClick.bind(this);
 		this.closeDeleteModal = this.closeDeleteModal.bind(this);
 		this.showDeleteModal = this.showDeleteModal.bind(this);
 		this.deletePost = this.deletePost.bind(this);
+		this.closeEditModal = this.closeEditModal.bind(this);
 	}
 
 	handleButtonClick() {
@@ -29,15 +34,30 @@ class Index extends Component {
 		});
 	}
 
+	closeEditModal() {
+		this.setState({
+			showEditModal: false,
+			selectedPost: null
+		});
+	}
+
 	closeDeleteModal() {
 		this.setState({
-			showDeleteModal: false
+			showDeleteModal: false,
+			selectedPost: null
 		});
 	}
 
 	showDeleteModal(index) {
 		this.setState({
 			showDeleteModal: true,
+			selectedPost: index
+		});
+	}
+
+	showEditModal(index) {
+		this.setState({
+			showEditModal: true,
 			selectedPost: index
 		});
 	}
@@ -52,7 +72,6 @@ class Index extends Component {
 	}
 
 	render() {
-		// console.log(this.props);
 		const renderPosts = this.props.posts.map((elem, index) => {
 			return (
 				<tr key={index}>
@@ -62,7 +81,7 @@ class Index extends Component {
 					<td>{new Date(Date.now()).toLocaleString()}</td>
 					<td>
 						<div className="btn-group">
-							<div className="btn btn-warning btn-sm">Edit</div>
+							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(index)}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
@@ -70,6 +89,7 @@ class Index extends Component {
 				</tr>
 			);
 		});
+		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
 		return (
 			<div>
 				<button className="btn btn-info align-right" onClick={this.handleButtonClick}>Create a New Post</button>
@@ -94,29 +114,24 @@ class Index extends Component {
 					</table>
 					: <h4 className="text-center">No Data Available</h4>
 				}
-				<div>
-					<Modal show={this.state.showDeleteModal} onHide={this.closeDeleteModal}>
-						<Modal.Header closeButton>
-							<h4 className="text-center">Delete Post</h4>
-						</Modal.Header>
-						<Modal.Body>
-							<p className="text-center">Are you sure you want to <span className="text-danger">Delete</span> this post ?</p>
-						</Modal.Body>
-						<Modal.Footer>
-							<div className="btn-group">
-								<button className="btn btn-danger" onClick={() => this.deletePost()}>Delete</button>
-								<button className="btn btn-default" onClick={() => this.closeDeleteModal()}>Cancel</button>
-							</div>
-						</Modal.Footer>
-					</Modal>
-				</div>
+
+				<DeleteModal 
+					showDeleteModal={this.state.showDeleteModal}
+					closeDeleteModal={this.closeDeleteModal}
+					deletePost = {this.deletePost}
+				/>
+				<EditModal
+					showEditModal={this.state.showEditModal}
+					index = {this.state.selectedPost}
+					closeEditModal = {this.closeEditModal}
+				/>
 			</div>
 		);
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost }, dispatch);
+	return bindActionCreators({ DeletePost}, dispatch);
 }
 
 function mapStateToProps(state) {

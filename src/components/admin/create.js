@@ -86,10 +86,6 @@ function validate(values) {
 	return errors;
 }
 
-function mapStateToProps({posts}) {
-	return {posts};
-}
-
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({AddPost}, dispatch);
 }
@@ -98,4 +94,4 @@ export default reduxForm({
 	validate: validate,
 	form: 'postCreateForm'
 })(
-	connect(mapStateToProps, mapDispatchToProps)(Create));
+	connect(null, mapDispatchToProps)(Create));

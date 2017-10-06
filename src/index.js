@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Switch, BrowserRouter, IndexRoute } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
+import { logger } from 'redux-logger';
 
 
 import reducers from './reducers/index';
@@ -12,7 +13,7 @@ import Index from './components/admin/index';
 import About from './components/admin/about';
 import './assets/css/style.css';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(logger)(createStore);
 
 ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(reducers)}>
