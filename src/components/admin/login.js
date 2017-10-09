@@ -25,30 +25,33 @@ class Login extends React.Component {
 	render() {
 		// console.log('Modal', this.props.showModal);
 		return (
-			<Modal show={this.props.showModal} onHide={()=>this.props.closeModal()}>
-				<Modal.Header closeButton>
-					<h4>Login</h4>
-				</Modal.Header>
-				<Modal.Body>
-					<form className="form-group login-form">
-						<Field 
-							label="Email"
-							name="email"
-							type="email"
-							placeholder="Please enter your email"
-							component={this.renderField}
-						/>
-						<Field 
-							label="Password"
-							name="password"
-							type="password"
-							placeholder="Please enter your password"
-							component={this.renderField}
-						/>
-						<br />
-						<Button className="btn btn-success btn-sm form-control" type="submit">Login</Button>
-					</form>
-				</Modal.Body>
+			<Modal bsSize="sm" show={this.props.showModal} onHide={()=>this.props.closeModal()}>
+				<form className="">
+					<Modal.Header closeButton>
+						<h4 className="text-center">Login</h4>
+					</Modal.Header>
+					<Modal.Body>
+						<div className="login-form">
+							<Field 
+								label="Email"
+								name="email"
+								type="email"
+								placeholder="Email"
+								component={this.renderField}
+							/>
+							<Field 
+								label="Password"
+								name="password"
+								type="password"
+								placeholder="Password"
+								component={this.renderField}
+							/>
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button className="btn btn-danger text-center form-control" type="submit">Login</Button>
+					</Modal.Footer>
+				</form>
 			</Modal>
 		);
 	}
