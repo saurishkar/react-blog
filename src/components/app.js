@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
+import { withCookies, Cookies } from 'react-cookie';
 
 import NavbarMain from './partials/navbar_main';
 import About from './admin/about';
@@ -49,4 +50,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withCookies(App);
