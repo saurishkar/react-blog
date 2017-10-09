@@ -92,7 +92,7 @@ class Index extends Component {
 		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
 		return (
 			<div>
-				<button className="btn btn-info align-right" onClick={this.handleButtonClick}>Create a New Post</button>
+				<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
 				<Collapse in={this.state.isOpen}>
 					<div>
 						<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />

@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/saurishkar/react-ecommerce-app#readme",
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-bootstrap": "^0.31.3",
+    "react-cookie": "^2.1.1",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",

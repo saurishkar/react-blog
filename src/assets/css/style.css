@@ -6,7 +6,8 @@ li{
 	margin: 15px;
 }
 .align-right{
-	position:relative;
+	position:absolute;
+	right:0px;
 }
 .form{
 	margin-top:20px;
@@ -37,4 +38,13 @@ p{
 
 .btn-group{
 	margin:auto;
+}
+
+.login-form{
+	margin:10px;
+}
+.panel{
+	position:relative;
+	left:0;
+	right:0;
 }

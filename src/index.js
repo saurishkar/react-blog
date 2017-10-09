@@ -4,13 +4,11 @@ import { Provider } from 'react-redux';
 import { Route, Switch, BrowserRouter, IndexRoute } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
+import { CookiesProvider } from 'react-cookie';
 
 
 import reducers from './reducers/index';
 import App from './components/app';
-import Create from './components/admin/create';
-import Index from './components/admin/index';
-import About from './components/admin/about';
 import './assets/css/style.css';
 
 const createStoreWithMiddleware = applyMiddleware(logger)(createStore);
@@ -18,11 +16,13 @@ const createStoreWithMiddleware = applyMiddleware(logger)(createStore);
 ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(reducers)}>
 		<BrowserRouter>
-			<div>
-				<Switch>
-					<Route exact path="/" component={App} />
-				</Switch>	
-			</div>
+			<CookiesProvider>
+				<div>
+					<Switch>
+						<Route exact path="/" component={App} />
+					</Switch>	
+				</div>
+			</CookiesProvider>
 		</BrowserRouter>
 	</Provider>
 	,document.querySelector('.container'));
