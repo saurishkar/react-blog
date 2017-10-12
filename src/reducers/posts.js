@@ -25,7 +25,6 @@ const PostsReducer = (state = { posts: [], comments: []}, action) => {
 		};
 
 	case FETCH_POSTS:
-		console.log('reducer', action.payload);
 		return action.payload;
 	
 	default: return state;

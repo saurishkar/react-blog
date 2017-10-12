@@ -71,20 +71,20 @@ class Index extends Component {
 		});
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.FetchPosts();
 	}
 
 	render() {
-
-		console.log('posts', this.props.posts);
-		const renderPosts = this.props.posts.map((elem, index) => {
+		// console.log(this.props.posts);
+		const postObj = Object.entries(this.props.posts);
+		const renderPosts = postObj.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td>{index+1}</td>
-					<td>{elem.title}</td>
-					<td>{elem.content}</td>
-					<td>{elem.last_updated}</td>
+					<td>{index}</td>
+					<td>{elem[1].title}</td>
+					<td>{elem[1].content}</td>
+					<td>{elem[1].last_updated}</td>
 					<td>
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
@@ -104,7 +104,7 @@ class Index extends Component {
 						<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
 					</div>
 				</Collapse><br />
-				{this.props.posts.length > 0 ?
+				{postObj.length > 0 ?
 					<table>
 						<thead>
 							<tr>
@@ -118,7 +118,7 @@ class Index extends Component {
 							{renderPosts}
 						</tbody>
 					</table>
-					: <h4 className="text-center">No Data Available</h4>
+					: <h4 className="text-center">{'No Data Available'}</h4>
 				}
 
 				<DeleteModal 

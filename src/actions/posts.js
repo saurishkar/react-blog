@@ -18,9 +18,8 @@ const fi = firebase.initializeApp(config).database().ref();
 const Posts = fi;
 
 export function AddPost(data) {
-	return {
-		type: ADD_POST,
-		payload: data
+	return dispatch => {
+		Posts.child('posts').push(data);
 	};
 }
 
@@ -39,10 +38,8 @@ export function UpdatePost(index, data) {
 }
 
 export function FetchPosts() {
-	console.log('firebase', Posts);
 	return dispatch => {
 		Posts.on('value', snapshot => {
-			console.log('value', snapshot);
 			dispatch({
 				type: FETCH_POSTS,
 				payload: snapshot.val()
