@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/saurishkar/react-ecommerce-app#readme",
   "dependencies": {
+    "firebase": "^4.5.0",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-bootstrap": "^0.31.3",

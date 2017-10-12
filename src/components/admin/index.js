@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Create from './create';
-import {DeletePost} from '../../actions/posts';
+import { DeletePost, FetchPosts } from '../../actions/posts';
 import DeleteModal  from '../partials/confirmation_modal';
 import EditModal from './edit';
 
@@ -71,7 +71,13 @@ class Index extends Component {
 		});
 	}
 
+	componentWillMount() {
+		this.props.FetchPosts();
+	}
+
 	render() {
+
+		console.log('posts', this.props.posts);
 		const renderPosts = this.props.posts.map((elem, index) => {
 			return (
 				<tr key={index}>
@@ -131,7 +137,7 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost}, dispatch);
+	return bindActionCreators({ FetchPosts, DeletePost }, dispatch);
 }
 
 function mapStateToProps(state) {
