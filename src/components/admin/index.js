@@ -84,7 +84,7 @@ class Index extends Component {
 					<td>{index+1}</td>
 					<td>{elem.title}</td>
 					<td>{elem.content}</td>
-					<td>{new Date(Date.now()).toLocaleString()}</td>
+					<td>{elem.last_updated}</td>
 					<td>
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>

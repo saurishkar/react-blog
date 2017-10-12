@@ -3,9 +3,19 @@ const DELETE_POST = 'DELETE_POST';
 const UPDATE_POST = 'UPDATE_POST';
 const FETCH_POSTS = 'FETCH_POSTS';
 
-import Firebase from 'firebase';
+import * as firebase from 'firebase';
+var config = {
+	apiKey: 'AIzaSyB_Qv8YEigQUJZUR_553KRN02v0EZqtkhg',
+	authDomain: 'react-ecommerce.firebaseapp.com',
+	databaseURL: 'https://react-ecommerce.firebaseio.com',
+	projectId: 'react-ecommerce',
+	storageBucket: 'react-ecommerce.appspot.com',
+	messagingSenderId: '392133875475'
+};
+ 
+const fi = firebase.initializeApp(config).database().ref();
 
-const Posts = Firebase.initializeApp({databaseURL: 'https://react-ecommerce.firebaseio.com/posts'});
+const Posts = fi;
 
 export function AddPost(data) {
 	return {
