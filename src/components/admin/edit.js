@@ -42,6 +42,7 @@ class EditModal extends Component {
 	}
 
 	handleFormSubmit(values){
+		values.last_updated = new Date().toLocaleString();
 		this.props.UpdatePost(this.props.index, values);
 		this.props.closeEditModal();
 		this.props.reset();

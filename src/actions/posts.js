@@ -29,10 +29,9 @@ export function DeletePost(key) {
 	};
 }
 
-export function UpdatePost(index, data) {
-	return {
-		type: UPDATE_POST,
-		payload: {data: data, index: index}
+export function UpdatePost(key, data) {
+	return dispatch => {
+		Posts.child(`posts/${key}`).update(data);
 	};
 }
 

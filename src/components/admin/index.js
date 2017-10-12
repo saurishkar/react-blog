@@ -55,10 +55,10 @@ class Index extends Component {
 		});
 	}
 
-	showEditModal(index) {
+	showEditModal(key) {
 		this.setState({
 			showEditModal: true,
-			selectedPost: index
+			selectedPost: key
 		});
 	}
 
@@ -80,13 +80,13 @@ class Index extends Component {
 		const renderPosts = postObj.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td>{index}</td>
+					<td>{index + 1}</td>
 					<td>{elem[1].title}</td>
 					<td>{elem[1].content}</td>
 					<td>{elem[1].last_updated}</td>
 					<td>
 						<div className="btn-group">
-							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
+							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(elem[0])}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(elem[0])}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
