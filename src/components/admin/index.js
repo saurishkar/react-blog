@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Create from './create';
-import {DeletePost} from '../../actions/posts';
+import { DeletePost, FetchPosts } from '../../actions/posts';
 import DeleteModal  from '../partials/confirmation_modal';
 import EditModal from './edit';
 
@@ -48,41 +48,46 @@ class Index extends Component {
 		});
 	}
 
-	showDeleteModal(index) {
+	showDeleteModal(key) {
 		this.setState({
 			showDeleteModal: true,
-			selectedPost: index
+			selectedPost: key
 		});
 	}
 
-	showEditModal(index) {
+	showEditModal(key) {
 		this.setState({
 			showEditModal: true,
-			selectedPost: index
+			selectedPost: key
 		});
 	}
 
 	deletePost() {
-		// console.log(this.props);
-		this.props.DeletePost(this.state.selectedPost);
+		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
 		this.setState({
 			selectedPost: null,
 			showDeleteModal: false
 		});
 	}
 
+	componentDidMount() {
+		this.props.FetchPosts();
+	}
+
 	render() {
-		const renderPosts = this.props.posts.map((elem, index) => {
+		// console.log(this.props.posts);
+		const postObj = Object.entries(this.props.posts);
+		const renderPosts = postObj.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td>{index+1}</td>
-					<td>{elem.title}</td>
-					<td>{elem.content}</td>
-					<td>{new Date(Date.now()).toLocaleString()}</td>
+					<td>{index + 1}</td>
+					<td>{elem[1].title}</td>
+					<td>{elem[1].content}</td>
+					<td>{elem[1].last_updated}</td>
 					<td>
 						<div className="btn-group">
-							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
-							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(index)}>Delete</div>
+							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(elem[0])}>Edit</div>
+							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(elem[0])}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
 					</td>
@@ -98,7 +103,7 @@ class Index extends Component {
 						<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
 					</div>
 				</Collapse><br />
-				{this.props.posts.length > 0 ?
+				{postObj.length > 0 ?
 					<table>
 						<thead>
 							<tr>
@@ -112,7 +117,7 @@ class Index extends Component {
 							{renderPosts}
 						</tbody>
 					</table>
-					: <h4 className="text-center">No Data Available</h4>
+					: <h4 className="text-center">{'No Data Available'}</h4>
 				}
 
 				<DeleteModal 
@@ -131,7 +136,7 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost}, dispatch);
+	return bindActionCreators({ FetchPosts, DeletePost }, dispatch);
 }
 
 function mapStateToProps(state) {

@@ -34,6 +34,7 @@ class Create extends Component {
 	handleFormSubmit(values){
 
 		console.log('Form Submitted', values);
+		values.last_updated = new Date().toLocaleString();
 		this.props.AddPost(values);
 		this.props.reset();
 		setTimeout(this.props.onButtonClick, 2000);
