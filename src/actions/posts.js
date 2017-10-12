@@ -23,10 +23,9 @@ export function AddPost(data) {
 	};
 }
 
-export function DeletePost(data) {
-	return {
-		type: DELETE_POST,
-		payload: data
+export function DeletePost(key) {
+	return dispatch => {
+		Posts.child(`posts/${key}`).remove();
 	};
 }
 

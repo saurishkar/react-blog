@@ -48,10 +48,10 @@ class Index extends Component {
 		});
 	}
 
-	showDeleteModal(index) {
+	showDeleteModal(key) {
 		this.setState({
 			showDeleteModal: true,
-			selectedPost: index
+			selectedPost: key
 		});
 	}
 
@@ -63,8 +63,7 @@ class Index extends Component {
 	}
 
 	deletePost() {
-		// console.log(this.props);
-		this.props.DeletePost(this.state.selectedPost);
+		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
 		this.setState({
 			selectedPost: null,
 			showDeleteModal: false
@@ -88,7 +87,7 @@ class Index extends Component {
 					<td>
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(index)}>Edit</div>
-							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(index)}>Delete</div>
+							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(elem[0])}>Delete</div>
 							<div className="btn btn-info btn-sm">View</div>
 						</div>
 					</td>
