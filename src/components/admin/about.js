@@ -5,6 +5,7 @@ class About extends Component {
 	render() {
 		return (
 			<div>
+				<NavbarMain />
 				<div className="container">
 					<h1 className="text-center">This is the About page of the site. </h1>
 					<p>

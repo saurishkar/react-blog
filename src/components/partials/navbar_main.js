@@ -4,14 +4,31 @@ import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 
+
+import Login from '../admin/login';
+
 class NavbarMain extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			showModal: false,
 			isLoggedIn: false
 		};
-
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 		this.logoutUser = this.logoutUser.bind(this);
+	}
+
+	openModal() {
+		this.setState({
+			showModal: true
+		});
+	}
+
+	closeModal() {
+		this.setState({
+			showModal: false
+		});
 	}
 
 	logoutUser() {
@@ -23,7 +40,7 @@ class NavbarMain extends React.Component {
 		this.setState({
 			isLoggedIn: true
 		});
-		this.props.showLoginModal();
+		this.openModal();
 	}
 
 	render() {
@@ -37,7 +54,7 @@ class NavbarMain extends React.Component {
 							<a href="#">{user.email}</a>
 						</div>
 						<div className="col-sm-4">
-							<a href="#" onClick={() => this.logoutUser()}>Logout</a>
+							<a tabIndex="0" role="button"  onClick={() => this.logoutUser()}>Logout</a>
 						</div>
 					</div>
 
@@ -45,23 +62,29 @@ class NavbarMain extends React.Component {
 			}
 
 			return (
-				<a href="#" onClick={() => this.loginUser()}>Login</a>
+				<div tabIndex="0" role="button" onClick={() => this.loginUser()}>Login</div>
 			);
 		};
 		return (
-			<Navbar>
-				<Navbar.Header>
-					<Navbar.Brand>
-						<a href="#">Learn To React</a>
-					</Navbar.Brand>
-				</Navbar.Header>
-				<ul className="list-unstyled navbar-nav">
-					<li className="nav-item"><Link to="/">Home</Link></li>
-					<li className="nav-item"><Link to="/about">About</Link></li>
-					<li className="nav-item"><Link to="/blog">Blog Post</Link></li>
-					<li className="nav-item align-right">{renderUserSession()}</li>
-				</ul>
-			</Navbar>
+			<div>
+				<Navbar>
+					<Navbar.Header>
+						<Navbar.Brand>
+							<a href="#">Learn To React</a>
+						</Navbar.Brand>
+					</Navbar.Header>
+					<ul className="list-unstyled navbar-nav">
+						<li className="nav-item"><Link to="/">Home</Link></li>
+						<li className="nav-item"><Link to="/about">About</Link></li>
+						<li className="nav-item"><Link to="/blog">Blog Post</Link></li>
+						<li className="nav-item align-right">{renderUserSession()}</li>
+					</ul>
+				</Navbar>
+				<Login 
+					showModal={this.state.showModal}
+					closeModal={this.closeModal}
+				/>
+			</div>
 		);
 	}
 }

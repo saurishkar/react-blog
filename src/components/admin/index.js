@@ -8,6 +8,7 @@ import Create from './create';
 import { DeletePost, FetchPosts } from '../../actions/posts';
 import DeleteModal  from '../partials/confirmation_modal';
 import EditModal from './edit';
+import NavbarMain from '../partials/navbar_main';
 
 class Index extends Component {
 	constructor(props) {
@@ -80,10 +81,10 @@ class Index extends Component {
 		const renderPosts = postObj.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td>{index + 1}</td>
-					<td>{elem[1].title}</td>
-					<td>{elem[1].content}</td>
-					<td>{elem[1].last_updated}</td>
+					<td width="10%">{index + 1}</td>
+					<td width="20%">{elem[1].title}</td>
+					<td width="40%">{elem[1].content}</td>
+					<td width="20%">{elem[1].last_updated}</td>
 					<td>
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(elem[0])}>Edit</div>
@@ -97,6 +98,7 @@ class Index extends Component {
 		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
 		return (
 			<div>
+				<NavbarMain />
 				<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
 				<Collapse in={this.state.isOpen}>
 					<div>
@@ -107,10 +109,10 @@ class Index extends Component {
 					<table>
 						<thead>
 							<tr>
-								<th>#</th>
-								<th>Post Title</th>
-								<th>Post Content</th>
-								<th>Last Updated</th>
+								<th width="10%">#</th>
+								<th width="20%">Post Title</th>
+								<th width="40%">Post Content</th>
+								<th width="20%">Last Updated</th>
 							</tr>
 						</thead>
 						<tbody>
