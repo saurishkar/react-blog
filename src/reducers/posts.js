@@ -1,7 +1,4 @@
-const ADD_POST = 'ADD_POST';
-const DELETE_POST = 'DELETE_POST';
-const UPDATE_POST = 'UPDATE_POST';
-const FETCH_POSTS = 'FETCH_POSTS';
+import { FETCH_POSTS, ADD_POST, DELETE_POST, UPDATE_POST } from '../constants/posts';
 
 const PostsReducer = (state = { posts: [], comments: []}, action) => {
 	switch(action.type) {

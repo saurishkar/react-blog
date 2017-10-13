@@ -81,11 +81,11 @@ class Index extends Component {
 		const renderPosts = postObj.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td width="10%">{index + 1}</td>
+					<td width="5%">{index + 1}</td>
 					<td width="20%">{elem[1].title}</td>
 					<td width="40%">{elem[1].content}</td>
-					<td width="20%">{elem[1].last_updated}</td>
-					<td>
+					<td width="15%">{elem[1].last_updated}</td>
+					<td width="20%">
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(elem[0])}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(elem[0])}>Delete</div>
@@ -99,39 +99,42 @@ class Index extends Component {
 		return (
 			<div>
 				<NavbarMain />
-				<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
-				<Collapse in={this.state.isOpen}>
-					<div>
-						<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
-					</div>
-				</Collapse><br />
-				{postObj.length > 0 ?
-					<table>
-						<thead>
-							<tr>
-								<th width="10%">#</th>
-								<th width="20%">Post Title</th>
-								<th width="40%">Post Content</th>
-								<th width="20%">Last Updated</th>
-							</tr>
-						</thead>
-						<tbody>
-							{renderPosts}
-						</tbody>
-					</table>
-					: <h4 className="text-center">{'No Data Available'}</h4>
-				}
+				<div className="container">
+					<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
+					<Collapse in={this.state.isOpen}>
+						<div>
+							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
+						</div>
+					</Collapse><br />
+					{postObj.length > 0 ?
+						<table>
+							<thead>
+								<tr>
+									<th width="5%">#</th>
+									<th width="20%">Post Title</th>
+									<th width="40%">Post Content</th>
+									<th width="15%">Last Updated</th>
+									<th width="20%"> </th>
+								</tr>
+							</thead>
+							<tbody>
+								{renderPosts}
+							</tbody>
+						</table>
+						: <h4 className="text-center">{'No Data Available'}</h4>
+					}
 
-				<DeleteModal 
-					showDeleteModal={this.state.showDeleteModal}
-					closeDeleteModal={this.closeDeleteModal}
-					deletePost = {this.deletePost}
-				/>
-				<EditModal
-					showEditModal={this.state.showEditModal}
-					index = {this.state.selectedPost}
-					closeEditModal = {this.closeEditModal}
-				/>
+					<DeleteModal 
+						showDeleteModal={this.state.showDeleteModal}
+						closeDeleteModal={this.closeDeleteModal}
+						deletePost = {this.deletePost}
+					/>
+					<EditModal
+						showEditModal={this.state.showEditModal}
+						index = {this.state.selectedPost}
+						closeEditModal = {this.closeEditModal}
+					/>
+				</div>
 			</div>
 		);
 	}

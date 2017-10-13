@@ -48,3 +48,11 @@ p{
 	left:0;
 	right:0;
 }
+.navbar{
+	width: 100%;
+	position:relative;
+}
+.home{
+	margin: 0px;
+	width:100%;
+}

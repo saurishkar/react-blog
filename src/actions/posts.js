@@ -1,7 +1,4 @@
-const ADD_POST = 'ADD_POST';
-const DELETE_POST = 'DELETE_POST';
-const UPDATE_POST = 'UPDATE_POST';
-const FETCH_POSTS = 'FETCH_POSTS';
+import { FETCH_POSTS } from '../constants/posts';
 
 import * as firebase from 'firebase';
 var config = {
