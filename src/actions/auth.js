@@ -1,5 +1,4 @@
-const ADMIN_LOGIN = 'ADMIN_LOGIN';
-const ADMIN_LOGOUT = 'ADMIN_LOGOUT';
+import { ADMIN_LOGIN, ADMIN_LOGOUT } from '../constants/auth';
 
 export const Login = (data) => {
 	return {

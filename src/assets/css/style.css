@@ -44,15 +44,11 @@ p{
 	margin:10px;
 }
 .panel{
-	position:relative;
-	left:0;
-	right:0;
+	margin:30px;
 }
-.navbar{
-	width: 100%;
-	position:relative;
-}
-.home{
+
+.posts{
 	margin: 0px;
-	width:100%;
+	padding: 0px;
+	text-align: justfied;
 }

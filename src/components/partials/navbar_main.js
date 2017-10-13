@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 
 
-import Login from '../admin/login';
+import Auth from '../admin/auth';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
@@ -62,12 +62,12 @@ class NavbarMain extends React.Component {
 			}
 
 			return (
-				<div tabIndex="0" role="button" onClick={() => this.loginUser()}>Login</div>
+				<div tabIndex="0" role="button" onClick={() => this.loginUser()} style={{ color: '#aaa'}}>Login</div>
 			);
 		};
 		return (
 			<div>
-				<Navbar>
+				<Navbar fixedTop={false} inverse={true}>
 					<Navbar.Header>
 						<Navbar.Brand>
 							<a href="#">Learn To React</a>
@@ -80,7 +80,7 @@ class NavbarMain extends React.Component {
 						<li className="nav-item align-right">{renderUserSession()}</li>
 					</ul>
 				</Navbar>
-				<Login 
+				<Auth 
 					showModal={this.state.showModal}
 					closeModal={this.closeModal}
 				/>

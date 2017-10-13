@@ -20,19 +20,22 @@ class Home extends Component {
 
 		return Object.entries(this.props.posts).map((elem, index) => {
 			return (
-				<div className="panel panel-default" key={index}>
+				<div className="panel panel-primary" key={index}>
 					<div className="panel-heading">
 						<div className="row">	
 							<div className="col-sm-8">
 								{elem[1].title}
 							</div>
 							<div className="col-sm-4" style={{ textAlign: 'right'}}>
-								#{index}
+								#{index + 1}
 							</div>
 						</div>
 					</div>
-					<div className="panel-content">
+					<div className="panel-body">
 						<p>{elem[1].content}</p>
+					</div>
+					<div className="panel-footer" style={{ textAlign: 'right'}}>
+						<i>{elem[1].last_updated}</i>
 					</div>
 				</div>
 			);
@@ -41,11 +44,11 @@ class Home extends Component {
 
 	render() {
 		return (
-			<div className="home">
-				<NavbarMain />
+			<div>
+				<div className="header-nav"><NavbarMain /></div>
 				<div className="container">
 					<h3 className="text-center"> Latest Posts </h3>
-					<div className="blog-body">
+					<div className="posts">
 						{ this.renderPosts() }
 					</div>
 				</div>

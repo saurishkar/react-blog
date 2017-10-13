@@ -3,8 +3,12 @@ import { instanceOf } from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Button, Modal } from 'react-bootstrap';
 import { withCookies, Cookies } from 'react-cookie';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-class Login extends React.Component {
+import { Login } from '../../actions/auth';
+
+class Auth extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -13,6 +17,7 @@ class Login extends React.Component {
 	}
 
 	handleFormSubmit(formData) {
+		this.props.login();
 		this.props.cookies.set('loggedInUser', JSON.stringify(
 			{
 				email: formData.email 
@@ -22,6 +27,10 @@ class Login extends React.Component {
 		this.props.closeModal();
 		this.props.reset(); // Resets the Login Form on successful login
 
+	}
+
+	componentDidMount() {
+		this.props.fetchUsers();
 	}
 
 	renderField(field) {
@@ -43,7 +52,6 @@ class Login extends React.Component {
 	render() {
 		// console.log('Modal', this.props.showModal);
 		const { handleSubmit } = this.props;
-
 		return (
 			<Modal bsSize="sm" show={this.props.showModal} onHide={()=>this.props.closeModal()}>
 				<form onSubmit={handleSubmit(this.handleFormSubmit)}>
@@ -96,7 +104,14 @@ function validate(values) {
 	
 }
 
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({Login}, dispatch);
+}
+
+
 export default reduxForm({
 	validate: validate,
 	form: 'loginAdminForm'
-})(withCookies(Login));
+})(connect(null, mapDispatchToProps)(
+	withCookies(Auth))
+);

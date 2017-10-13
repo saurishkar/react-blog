@@ -98,7 +98,7 @@ class Index extends Component {
 		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
 		return (
 			<div>
-				<NavbarMain />
+				<div className="header-nav"><NavbarMain /></div>
 				<div className="container">
 					<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
 					<Collapse in={this.state.isOpen}>
