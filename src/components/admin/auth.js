@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import { instanceOf } from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Button, Modal } from 'react-bootstrap';
-import { withCookies, Cookies } from 'react-cookie';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Login } from '../../actions/auth';
+import UserAPI from '../../apis/auth';
 
 class Auth extends React.Component {
 
@@ -17,12 +17,7 @@ class Auth extends React.Component {
 	}
 
 	handleFormSubmit(formData) {
-		this.props.login();
-		this.props.cookies.set('loggedInUser', JSON.stringify(
-			{
-				email: formData.email 
-			}),
-		{ path: '/'});
+		this.props.Login(formData);
 
 		this.props.closeModal();
 		this.props.reset(); // Resets the Login Form on successful login
@@ -30,7 +25,7 @@ class Auth extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchUsers();
+		// this.props.fetchUsers();
 	}
 
 	renderField(field) {
@@ -85,10 +80,6 @@ class Auth extends React.Component {
 	}
 }
 
-Login.propTypes = {
-	cookies: instanceOf(Cookies).isRequired
-};
-
 function validate(values) {
 	const errors = [];
 
@@ -105,13 +96,24 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({Login}, dispatch);
+	return {
+		Login: (formData) => {
+
+			const userLoginPromise = UserAPI.login(formData);
+			userLoginPromise.then((response) => {
+				console.log(response);
+				localStorage.setItem('loggedInUser', JSON.stringify(formData));
+				// dispatch(Login(response));
+			});
+
+			return userLoginPromise;
+		}
+	};
 }
 
 
 export default reduxForm({
 	validate: validate,
 	form: 'loginAdminForm'
-})(connect(null, mapDispatchToProps)(
-	withCookies(Auth))
+})(connect(null, mapDispatchToProps)(Auth)
 );

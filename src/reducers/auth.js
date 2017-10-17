@@ -3,15 +3,11 @@ const ADMIN_LOGIN = 'ADMIN_LOGIN';
 
 export const AuthReducer = (state, action) => {
 	switch(action.type) {
-	case ADMIN_LOGIN: //Check Login Credentials
+	case ADMIN_LOGIN: 
+		return state;
 
-		firebase.auth().signInWithEmailAndPassword(action.payload.email, action.payload.password).catch((error) {
-			console.log("Error", error);
-		});
-		return;
-
-	case ADMIN_LOGOUT: // Logout the current user and update the state
-		return;
+	case ADMIN_LOGOUT: 
+		return state;
 
 	default: return state;
 	}

@@ -7,7 +7,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
 import { CookiesProvider } from 'react-cookie';
 
-
 import reducers from './reducers/index';
 import App from './components/app';
 import './assets/css/style.css';

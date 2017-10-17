@@ -5,10 +5,15 @@ import { withCookies, Cookies } from 'react-cookie';
 import About from './admin/about';
 import Index from './admin/index';
 import Home from './admin/home';
+import * as config from '../env';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		firebase.initializeApp(config.FIREBASE);
 	}
 
 	render() {

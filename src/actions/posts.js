@@ -1,9 +1,9 @@
 import * as firebase from 'firebase';
 
-import * as config from '../constants/firebase';
+import * as config from '../env';
 import { FETCH_POSTS } from '../constants/posts';
 
-const fi = firebase.initializeApp(config).database().ref();
+const fi = firebase.initializeApp(config.FIREBASE).database().ref();
 const Posts = fi;
 
 export function AddPost(data) {

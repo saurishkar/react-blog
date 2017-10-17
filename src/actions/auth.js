@@ -1,15 +1,16 @@
 import { ADMIN_LOGIN, ADMIN_LOGOUT } from '../constants/auth';
+import userAPI from '../apis/auth';
 
-export const Login = (data) => {
+export const Login = (response) => {
 	return {
 		type: ADMIN_LOGIN,
-		payload: data
+		payload: response
 	};
 };
 
-export const Logout = (data) => {
+export const Logout = () => {
 	return {
 		type: ADMIN_LOGOUT,
-		payload: data
+		payload: {}
 	};
 }; 
