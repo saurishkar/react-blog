@@ -1,10 +1,10 @@
 const ADMIN_LOGOUT = 'ADMIN_LOGOUT';
 const ADMIN_LOGIN = 'ADMIN_LOGIN';
 
-export const AuthReducer = (state, action) => {
+const AuthReducer = (state = {}, action) => {
 	switch(action.type) {
 	case ADMIN_LOGIN: 
-		return state;
+		return action.payload;
 
 	case ADMIN_LOGOUT: 
 		return state;
@@ -12,3 +12,5 @@ export const AuthReducer = (state, action) => {
 	default: return state;
 	}
 };
+
+export default AuthReducer;

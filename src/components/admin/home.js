@@ -12,7 +12,7 @@ class Home extends Component {
 		this.renderPosts = this.renderPosts.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.FetchPosts();
 	}
 

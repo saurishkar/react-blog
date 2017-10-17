@@ -1,10 +1,10 @@
 import { ADMIN_LOGIN, ADMIN_LOGOUT } from '../constants/auth';
 import userAPI from '../apis/auth';
 
-export const Login = (response) => {
+export const Login = () => {
 	return {
 		type: ADMIN_LOGIN,
-		payload: response
+		payload: JSON.parse(localStorage.getItem('loggedInUser'))
 	};
 };
 

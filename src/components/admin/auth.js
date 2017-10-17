@@ -25,7 +25,13 @@ class Auth extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.props.fetchUsers();
+		const isUserLoggedIn = localStorage.getItem('loggedInUser');
+		if (JSON.parse(isUserLoggedIn).user) {
+			// Calling LOGIN action if localStorage contains user
+			// After the page has been refreshed / reloaded
+			// To protect the user data from getting lost.
+			this.props.initializeUser();
+		}
 	}
 
 	renderField(field) {
@@ -102,11 +108,14 @@ function mapDispatchToProps(dispatch) {
 			const userLoginPromise = UserAPI.login(formData);
 			userLoginPromise.then((response) => {
 				console.log(response);
-				localStorage.setItem('loggedInUser', JSON.stringify(formData));
-				// dispatch(Login(response));
+				localStorage.setItem('loggedInUser', JSON.stringify({user: formData.email}));
+				dispatch(Login());
 			});
 
 			return userLoginPromise;
+		},
+		initializeUser: () => {
+			dispatch(Login());
 		}
 	};
 }

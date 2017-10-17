@@ -2,7 +2,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import React, { Component } from 'react';
 import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 
 import Auth from '../admin/auth';
 
@@ -36,21 +36,22 @@ class NavbarMain extends React.Component {
 	}
 
 	loginUser() {
+		
 		this.setState({
 			isLoggedIn: true
 		});
-		this.openModal();
 	}
+
+
 
 	render() {
 
 		const renderUserSession = () => {
-			const user = localStorage.getItem('loggedInUser');
-			if(user) {
+			if(this.props.auth.user) {
 				return (
 					<div className="row">
 						<div className="col-sm-8">
-							<a href="#">{user.email}</a>
+							<a href="#">{this.props.auth.user}</a>
 						</div>
 						<div className="col-sm-4">
 							<a tabIndex="0" role="button"  onClick={() => this.logoutUser()}>Logout</a>
@@ -61,7 +62,7 @@ class NavbarMain extends React.Component {
 			}
 
 			return (
-				<div tabIndex="0" role="button" onClick={() => this.loginUser()} style={{ color: '#aaa'}}>Login</div>
+				<div tabIndex="0" role="button" onClick={() => this.openModal()} style={{ color: '#aaa'}}>Login</div>
 			);
 		};
 		return (
@@ -82,10 +83,15 @@ class NavbarMain extends React.Component {
 				<Auth 
 					showModal={this.state.showModal}
 					closeModal={this.closeModal}
+					setUser = {this.login}
 				/>
 			</div>
 		);
 	}
 }
 
-export default NavbarMain;
+function mapStateToProps(state) {
+	return {auth: state.auth};
+}
+
+export default connect(mapStateToProps)(NavbarMain);
