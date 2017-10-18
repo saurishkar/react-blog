@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import NavbarMain from '../partials/navbar_main';
+import NavbarMain from '../shared/navbar_main';
 import { FetchPosts } from '../../actions/posts';
 
 class Home extends Component {
@@ -10,10 +10,6 @@ class Home extends Component {
 		super(props);
 
 		this.renderPosts = this.renderPosts.bind(this);
-	}
-
-	componentDidMount() {
-		this.props.FetchPosts();
 	}
 
 	renderPosts() {

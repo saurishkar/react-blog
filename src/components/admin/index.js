@@ -6,9 +6,9 @@ import { bindActionCreators } from 'redux';
 
 import Create from './create';
 import { DeletePost, FetchPosts } from '../../actions/posts';
-import DeleteModal  from '../partials/confirmation_modal';
+import DeleteModal  from '../shared/confirmation_modal';
 import EditModal from './edit';
-import NavbarMain from '../partials/navbar_main';
+import NavbarMain from '../shared/navbar_main';
 
 class Index extends Component {
 	constructor(props) {
@@ -69,10 +69,6 @@ class Index extends Component {
 			selectedPost: null,
 			showDeleteModal: false
 		});
-	}
-
-	componentDidMount() {
-		this.props.FetchPosts();
 	}
 
 	render() {
@@ -141,7 +137,7 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ FetchPosts, DeletePost }, dispatch);
+	return bindActionCreators({ DeletePost }, dispatch);
 }
 
 function mapStateToProps(state) {

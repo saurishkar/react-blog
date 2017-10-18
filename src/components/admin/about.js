@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavbarMain from '../partials/navbar_main';
+import NavbarMain from '../shared/navbar_main';
 
 class About extends Component {
 	render() {

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
+import { FetchPosts } from '../../actions/posts';
 
 class Auth extends React.Component {
 
@@ -26,7 +27,7 @@ class Auth extends React.Component {
 
 	componentDidMount() {
 		const isUserLoggedIn = localStorage.getItem('loggedInUser');
-		if (JSON.parse(isUserLoggedIn).user) {
+		if (isUserLoggedIn && JSON.parse(isUserLoggedIn).user) {
 			// Calling LOGIN action if localStorage contains user
 			// After the page has been refreshed / reloaded
 			// To protect the user data from getting lost.
@@ -101,28 +102,33 @@ function validate(values) {
 	
 }
 
+function mapStateToProps({auth}) {
+	return {auth};
+}
+
 function mapDispatchToProps(dispatch) {
 	return {
 		Login: (formData) => {
 
 			const userLoginPromise = UserAPI.login(formData);
 			userLoginPromise.then((response) => {
-				console.log(response);
 				localStorage.setItem('loggedInUser', JSON.stringify({user: formData.email}));
 				dispatch(Login());
+				dispatch(FetchPosts());
 			});
-
+			
 			return userLoginPromise;
 		},
 		initializeUser: () => {
 			dispatch(Login());
+			console.log('fetching posts');
+			dispatch(FetchPosts());
 		}
 	};
 }
 
-
 export default reduxForm({
 	validate: validate,
 	form: 'loginAdminForm'
-})(connect(null, mapDispatchToProps)(Auth)
+})(connect(mapStateToProps, mapDispatchToProps)(Auth)
 );
