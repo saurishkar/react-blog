@@ -19,7 +19,6 @@ class Auth extends React.Component {
 
 	handleFormSubmit(formData) {
 		this.props.Login(formData);
-
 		this.props.closeModal();
 		this.props.reset(); // Resets the Login Form on successful login
 
@@ -112,16 +111,18 @@ function mapDispatchToProps(dispatch) {
 
 			const userLoginPromise = UserAPI.login(formData);
 			userLoginPromise.then((response) => {
-				localStorage.setItem('loggedInUser', JSON.stringify({user: formData.email}));
-				dispatch(Login());
-				dispatch(FetchPosts());
+				if(response.uid) {
+					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
+					dispatch(Login());
+					// console.log(firebase.auth().currentUser);
+					dispatch(FetchPosts());
+				}
 			});
 			
 			return userLoginPromise;
 		},
 		initializeUser: () => {
 			dispatch(Login());
-			console.log('fetching posts');
 			dispatch(FetchPosts());
 		}
 	};

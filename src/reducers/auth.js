@@ -7,7 +7,7 @@ const AuthReducer = (state = {}, action) => {
 		return action.payload;
 
 	case ADMIN_LOGOUT: 
-		return state;
+		return action.payload;
 
 	default: return state;
 	}

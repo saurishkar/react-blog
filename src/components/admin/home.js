@@ -12,30 +12,35 @@ class Home extends Component {
 		this.renderPosts = this.renderPosts.bind(this);
 	}
 
-	renderPosts() {
+	componentDidMount() {
+		this.props.FetchPosts();
+	}
 
-		return Object.entries(this.props.posts).map((elem, index) => {
-			return (
-				<div className="panel panel-primary" key={index}>
-					<div className="panel-heading">
-						<div className="row">	
-							<div className="col-sm-8">
-								{elem[1].title}
-							</div>
-							<div className="col-sm-4" style={{ textAlign: 'right'}}>
+	renderPosts() {
+		if (this.props.posts.length > 0) {
+			return this.props.posts.map((elem, index) => {
+				return (
+					<div className="panel panel-primary" key={index}>
+						<div className="panel-heading">
+							<div className="row">	
+								<div className="col-sm-8">
+									{elem.title}
+								</div>
+								<div className="col-sm-4" style={{ textAlign: 'right'}}>
 								#{index + 1}
+								</div>
 							</div>
 						</div>
+						<div className="panel-body">
+							<p>{elem.content}</p>
+						</div>
+						<div className="panel-footer" style={{ textAlign: 'right'}}>
+							<i>{elem.last_updated}</i>
+						</div>
 					</div>
-					<div className="panel-body">
-						<p>{elem[1].content}</p>
-					</div>
-					<div className="panel-footer" style={{ textAlign: 'right'}}>
-						<i>{elem[1].last_updated}</i>
-					</div>
-				</div>
-			);
-		});
+				);
+			});
+		}
 	}
 
 	render() {
@@ -54,7 +59,7 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-	return state.posts;
+	return {posts: state.posts};
 }
 
 function mapDispatchToProps(dispatch) {

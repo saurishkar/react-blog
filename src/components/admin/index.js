@@ -73,8 +73,7 @@ class Index extends Component {
 
 	render() {
 		// console.log(this.props.posts);
-		const postObj = Object.entries(this.props.posts);
-		const renderPosts = postObj.map((elem, index) => {
+		const renderPosts = this.props.posts.map((elem, index) => {
 			return (
 				<tr key={index}>
 					<td width="5%">{index + 1}</td>
@@ -102,7 +101,7 @@ class Index extends Component {
 							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
 						</div>
 					</Collapse><br />
-					{postObj.length > 0 ?
+					{this.props.posts.length > 0 ?
 						<table>
 							<thead>
 								<tr>

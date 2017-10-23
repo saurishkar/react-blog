@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Auth from '../admin/auth';
+import UserAPI from '../../apis/auth';
+import { Logout } from '../../actions/auth';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showModal: false,
-			isLoggedIn: false
+			showModal: false
 		};
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
-		this.logoutUser = this.logoutUser.bind(this);
 	}
 
 	openModal() {
@@ -30,20 +30,6 @@ class NavbarMain extends React.Component {
 		});
 	}
 
-	logoutUser() {
-		localStorage.clear();
-		this.setState({ isLoggedIn: false });
-	}
-
-	loginUser() {
-		
-		this.setState({
-			isLoggedIn: true
-		});
-	}
-
-
-
 	render() {
 
 		const renderUserSession = () => {
@@ -51,10 +37,10 @@ class NavbarMain extends React.Component {
 				return (
 					<div className="row">
 						<div className="col-sm-8">
-							<a href="#">{this.props.auth.user}</a>
+							<a href="#">{this.props.auth.user.email}</a>
 						</div>
 						<div className="col-sm-4">
-							<a tabIndex="0" role="button"  onClick={() => this.logoutUser()}>Logout</a>
+							<a tabIndex="0" role="button"  onClick={() => this.props.logout()}>Logout</a>
 						</div>
 					</div>
 
@@ -83,7 +69,6 @@ class NavbarMain extends React.Component {
 				<Auth 
 					showModal={this.state.showModal}
 					closeModal={this.closeModal}
-					setUser = {this.login}
 				/>
 			</div>
 		);
@@ -94,4 +79,16 @@ function mapStateToProps(state) {
 	return {auth: state.auth};
 }
 
-export default connect(mapStateToProps)(NavbarMain);
+function mapDispatchToProps(dispatch) {
+	return {
+		logout: () => {
+			const signOutPromise = UserAPI.logout();
+			signOutPromise.then(() => {
+				localStorage.clear('loggedInUser');
+				dispatch(Logout());
+			});
+		}
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarMain);

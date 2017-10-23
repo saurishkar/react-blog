@@ -1,6 +1,6 @@
 import { FETCH_POSTS, ADD_POST, DELETE_POST, UPDATE_POST } from '../constants/posts';
 
-const PostsReducer = (state = { posts: [], comments: []}, action) => {
+const PostsReducer = (state = {}, action) => {
 	switch(action.type) {
 	case ADD_POST: return {
 		posts: [
