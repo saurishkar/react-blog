@@ -24,18 +24,15 @@ export function UpdatePost(key, data) {
 	};
 }
 
-export function FetchPosts() {
+export function FetchPosts(data) {
 	return dispatch => {
-		const loggedUser = JSON.parse(localStorage.getItem('loggedInUser'));
-		if (loggedUser && loggedUser.user) {
-			Posts.ref(`/posts/${loggedUser.user.uid}/`).once('value').then(snapshot => {
+		console.log('data', data);
+		if (data) {
+			
 			  	dispatch({
-					type: FETCH_POSTS,
-					payload: snapshot.val()
-				});
+				type: FETCH_POSTS,
+				payload: data
 			});
-		} else {
-			// No user is signed in.
 		}
 		// });
 	};

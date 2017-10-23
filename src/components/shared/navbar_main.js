@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Auth from '../admin/auth';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
+import { FetchPosts } from '../../actions/posts';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
@@ -33,7 +34,7 @@ class NavbarMain extends React.Component {
 	render() {
 
 		const renderUserSession = () => {
-			if(this.props.auth.user) {
+			if(this.props.auth && this.props.auth.user) {
 				return (
 					<div className="row">
 						<div className="col-sm-8">
@@ -86,6 +87,7 @@ function mapDispatchToProps(dispatch) {
 			signOutPromise.then(() => {
 				localStorage.clear('loggedInUser');
 				dispatch(Logout());
+				dispatch(FetchPosts({}));
 			});
 		}
 	};

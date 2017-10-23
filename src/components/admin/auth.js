@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchPosts } from '../../actions/posts';
+import * as config from '../../env';
 
 class Auth extends React.Component {
 
@@ -25,13 +26,13 @@ class Auth extends React.Component {
 	}
 
 	componentDidMount() {
-		const isUserLoggedIn = localStorage.getItem('loggedInUser');
-		if (isUserLoggedIn && JSON.parse(isUserLoggedIn).user) {
-			// Calling LOGIN action if localStorage contains user
-			// After the page has been refreshed / reloaded
-			// To protect the user data from getting lost.
-			this.props.initializeUser();
-		}
+		firebase.auth().onAuthStateChanged((user) => {
+			if(user) {
+				firebase.database().ref(`/posts/${user.uid}/`).once('value').then(snapshot => {
+			  		this.props.initializeUser(snapshot.val());
+				});
+			}
+		});
 	}
 
 	renderField(field) {
@@ -51,7 +52,6 @@ class Auth extends React.Component {
 	}
 
 	render() {
-		// console.log('Modal', this.props.showModal);
 		const { handleSubmit } = this.props;
 		return (
 			<Modal bsSize="sm" show={this.props.showModal} onHide={()=>this.props.closeModal()}>
@@ -113,17 +113,14 @@ function mapDispatchToProps(dispatch) {
 			userLoginPromise.then((response) => {
 				if(response.uid) {
 					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
-					dispatch(Login());
-					// console.log(firebase.auth().currentUser);
-					dispatch(FetchPosts());
 				}
 			});
 			
 			return userLoginPromise;
 		},
-		initializeUser: () => {
+		initializeUser: (posts) => {
 			dispatch(Login());
-			dispatch(FetchPosts());
+			dispatch(FetchPosts(posts));
 		}
 	};
 }
