@@ -18,9 +18,9 @@ export function DeletePost(key) {
 	};
 }
 
-export function UpdatePost(key, user, data) {
+export function UpdatePost(key, data) {
 	return dispatch => {
-		Posts.ref('posts/').child(`${user}/${key}`).update(data);
+		Posts.ref('posts/').child(`${key}`).update(data);
 	};
 }
 

@@ -42,6 +42,8 @@ class EditModal extends Component {
 	}
 
 	handleFormSubmit(values){
+		const currentUser = this.props.auth.user;
+		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
 		this.props.UpdatePost(this.props.index, values);
 		this.props.closeEditModal();
@@ -51,7 +53,12 @@ class EditModal extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
-			this.props.initialize(this.props.posts[nextProps.index]);
+			const post = this.props.posts.filter((elem) => {
+				if (elem[0] == nextProps.index)
+					return true;
+			});
+			// console.log('post', post[0]);
+			this.props.initialize(post[0][1]);
 		}
 	}
 
@@ -108,7 +115,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-	return state.posts;
+	return {posts: state.posts, auth: state.auth};
 }
 
 function mapDispatchToProps(dispatch) {
