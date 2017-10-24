@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {UpdatePost} from '../../actions/posts';
+import {UpdatePost, FetchUserPosts} from '../../actions/posts';
 
 class EditModal extends Component {
 	constructor(props) {
@@ -45,7 +45,10 @@ class EditModal extends Component {
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
-		this.props.UpdatePost(this.props.index, values);
+		const promise = this.props.UpdatePost(this.props.index, values);
+		promise.then(() => {
+			this.props.FetchUserPosts();
+		});
 		this.props.closeEditModal();
 		this.props.reset();
 	}
@@ -57,14 +60,12 @@ class EditModal extends Component {
 				if (elem[0] == nextProps.index)
 					return true;
 			});
-			// console.log('post', post[0]);
 			this.props.initialize(post[0][1]);
 		}
 	}
 
 	render() {
 		const { handleSubmit } = this.props;
-		// console.log('Receiving', this.props.post);
 		return (
 			<div>
 				<Modal show={this.props.showEditModal} onHide={() => this.props.closeEditModal()}>
@@ -99,7 +100,6 @@ class EditModal extends Component {
 	}
 }
 function validate(values) {
-	// console.log(values);
 	const errors ={} ; // redux-form will check for this object for any added properties and return them
 	// as errors if present on submission of the form
     
@@ -119,8 +119,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	// console.log('mapDispatchToProps');
-	return bindActionCreators({UpdatePost}, dispatch);
+	return bindActionCreators({UpdatePost, FetchUserPosts}, dispatch);
 }
 
 export default reduxForm({

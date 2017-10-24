@@ -3,7 +3,7 @@ import { reduxForm, Field} from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { AddPost } from '../../actions/posts';
+import { AddPost, FetchUserPosts } from '../../actions/posts';
 
 class Create extends Component {
 	constructor(props) {
@@ -34,7 +34,10 @@ class Create extends Component {
 		const currentUser = this.props.auth.user;
 		values.last_updated = new Date().toLocaleString();
 		values.author_email = currentUser.email;
-		this.props.AddPost(values);
+		const AddPromise = this.props.AddPost(values);
+		AddPromise.then(() => {
+			this.props.FetchUserPosts();
+		});
 		this.props.reset();
 		setTimeout(this.props.onButtonClick, 2000);
 	}
@@ -91,7 +94,7 @@ function mapStateToProps({auth}) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({AddPost}, dispatch);
+	return bindActionCreators({AddPost, FetchUserPosts}, dispatch);
 }
 
 export default reduxForm({

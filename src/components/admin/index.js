@@ -65,10 +65,13 @@ class Index extends Component {
 	}
 
 	deletePost() {
-		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
-		this.setState({
-			selectedPost: null,
-			showDeleteModal: false
+		const promise = this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
+		promise.then(() => {
+			this.props.FetchUserPosts();
+			this.setState({
+				selectedPost: null,
+				showDeleteModal: false
+			});
 		});
 	}
 
@@ -78,7 +81,6 @@ class Index extends Component {
 
 	render() {
 		const list = this.props.userPosts;
-		console.log('list', list);
 		const renderPosts = list.map((elem, index) => {
 			return (
 				<tr key={index}>

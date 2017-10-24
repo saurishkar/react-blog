@@ -1,44 +1,41 @@
-import * as firebase from 'firebase';
 
-import * as config from '../env';
 import POSTS from '../constants/posts';
-
-const fi = firebase.initializeApp(config.FIREBASE).database();
-const Posts = fi;
+import FirebaseApi from '../apis/firebase';
 
 export function AddPost(data) {
 	return dispatch => {
-		Posts.ref().child('posts/').push(data);
+		return FirebaseApi.AddPost(data);
 	};
 }
 
 export function DeletePost(key) {
 	return dispatch => {
-		Posts.ref('posts/').child(`${key}`).remove();
+		return FirebaseApi.DeletePost(key);
 	};
 }
 
 export function UpdatePost(key, data) {
 	return dispatch => {
-		Posts.ref('posts/').child(`${key}`).update(data);
+		return FirebaseApi.UpdatePost(key, data);
 	};
 }
 
 export function FetchAllPosts() {
 	return dispatch => {
-		Posts.ref('posts/').once('value').then(snapshot => {
+		const promise = FirebaseApi.FetchPosts();
+		promise.then(snapshot => {
 			dispatch({
 				type: POSTS.FetchAll,
 				payload: Object.entries(snapshot.val())
 			});
-		
 		});
 	};
 }
 
 export function FetchUserPosts() {
 	return dispatch => {
-		Posts.ref('posts/').once('value').then(snapshot => {
+		const promise = FirebaseApi.FetchPosts();
+		promise.then(snapshot => {
 			const currentUser = JSON.parse(localStorage.getItem('loggedInUser'));
 			if (currentUser) {
 				const userPosts = Object.entries(snapshot.val()).filter((elem) => {
