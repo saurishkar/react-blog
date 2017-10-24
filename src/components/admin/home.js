@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import NavbarMain from '../shared/navbar_main';
-import { FetchPosts } from '../../actions/posts';
+import { FetchAllPosts } from '../../actions/posts';
 
 class Home extends Component {
 	constructor(props) {
@@ -13,7 +13,7 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		// this.props.FetchPosts();
+		this.props.FetchAllPosts();
 	}
 
 	renderPosts() {
@@ -65,7 +65,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({FetchPosts}, dispatch);
+	return bindActionCreators({FetchAllPosts}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

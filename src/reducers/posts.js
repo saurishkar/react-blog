@@ -16,7 +16,7 @@ const PostsReducer = (state = {}, action) => {
 		return action.payload;
 
 	case POSTS.FetchUser:
-		return state;
+		return action.payload;
 	
 	default: return state;
 	}

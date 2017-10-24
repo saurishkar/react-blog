@@ -36,20 +36,28 @@ class NavbarMain extends React.Component {
 		const renderUserSession = () => {
 			if(this.props.auth && this.props.auth.user) {
 				return (
-					<div className="row">
-						<div className="col-sm-8">
-							<a href="#">{this.props.auth.user.email}</a>
-						</div>
-						<div className="col-sm-4">
-							<a tabIndex="0" role="button"  onClick={() => this.props.logout()}>Logout</a>
-						</div>
-					</div>
-
+					<ul className="list-unstyled navbar-nav">
+						<li className="nav-item"><Link to="/blog">My Posts</Link></li>
+						<ul className="list-unstyled navbar-nav align-right">
+							<li className="nav-item">{this.props.auth.user.email}</li>
+							<li className="nav-item">
+								<a tabIndex="0" role="button"  onClick={() => this.props.logout()}>Logout</a>
+							</li>
+						</ul>
+					</ul>
 				);
 			}
 
 			return (
-				<div tabIndex="0" role="button" onClick={() => this.openModal()} style={{ color: '#aaa'}}>Login</div>
+				<li 
+					className="align-right" 
+					tabIndex="0" 
+					role="button" 
+					onClick={() => this.openModal()} 
+					style={{ color: '#aaa'}}
+				>
+					Login
+				</li>
 			);
 		};
 		return (
@@ -63,8 +71,7 @@ class NavbarMain extends React.Component {
 					<ul className="list-unstyled navbar-nav">
 						<li className="nav-item"><Link to="/">Home</Link></li>
 						<li className="nav-item"><Link to="/about">About</Link></li>
-						<li className="nav-item"><Link to="/blog">Blog Post</Link></li>
-						<li className="nav-item align-right">{renderUserSession()}</li>
+						{renderUserSession()}
 					</ul>
 				</Navbar>
 				<Auth 

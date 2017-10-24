@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import Create from './create';
-import { DeletePost, FetchPosts } from '../../actions/posts';
+import { DeletePost, FetchUserPosts } from '../../actions/posts';
 import DeleteModal  from '../shared/confirmation_modal';
 import EditModal from './edit';
 import NavbarMain from '../shared/navbar_main';
@@ -80,6 +80,10 @@ class Index extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.props.FetchUserPosts();
+	}
+
 	render() {
 		const list = Object.entries(this.props.posts);
 		const renderPosts = list.map((elem, index) => {
@@ -145,7 +149,7 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost, FetchPosts }, dispatch);
+	return bindActionCreators({ DeletePost, FetchUserPosts }, dispatch);
 }
 
 function mapStateToProps(state) {

@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 
 import * as config from '../env';
-import { FETCH_POSTS } from '../constants/posts';
+import POSTS from '../constants/posts';
 
 const fi = firebase.initializeApp(config.FIREBASE).database();
 const Posts = fi;
@@ -24,15 +24,29 @@ export function UpdatePost(key, user, data) {
 	};
 }
 
-export function FetchPosts(user) {
+export function FetchAllPosts() {
 	return dispatch => {
-		console.log(firebase.auth());
-		Posts.ref(`posts/${user}/`).once('value').then(snapshot => {
+		Posts.ref('posts/').once('value').then(snapshot => {
 			dispatch({
-				type: FETCH_POSTS,
+				type: POSTS.FetchAll,
 				payload: snapshot.val()
 			});
 		
+		});
+	};
+}
+
+export function FetchUserPosts() {
+	return dispatch => {
+		Posts.ref('posts/').once('value').then(snapshot => {
+			const currentUser = localStorage.getItem('loggedInUser');
+			const userPosts = Object.entries(snapshot.val()).map((elem) => {
+				return elem[1].author_email == currentUser.email ? elem: false;
+			});
+			dispatch({
+				type: POSTS.FetchAll,
+				payload: userPosts
+			});
 		});
 	};
 }
