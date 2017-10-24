@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { AddPost, FetchUserPosts } from '../../actions/posts';
+import Tags from './tags';
 
 class Create extends Component {
 	constructor(props) {
@@ -62,6 +63,7 @@ class Create extends Component {
 								component={this.renderTextarea}
 							/>
 						</div>
+						<Tags />
 					</div><br />
 					<div className="btn-group">
 						<button className="btn btn-danger" type="submit">Add</button>

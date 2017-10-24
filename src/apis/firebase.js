@@ -1,21 +1,24 @@
 import * as firebase from 'firebase';
 import * as config from '../env';
 
-const fi = firebase.initializeApp(config.FIREBASE).database();
-const Posts = fi;
+const firedb = firebase.initializeApp(config.FIREBASE).database();
 
 const FirebaseApi = {
 	AddPost: (data) => {
-		return Posts.ref().child('posts/').push(data);
+		return firedb.ref().child('posts/').push(data);
 	},
 	DeletePost: (key) => {
-		return Posts.ref('posts/').child(`${key}`).remove();
+		return firedb.ref('posts/').child(`${key}`).remove();
 	},
 	UpdatePost: (key, data) => {
-		return Posts.ref('posts/').child(`${key}`).update(data);
+		return firedb.ref('posts/').child(`${key}`).update(data);
 	},
 	FetchPosts: () => {
-		const FetchPromise = Posts.ref('posts/').once('value');
+		const FetchPromise = firedb.ref('posts/').once('value');
+		return FetchPromise;
+	},
+	FetchTags: () => {
+		const FetchPromise = firedb.ref('tags/').once('value');
 		return FetchPromise;
 	}
 };
