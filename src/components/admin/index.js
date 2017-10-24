@@ -3,11 +3,13 @@ import { Link, Route } from 'react-router-dom';
 import { Collapse, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import Create from './create';
-import { DeletePost, FetchPosts } from '../../actions/posts';
-import DeleteModal  from '../partials/confirmation_modal';
+import { DeletePost, FetchUserPosts } from '../../actions/posts';
+import DeleteModal  from '../shared/confirmation_modal';
 import EditModal from './edit';
+import NavbarMain from '../shared/navbar_main';
 
 class Index extends Component {
 	constructor(props) {
@@ -63,28 +65,30 @@ class Index extends Component {
 	}
 
 	deletePost() {
-		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
-		this.setState({
-			selectedPost: null,
-			showDeleteModal: false
+		const promise = this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
+		promise.then(() => {
+			this.props.FetchUserPosts();
+			this.setState({
+				selectedPost: null,
+				showDeleteModal: false
+			});
 		});
 	}
 
-	componentDidMount() {
-		this.props.FetchPosts();
+	componentWillMount() {
+		this.props.FetchUserPosts();
 	}
 
 	render() {
-		// console.log(this.props.posts);
-		const postObj = Object.entries(this.props.posts);
-		const renderPosts = postObj.map((elem, index) => {
+		const list = this.props.userPosts;
+		const renderPosts = list.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td>{index + 1}</td>
-					<td>{elem[1].title}</td>
-					<td>{elem[1].content}</td>
-					<td>{elem[1].last_updated}</td>
-					<td>
+					<td width="5%">{index + 1}</td>
+					<td width="20%">{elem[1].title}</td>
+					<td width="40%">{elem[1].content}</td>
+					<td width="15%">{elem[1].last_updated}</td>
+					<td width="20%">
 						<div className="btn-group">
 							<div className="btn btn-warning btn-sm" onClick={() => this.showEditModal(elem[0])}>Edit</div>
 							<div className="btn btn-danger btn-sm" onClick={()=>this.showDeleteModal(elem[0])}>Delete</div>
@@ -94,53 +98,57 @@ class Index extends Component {
 				</tr>
 			);
 		});
-		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
+		// console.log('Fetch',this.props.userPosts[this.state.selectedPost]);
 		return (
 			<div>
-				<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
-				<Collapse in={this.state.isOpen}>
-					<div>
-						<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
-					</div>
-				</Collapse><br />
-				{postObj.length > 0 ?
-					<table>
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Post Title</th>
-								<th>Post Content</th>
-								<th>Last Updated</th>
-							</tr>
-						</thead>
-						<tbody>
-							{renderPosts}
-						</tbody>
-					</table>
-					: <h4 className="text-center">{'No Data Available'}</h4>
-				}
+				<div className="header-nav"><NavbarMain /></div>
+				<div className="container">
+					<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
+					<Collapse in={this.state.isOpen}>
+						<div>
+							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
+						</div>
+					</Collapse><br />
+					{list.length > 0 ?
+						<table>
+							<thead>
+								<tr>
+									<th width="5%">#</th>
+									<th width="20%">Post Title</th>
+									<th width="40%">Post Content</th>
+									<th width="15%">Last Updated</th>
+									<th width="20%"> </th>
+								</tr>
+							</thead>
+							<tbody>
+								{renderPosts}
+							</tbody>
+						</table>
+						: <h4 className="text-center">{'No Data Available'}</h4>
+					}
 
-				<DeleteModal 
-					showDeleteModal={this.state.showDeleteModal}
-					closeDeleteModal={this.closeDeleteModal}
-					deletePost = {this.deletePost}
-				/>
-				<EditModal
-					showEditModal={this.state.showEditModal}
-					index = {this.state.selectedPost}
-					closeEditModal = {this.closeEditModal}
-				/>
+					<DeleteModal 
+						showDeleteModal={this.state.showDeleteModal}
+						closeDeleteModal={this.closeDeleteModal}
+						deletePost = {this.deletePost}
+					/>
+					<EditModal
+						showEditModal={this.state.showEditModal}
+						index = {this.state.selectedPost}
+						closeEditModal = {this.closeEditModal}
+					/>
+				</div>
 			</div>
 		);
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ FetchPosts, DeletePost }, dispatch);
+	return bindActionCreators({ DeletePost, FetchUserPosts }, dispatch);
 }
 
-function mapStateToProps(state) {
-	return state.posts;
+function mapStateToProps({ userPosts }) {
+	return { userPosts };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

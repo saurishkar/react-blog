@@ -1,47 +1,52 @@
-const ADD_POST = 'ADD_POST';
-const DELETE_POST = 'DELETE_POST';
-const UPDATE_POST = 'UPDATE_POST';
-const FETCH_POSTS = 'FETCH_POSTS';
 
-import * as firebase from 'firebase';
-var config = {
-	apiKey: 'AIzaSyB_Qv8YEigQUJZUR_553KRN02v0EZqtkhg',
-	authDomain: 'react-ecommerce.firebaseapp.com',
-	databaseURL: 'https://react-ecommerce.firebaseio.com',
-	projectId: 'react-ecommerce',
-	storageBucket: 'react-ecommerce.appspot.com',
-	messagingSenderId: '392133875475'
-};
- 
-const fi = firebase.initializeApp(config).database().ref();
-
-const Posts = fi;
+import POSTS from '../constants/posts';
+import FirebaseApi from '../apis/firebase';
 
 export function AddPost(data) {
 	return dispatch => {
-		Posts.child('posts').push(data);
+		return FirebaseApi.AddPost(data);
 	};
 }
 
 export function DeletePost(key) {
 	return dispatch => {
-		Posts.child(`posts/${key}`).remove();
+		return FirebaseApi.DeletePost(key);
 	};
 }
 
 export function UpdatePost(key, data) {
 	return dispatch => {
-		Posts.child(`posts/${key}`).update(data);
+		return FirebaseApi.UpdatePost(key, data);
 	};
 }
 
-export function FetchPosts() {
+export function FetchAllPosts() {
 	return dispatch => {
-		Posts.on('value', snapshot => {
+		const promise = FirebaseApi.FetchPosts();
+		promise.then(snapshot => {
 			dispatch({
-				type: FETCH_POSTS,
-				payload: snapshot.val()
+				type: POSTS.FetchAll,
+				payload: Object.entries(snapshot.val())
 			});
+		});
+	};
+}
+
+export function FetchUserPosts() {
+	return dispatch => {
+		const promise = FirebaseApi.FetchPosts();
+		promise.then(snapshot => {
+			const currentUser = JSON.parse(localStorage.getItem('loggedInUser'));
+			if (currentUser) {
+				const userPosts = Object.entries(snapshot.val()).filter((elem) => {
+					if (elem[1].author_email == currentUser.user.email)
+						return true;
+				});
+				dispatch({
+					type: POSTS.FetchUser,
+					payload: userPosts
+				});
+			}
 		});
 	};
 }

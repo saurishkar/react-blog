@@ -44,7 +44,11 @@ p{
 	margin:10px;
 }
 .panel{
-	position:relative;
-	left:0;
-	right:0;
+	margin:30px;
+}
+
+.posts{
+	margin: 0px;
+	padding: 0px;
+	text-align: justfied;
 }

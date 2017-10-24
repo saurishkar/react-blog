@@ -3,7 +3,7 @@ import { reduxForm, Field} from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { AddPost } from '../../actions/posts';
+import { AddPost, FetchUserPosts } from '../../actions/posts';
 
 class Create extends Component {
 	constructor(props) {
@@ -11,7 +11,6 @@ class Create extends Component {
 	}
 
 	renderInput(props) {
-		// console.log(props.meta.error.name);
 		return (
 			<div>
 				<label htmlFor={props.label}>{props.label}</label>
@@ -32,10 +31,13 @@ class Create extends Component {
 	}
 
 	handleFormSubmit(values){
-
-		console.log('Form Submitted', values);
+		const currentUser = this.props.auth.user;
 		values.last_updated = new Date().toLocaleString();
-		this.props.AddPost(values);
+		values.author_email = currentUser.email;
+		const AddPromise = this.props.AddPost(values);
+		AddPromise.then(() => {
+			this.props.FetchUserPosts();
+		});
 		this.props.reset();
 		setTimeout(this.props.onButtonClick, 2000);
 	}
@@ -87,12 +89,16 @@ function validate(values) {
 	return errors;
 }
 
+function mapStateToProps({auth}) {
+	return {auth};
+}
+
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({AddPost}, dispatch);
+	return bindActionCreators({AddPost, FetchUserPosts}, dispatch);
 }
 
 export default reduxForm({
 	validate: validate,
 	form: 'postCreateForm'
 })(
-	connect(null, mapDispatchToProps)(Create));
+	connect(mapStateToProps, mapDispatchToProps)(Create));

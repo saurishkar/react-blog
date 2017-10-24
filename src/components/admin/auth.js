@@ -2,26 +2,32 @@ import React, {Component} from 'react';
 import { instanceOf } from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Button, Modal } from 'react-bootstrap';
-import { withCookies, Cookies } from 'react-cookie';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-class Login extends React.Component {
+import { Login } from '../../actions/auth';
+import UserAPI from '../../apis/auth';
+import { FetchUserPosts } from '../../actions/posts';
+import * as config from '../../env';
+
+class Auth extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 	}
 
 	handleFormSubmit(formData) {
-		this.props.cookies.set('loggedInUser', JSON.stringify(
-			{
-				email: formData.email 
-			}),
-		{ path: '/'});
+		this.props.Login(formData).then(() => {
+			this.props.closeModal();
+			this.props.reset(); // Resets the Login Form on successful login
+		});
+	}
 
-		this.props.closeModal();
-		this.props.reset(); // Resets the Login Form on successful login
-
+	componentDidMount() {
+		if (localStorage.getItem('loggedInUser')) {
+			this.props.initializeUser();
+		}
 	}
 
 	renderField(field) {
@@ -41,9 +47,7 @@ class Login extends React.Component {
 	}
 
 	render() {
-		// console.log('Modal', this.props.showModal);
 		const { handleSubmit } = this.props;
-
 		return (
 			<Modal bsSize="sm" show={this.props.showModal} onHide={()=>this.props.closeModal()}>
 				<form onSubmit={handleSubmit(this.handleFormSubmit)}>
@@ -77,10 +81,6 @@ class Login extends React.Component {
 	}
 }
 
-Login.propTypes = {
-	cookies: instanceOf(Cookies).isRequired
-};
-
 function validate(values) {
 	const errors = [];
 
@@ -96,7 +96,33 @@ function validate(values) {
 	
 }
 
+function mapStateToProps({auth}) {
+	return {auth};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		Login: (formData) => {
+
+			const userLoginPromise = UserAPI.login(formData);
+			userLoginPromise.then((response) => {
+				if(response.uid) {
+					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
+					dispatch(Login());
+				}
+			});
+			
+			return userLoginPromise;
+		},
+		initializeUser: () => {
+			dispatch(Login());
+			dispatch(FetchUserPosts());
+		}
+	};
+}
+
 export default reduxForm({
 	validate: validate,
 	form: 'loginAdminForm'
-})(withCookies(Login));
+})(connect(mapStateToProps, mapDispatchToProps)(Auth)
+);

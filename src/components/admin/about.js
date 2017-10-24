@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import NavbarMain from '../partials/navbar_main';
+import NavbarMain from '../shared/navbar_main';
 
 class About extends Component {
 	render() {
 		return (
 			<div>
+				<div className="header-nav"><NavbarMain /></div>
 				<div className="container">
 					<h1 className="text-center">This is the About page of the site. </h1>
 					<p>

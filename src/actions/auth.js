@@ -1,16 +1,15 @@
-const ADMIN_LOGIN = 'ADMIN_LOGIN';
-const ADMIN_LOGOUT = 'ADMIN_LOGOUT';
+import { ADMIN_LOGIN, ADMIN_LOGOUT } from '../constants/auth';
 
-export const Login = (data) => {
+export const Login = () => {
 	return {
 		type: ADMIN_LOGIN,
-		payload: data
+		payload: JSON.parse(localStorage.getItem('loggedInUser'))
 	};
 };
 
-export const Logout = (data) => {
+export const Logout = () => {
 	return {
 		type: ADMIN_LOGOUT,
-		payload: data
+		payload: {}
 	};
 }; 

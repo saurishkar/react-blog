@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {UpdatePost} from '../../actions/posts';
+import {UpdatePost, FetchUserPosts} from '../../actions/posts';
 
 class EditModal extends Component {
 	constructor(props) {
@@ -42,8 +42,13 @@ class EditModal extends Component {
 	}
 
 	handleFormSubmit(values){
+		const currentUser = this.props.auth.user;
+		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
-		this.props.UpdatePost(this.props.index, values);
+		const promise = this.props.UpdatePost(this.props.index, values);
+		promise.then(() => {
+			this.props.FetchUserPosts();
+		});
 		this.props.closeEditModal();
 		this.props.reset();
 	}
@@ -51,13 +56,16 @@ class EditModal extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
-			this.props.initialize(this.props.posts[nextProps.index]);
+			const post = this.props.posts.filter((elem) => {
+				if (elem[0] == nextProps.index)
+					return true;
+			});
+			this.props.initialize(post[0][1]);
 		}
 	}
 
 	render() {
 		const { handleSubmit } = this.props;
-		// console.log('Receiving', this.props.post);
 		return (
 			<div>
 				<Modal show={this.props.showEditModal} onHide={() => this.props.closeEditModal()}>
@@ -92,7 +100,6 @@ class EditModal extends Component {
 	}
 }
 function validate(values) {
-	// console.log(values);
 	const errors ={} ; // redux-form will check for this object for any added properties and return them
 	// as errors if present on submission of the form
     
@@ -108,12 +115,11 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-	return state.posts;
+	return {posts: state.posts, auth: state.auth};
 }
 
 function mapDispatchToProps(dispatch) {
-	// console.log('mapDispatchToProps');
-	return bindActionCreators({UpdatePost}, dispatch);
+	return bindActionCreators({UpdatePost, FetchUserPosts}, dispatch);
 }
 
 export default reduxForm({
