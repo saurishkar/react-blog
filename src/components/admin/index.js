@@ -73,23 +73,17 @@ class Index extends Component {
 		});
 	}
 
-	componentShouldUpdate(nextState, nextProps) {
-		if (nextProps.posts && nextProps.posts.length != this.props.posts.length) {
-			const currentUser = firebase.auth().currentUser;
-			this.props.FetchPosts(currentUser);
-		}
-	}
-
-	componentDidMount() {
+	componentWillMount() {
 		this.props.FetchUserPosts();
 	}
 
 	render() {
-		const list = Object.entries(this.props.posts);
+		const list = this.props.userPosts;
+		console.log('list', list);
 		const renderPosts = list.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td width="5%">{index}</td>
+					<td width="5%">{index + 1}</td>
 					<td width="20%">{elem[1].title}</td>
 					<td width="40%">{elem[1].content}</td>
 					<td width="15%">{elem[1].last_updated}</td>
@@ -103,7 +97,7 @@ class Index extends Component {
 				</tr>
 			);
 		});
-		// console.log('Fetch',this.props.posts[this.state.selectedPost]);
+		// console.log('Fetch',this.props.userPosts[this.state.selectedPost]);
 		return (
 			<div>
 				<div className="header-nav"><NavbarMain /></div>
@@ -152,8 +146,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ DeletePost, FetchUserPosts }, dispatch);
 }
 
-function mapStateToProps(state) {
-	return {posts: state.posts};
+function mapStateToProps({ userPosts }) {
+	return { userPosts };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

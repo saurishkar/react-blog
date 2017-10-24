@@ -1,5 +1,4 @@
 import { ADMIN_LOGIN, ADMIN_LOGOUT } from '../constants/auth';
-import userAPI from '../apis/auth';
 
 export const Login = () => {
 	return {

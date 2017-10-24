@@ -1,6 +1,6 @@
 import POSTS from '../constants/posts';
 
-const PostsReducer = (state = {}, action) => {
+export const AllPostsReducer = (state = [], action) => {
 	switch(action.type) {
 	case POSTS.Add: return [
 		...state.posts, 
@@ -14,12 +14,16 @@ const PostsReducer = (state = {}, action) => {
 
 	case POSTS.FetchAll:
 		return action.payload;
-
-	case POSTS.FetchUser:
-		return action.payload;
 	
 	default: return state;
 	}
 };
 
-export default PostsReducer;
+export const UserPostsReducer = (state = [], action) => {
+	switch(action.type) {
+	case POSTS.FetchUser:
+		return action.payload;
+	default : return state;
+	}
+};
+

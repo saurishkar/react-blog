@@ -31,9 +31,10 @@ class Create extends Component {
 	}
 
 	handleFormSubmit(values){
-		const currentUser = firebase.auth().currentUser;
+		const currentUser = this.props.auth.user;
 		values.last_updated = new Date().toLocaleString();
-		this.props.AddPost(values, currentUser.uid);
+		values.author_email = currentUser.email;
+		this.props.AddPost(values);
 		this.props.reset();
 		setTimeout(this.props.onButtonClick, 2000);
 	}
@@ -85,6 +86,10 @@ function validate(values) {
 	return errors;
 }
 
+function mapStateToProps({auth}) {
+	return {auth};
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({AddPost}, dispatch);
 }
@@ -93,4 +98,4 @@ export default reduxForm({
 	validate: validate,
 	form: 'postCreateForm'
 })(
-	connect(null, mapDispatchToProps)(Create));
+	connect(mapStateToProps, mapDispatchToProps)(Create));

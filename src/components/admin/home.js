@@ -17,10 +17,9 @@ class Home extends Component {
 	}
 
 	renderPosts() {
-		const list = Object.entries(this.props.posts);
-		
+		const list = this.props.posts;
 		if (list.length > 0) {
-			return Object.entries(this.props.posts).map((elem, index) => {
+			return list.map((elem, index) => {
 				return (
 					<div className="panel panel-primary" key={index}>
 						<div className="panel-heading">
@@ -29,7 +28,7 @@ class Home extends Component {
 									{elem[1].title}
 								</div>
 								<div className="col-sm-4" style={{ textAlign: 'right'}}>
-								#{index + 1}
+									{elem[1].author_email}
 								</div>
 							</div>
 						</div>

@@ -6,9 +6,9 @@ import POSTS from '../constants/posts';
 const fi = firebase.initializeApp(config.FIREBASE).database();
 const Posts = fi;
 
-export function AddPost(data, user) {
+export function AddPost(data) {
 	return dispatch => {
-		Posts.ref('posts/').child(user).push(data);
+		Posts.ref().child('posts/').push(data);
 	};
 }
 
@@ -29,7 +29,7 @@ export function FetchAllPosts() {
 		Posts.ref('posts/').once('value').then(snapshot => {
 			dispatch({
 				type: POSTS.FetchAll,
-				payload: snapshot.val()
+				payload: Object.entries(snapshot.val())
 			});
 		
 		});
@@ -39,14 +39,17 @@ export function FetchAllPosts() {
 export function FetchUserPosts() {
 	return dispatch => {
 		Posts.ref('posts/').once('value').then(snapshot => {
-			const currentUser = localStorage.getItem('loggedInUser');
-			const userPosts = Object.entries(snapshot.val()).map((elem) => {
-				return elem[1].author_email == currentUser.email ? elem: false;
-			});
-			dispatch({
-				type: POSTS.FetchAll,
-				payload: userPosts
-			});
+			const currentUser = JSON.parse(localStorage.getItem('loggedInUser'));
+			if (currentUser) {
+				const userPosts = Object.entries(snapshot.val()).filter((elem) => {
+					if (elem[1].author_email == currentUser.user.email)
+						return true;
+				});
+				dispatch({
+					type: POSTS.FetchUser,
+					payload: userPosts
+				});
+			}
 		});
 	};
 }

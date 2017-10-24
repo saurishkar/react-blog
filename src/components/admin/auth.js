@@ -7,14 +7,13 @@ import { connect } from 'react-redux';
 
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
-import { FetchPosts } from '../../actions/posts';
+import { FetchUserPosts } from '../../actions/posts';
 import * as config from '../../env';
 
 class Auth extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 	}
 
@@ -26,11 +25,9 @@ class Auth extends React.Component {
 	}
 
 	componentDidMount() {
-		firebase.auth().onAuthStateChanged((user) => {
-			if(user) {
-				this.props.initializeUser(user.uid);
-			}
-		});
+		if (localStorage.getItem('loggedInUser')) {
+			this.props.initializeUser();
+		}
 	}
 
 	renderField(field) {
@@ -111,14 +108,15 @@ function mapDispatchToProps(dispatch) {
 			userLoginPromise.then((response) => {
 				if(response.uid) {
 					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
+					dispatch(Login());
 				}
 			});
 			
 			return userLoginPromise;
 		},
-		initializeUser: (user) => {
+		initializeUser: () => {
 			dispatch(Login());
-			dispatch(FetchPosts(user));
+			dispatch(FetchUserPosts());
 		}
 	};
 }
