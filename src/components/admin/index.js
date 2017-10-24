@@ -65,8 +65,7 @@ class Index extends Component {
 	}
 
 	deletePost() {
-		const currentUser = firebase.auth().currentUser;
-		this.props.DeletePost(this.state.selectedPost, currentUser.uid);  // This will send the corresponding key of the post
+		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
 		this.setState({
 			selectedPost: null,
 			showDeleteModal: false

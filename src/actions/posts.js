@@ -12,9 +12,9 @@ export function AddPost(data) {
 	};
 }
 
-export function DeletePost(key, user) {
+export function DeletePost(key) {
 	return dispatch => {
-		Posts.ref('posts/').child(`${user}/${key}`).remove();
+		Posts.ref('posts/').child(`${key}`).remove();
 	};
 }
 
