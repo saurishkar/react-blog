@@ -13,18 +13,20 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.FetchPosts();
+		// this.props.FetchPosts();
 	}
 
 	renderPosts() {
-		if (this.props.posts.length > 0) {
-			return this.props.posts.map((elem, index) => {
+		const list = Object.entries(this.props.posts);
+		
+		if (list.length > 0) {
+			return Object.entries(this.props.posts).map((elem, index) => {
 				return (
 					<div className="panel panel-primary" key={index}>
 						<div className="panel-heading">
 							<div className="row">	
 								<div className="col-sm-8">
-									{elem.title}
+									{elem[1].title}
 								</div>
 								<div className="col-sm-4" style={{ textAlign: 'right'}}>
 								#{index + 1}
@@ -32,10 +34,10 @@ class Home extends Component {
 							</div>
 						</div>
 						<div className="panel-body">
-							<p>{elem.content}</p>
+							<p>{elem[1].content}</p>
 						</div>
 						<div className="panel-footer" style={{ textAlign: 'right'}}>
-							<i>{elem.last_updated}</i>
+							<i>{elem[1].last_updated}</i>
 						</div>
 					</div>
 				);

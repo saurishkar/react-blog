@@ -11,7 +11,6 @@ class Create extends Component {
 	}
 
 	renderInput(props) {
-		// console.log(props.meta.error.name);
 		return (
 			<div>
 				<label htmlFor={props.label}>{props.label}</label>
@@ -32,10 +31,9 @@ class Create extends Component {
 	}
 
 	handleFormSubmit(values){
-
-		console.log('Form Submitted', values);
+		const currentUser = firebase.auth().currentUser;
 		values.last_updated = new Date().toLocaleString();
-		this.props.AddPost(values);
+		this.props.AddPost(values, currentUser.uid);
 		this.props.reset();
 		setTimeout(this.props.onButtonClick, 2000);
 	}

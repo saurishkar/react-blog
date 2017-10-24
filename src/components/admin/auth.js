@@ -19,18 +19,16 @@ class Auth extends React.Component {
 	}
 
 	handleFormSubmit(formData) {
-		this.props.Login(formData);
-		this.props.closeModal();
-		this.props.reset(); // Resets the Login Form on successful login
-
+		this.props.Login(formData).then(() => {
+			this.props.closeModal();
+			this.props.reset(); // Resets the Login Form on successful login
+		});
 	}
 
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged((user) => {
 			if(user) {
-				firebase.database().ref(`/posts/${user.uid}/`).once('value').then(snapshot => {
-			  		this.props.initializeUser(snapshot.val());
-				});
+				this.props.initializeUser(user.uid);
 			}
 		});
 	}
@@ -118,9 +116,9 @@ function mapDispatchToProps(dispatch) {
 			
 			return userLoginPromise;
 		},
-		initializeUser: (posts) => {
+		initializeUser: (user) => {
 			dispatch(Login());
-			dispatch(FetchPosts(posts));
+			dispatch(FetchPosts(user));
 		}
 	};
 }

@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import { Collapse, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import Create from './create';
 import { DeletePost, FetchPosts } from '../../actions/posts';
@@ -64,19 +65,27 @@ class Index extends Component {
 	}
 
 	deletePost() {
-		this.props.DeletePost(this.state.selectedPost);  // This will send the corresponding key of the post
+		const currentUser = firebase.auth().currentUser;
+		this.props.DeletePost(this.state.selectedPost, currentUser.uid);  // This will send the corresponding key of the post
 		this.setState({
 			selectedPost: null,
 			showDeleteModal: false
 		});
 	}
 
+	componentShouldUpdate(nextState, nextProps) {
+		if (nextProps.posts && nextProps.posts.length != this.props.posts.length) {
+			const currentUser = firebase.auth().currentUser;
+			this.props.FetchPosts(currentUser);
+		}
+	}
+
 	render() {
-		// console.log(this.props.posts);
-		const renderPosts = this.props.posts.map((elem, index) => {
+		const list = Object.entries(this.props.posts);
+		const renderPosts = list.map((elem, index) => {
 			return (
 				<tr key={index}>
-					<td width="5%">{index + 1}</td>
+					<td width="5%">{index}</td>
 					<td width="20%">{elem[1].title}</td>
 					<td width="40%">{elem[1].content}</td>
 					<td width="15%">{elem[1].last_updated}</td>
@@ -101,7 +110,7 @@ class Index extends Component {
 							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
 						</div>
 					</Collapse><br />
-					{this.props.posts.length > 0 ?
+					{list.length > 0 ?
 						<table>
 							<thead>
 								<tr>
@@ -136,11 +145,11 @@ class Index extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ DeletePost }, dispatch);
+	return bindActionCreators({ DeletePost, FetchPosts }, dispatch);
 }
 
 function mapStateToProps(state) {
-	return state.posts;
+	return {posts: state.posts};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

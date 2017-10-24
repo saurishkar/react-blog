@@ -1,28 +1,22 @@
-import { FETCH_POSTS, ADD_POST, DELETE_POST, UPDATE_POST } from '../constants/posts';
+import POSTS from '../constants/posts';
 
 const PostsReducer = (state = {}, action) => {
 	switch(action.type) {
-	case ADD_POST: return {
-		posts: [
-			...state.posts, 
-			action.payload
-		], 
-		comments: state.comments
-	};
+	case POSTS.Add: return [
+		...state.posts, 
+		action.payload
+	];
 
-	case DELETE_POST: return { 
-		posts: 
-			state.posts.slice(0, action.payload).concat(state.posts.slice(action.payload + 1))
-	};
+	case POSTS.Delete: return state.posts.slice(0, action.payload).concat(state.posts.slice(action.payload + 1));
 	
-	case UPDATE_POST:
-		return {
-			posts: 
-				state.posts.slice(0, action.payload.index).concat(action.payload.data).concat(state.posts.slice(action.payload.index + 1))
-		};
+	case POSTS.Update:
+		return state.posts.slice(0, action.payload.index).concat(action.payload.data).concat(state.posts.slice(action.payload.index + 1));
 
-	case FETCH_POSTS:
+	case POSTS.FetchAll:
 		return action.payload;
+
+	case POSTS.FetchUser:
+		return state;
 	
 	default: return state;
 	}
