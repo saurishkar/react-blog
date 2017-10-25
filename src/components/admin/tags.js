@@ -7,18 +7,26 @@ import { FetchTags } from '../../actions/tags';
 class Tags extends Component {
 	constructor(props) {
 		super(props);
-
 		this.renderTags = this.renderTags.bind(this);
 	}
 
 	renderTags() {
 		const list = this.props.tags;
-		console.log(list);
 		return list.map((elem, index) => {
 			return (
-				<span key={index}>
-					<span className="label label-danger">{elem[1].name}</span>&nbsp;
-				</span>
+				<td key={index}>
+					<h5>
+						<span className="label label-danger">
+							{elem[1].name}
+						</span>
+						<input 
+							className="tag-check"
+							type="checkbox" 
+							name={`check_${elem[0]}`} 
+							onChange = {(e) => this.props.handleChange(e, elem[0])}
+						/>
+					</h5>
+				</td>
 			);
 		});
 	}
@@ -33,7 +41,13 @@ class Tags extends Component {
 				<div className="container">
 					<div className="row">
 						<h5>Available Tags</h5>
-						{ this.renderTags() }
+						<table>
+							<tbody>
+								<tr>
+									{ this.renderTags() }
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, Field} from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -9,6 +9,22 @@ import Tags from './tags';
 class Create extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			selectedTags: []
+		};
+		this.handleCheckTag = this.handleCheckTag.bind(this);
+	}
+
+	handleCheckTag(event, key) {
+		if (event.target.checked) {
+			if (!this.state.selectedTags.filter((elem) => {
+				return elem == key? true: false;	
+			}).length) {
+				this.setState({
+					selectedTags: [...this.state.selectedTags, key]
+				});
+			}
+		}
 	}
 
 	renderInput(props) {
@@ -35,6 +51,7 @@ class Create extends Component {
 		const currentUser = this.props.auth.user;
 		values.last_updated = new Date().toLocaleString();
 		values.author_email = currentUser.email;
+		values.tags = this.state.selectedTags;
 		const AddPromise = this.props.AddPost(values);
 		AddPromise.then(() => {
 			this.props.FetchUserPosts();
@@ -63,7 +80,9 @@ class Create extends Component {
 								component={this.renderTextarea}
 							/>
 						</div>
-						<Tags />
+						<Tags
+							handleChange = {this.handleCheckTag} 
+						/>
 					</div><br />
 					<div className="btn-group">
 						<button className="btn btn-danger" type="submit">Add</button>
