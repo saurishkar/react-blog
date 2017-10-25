@@ -34,9 +34,9 @@ class Tags extends Component {
 		const list = this.props.tags;
 		return list.map((elem, index) => {
 			return (
-				<td key={index}>
-					<h5>
-						<span className="label label-danger">
+				<span key={index}>
+					<big>
+						<span className="label label-primary">
 							{elem[1].name}
 						</span>
 						<input 
@@ -45,8 +45,8 @@ class Tags extends Component {
 							name={`check_${elem[0]}`} 
 							onChange = {(e) => this.props.handleChange(e, elem[0])}
 						/>
-					</h5>
-				</td>
+					</big>
+				</span>
 			);
 		});
 	}
@@ -57,16 +57,11 @@ class Tags extends Component {
 
 	render() {
 		return (
-			<div className="col-sm-6">
+			<div>
+				<label>Tags</label>
 				<div className="row">
-					<div className="col-sm-12"><h5 className="text-center">Tags</h5></div>
-					<div className="col-sm-12">
-						{ this.renderTags() }
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-sm-12 text-center">
-						<div className="input-group form-group">
+					<div className="col-sm-10 no-gutters">
+						<div className="input-group">
 							<span className="input-group-addon">Tag Name</span>
 							<input 
 								type="text" 
@@ -76,13 +71,21 @@ class Tags extends Component {
 								value={this.state.tag}
 							/>
 						</div>
+					</div>
+					<div className="col-sm-2 no-gutters">
 						<button 
 							readOnly={this.state.tag ? '': 'disabled'} 
-							className="btn btn-sm btn-danger form-control"
+							className="btn btn-sm btn-default form-control"
 							onClick={(event) => this.handleClick(event)}
 						>	
 								Create
 						</button>
+					</div>
+				</div>
+				<br />
+				<div className="row">
+					<div className="col-sm-12">
+						{ this.renderTags() }
 					</div>
 				</div>
 			</div>

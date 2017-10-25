@@ -80,9 +80,11 @@ class Create extends Component {
 								component={this.renderTextarea}
 							/>
 						</div>
-						<Tags
-							handleChange = {this.handleCheckTag} 
-						/>
+						<div className="col-sm-6">
+							<Tags
+								handleChange = {this.handleCheckTag} 
+							/>
+						</div>
 					</div><br />
 					<div className="btn-group">
 						<button className="btn btn-danger" type="submit">Add</button>
