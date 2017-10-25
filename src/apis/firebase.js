@@ -20,6 +20,9 @@ const FirebaseApi = {
 	FetchTags: () => {
 		const FetchPromise = firedb.ref('tags/').once('value');
 		return FetchPromise;
+	},
+	CreateTag: (data) => {
+		return firedb.ref().child('tags/').push(data);
 	}
 };
 

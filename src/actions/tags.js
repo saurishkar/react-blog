@@ -13,3 +13,10 @@ export function FetchTags() {
 	};
 }
 
+export function CreateTag(data) {
+	return dispatch => {
+		const promise = FirebaseApi.CreateTag(data);
+		return promise;
+	};
+}
+

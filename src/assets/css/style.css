@@ -56,3 +56,8 @@ p{
 .label{
 	margin-right: 5px;
 }
+
+.tags-table{
+	margin: auto;
+	padding: 2px;
+}
