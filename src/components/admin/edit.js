@@ -46,11 +46,11 @@ class EditModal extends Component {
 		return this.props.tags.map((elem, index) => {
 			return (
 				<span key={index} className="tag">
-					<small>{elem[1].name}</small>
+					<small>{elem[1].name}</small>&nbsp;
 					<Field 
 						key={index}
 						type="checkbox"
-						name={`tags.${elem[0]}`}
+						name={`tags_${elem[0]}`}
 						component="input"
 					/>
 				</span>
@@ -73,11 +73,19 @@ class EditModal extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
-			const post = this.props.posts.filter((elem) => {
+			const userPost = this.props.posts;
+			const post = userPost.filter((elem) => {
 				if (elem[0] == nextProps.index)
 					return true;
 			});
-			this.props.initialize(post[0][1]);
+			// const userTags = userPost[nextProps.index];
+			console.log('particuar post', post);
+			const initialValues = {title: post[0][1].title, content: post[0][1].content};
+			post[0][1].tags.map((elem) => {
+				Object.assign(initialValues, {[`tags_${elem}`]: true}); 
+			});
+			console.log(initialValues);
+			this.props.initialize(initialValues);
 		}
 	}
 
@@ -136,7 +144,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-	return {posts: state.posts, auth: state.auth, tags: state.tags};
+	return {posts: state.posts, auth: state.auth, tags: state.tags, userPosts: state.userPosts};
 }
 
 function mapDispatchToProps(dispatch) {
