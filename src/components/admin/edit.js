@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Checkbox, FormGroup } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,6 +9,7 @@ import {UpdatePost, FetchUserPosts} from '../../actions/posts';
 class EditModal extends Component {
 	constructor(props) {
 		super(props);
+		this.listTags = this.listTags.bind(this);
 	}
 
 	renderInput(field) {
@@ -41,6 +42,22 @@ class EditModal extends Component {
 		);
 	}
 
+	listTags() {
+		return this.props.tags.map((elem, index) => {
+			return (
+				<span key={index} className="tag">
+					<small>{elem[1].name}</small>
+					<Field 
+						key={index}
+						type="checkbox"
+						name={`tags.${elem[0]}`}
+						component="input"
+					/>
+				</span>
+			);
+		});
+	}
+
 	handleFormSubmit(values){
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
@@ -68,7 +85,7 @@ class EditModal extends Component {
 		const { handleSubmit } = this.props;
 		return (
 			<div>
-				<Modal show={this.props.showEditModal} onHide={() => this.props.closeEditModal()}>
+				<Modal bsSize="lg" show={this.props.showEditModal} onHide={() => this.props.closeEditModal()}>
 					<Modal.Header closeButton>
 						<h4 className="text-center">Edit Post</h4>
 					</Modal.Header>
@@ -87,13 +104,17 @@ class EditModal extends Component {
 								component={this.renderTextarea}
 							/>
 							<br />
+							<div>
+								<label>Tags</label>
+								<FormGroup>{ this.listTags() }</FormGroup>
+							</div>
+							<br />
 							<div className="btn-group">
 								<button className="btn btn-success" type="submit">Update</button>
 								<a className="btn btn-default" onClick={() => this.props.closeEditModal()}>Cancel</a>
 							</div>
 						</form>
 					</Modal.Body>
-
 				</Modal>
 			</div>
 		);
@@ -115,7 +136,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-	return {posts: state.posts, auth: state.auth};
+	return {posts: state.posts, auth: state.auth, tags: state.tags};
 }
 
 function mapDispatchToProps(dispatch) {
