@@ -76,9 +76,10 @@ class EditModal extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('Received Props', nextProps);
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
-			const userPost = this.props.posts;
+			const userPost = this.props.userPosts;
 			const post = userPost.filter((elem) => {
 				if (elem[0] == nextProps.index)
 					return true;
