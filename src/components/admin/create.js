@@ -91,7 +91,7 @@ class Create extends Component {
 						</div>
 					</div><br />
 					<div className="btn-group">
-						<button className="btn btn-danger" type="submit">Add</button>
+						<button className="btn btn-danger" type="submit">Create</button>
 						<a className="btn btn-default" onClick={this.props.onButtonClick}>Cancel</a>
 					</div>
 				</form>

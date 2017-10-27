@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Field } from 'redux-form';
 
 import { FetchTags, CreateTag } from '../../actions/tags';
 
@@ -39,11 +40,12 @@ class Tags extends Component {
 						<span className="label label-primary">
 							{elem[1].name}
 						</span>
-						<input 
+						<Field 
 							className="tag-check"
 							type="checkbox" 
-							name={`tag[${index}].checkbox`} 
+							name={`tags[${elem[0]}]`} 
 							onChange = {(e) => this.props.handleChange(e, elem)}
+							component ="input"
 						/>
 					</big>
 				</span>
@@ -60,7 +62,7 @@ class Tags extends Component {
 			<div>
 				<label>Tags</label>
 				<div className="row">
-					<div className="col-sm-10 no-gutters">
+					<div className="col-sm-10" style={{'paddingRight': '0px'}}>
 						<div className="input-group">
 							<span className="input-group-addon">Tag Name</span>
 							<input 
@@ -72,7 +74,7 @@ class Tags extends Component {
 							/>
 						</div>
 					</div>
-					<div className="col-sm-2 no-gutters">
+					<div className="col-sm-2" style={{'paddingLeft': '0px'}}>
 						<button 
 							readOnly={this.state.tag ? '': 'disabled'} 
 							className="btn btn-md btn-default form-control"

@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {UpdatePost, FetchUserPosts} from '../../actions/posts';
+import Tags from './tags';
 
 class EditModal extends Component {
 	constructor(props) {
 		super(props);
-		this.listTags = this.listTags.bind(this);
 	}
 
 	renderInput(field) {
@@ -42,22 +42,6 @@ class EditModal extends Component {
 		);
 	}
 
-	listTags() {
-		return this.props.tags.map((elem, index) => {
-			return (
-				<span key={index} className="tag">
-					<small>{elem[1].name}</small>&nbsp;
-					<Field 
-						key={index}
-						type="checkbox"
-						name={`tags[${elem[0]}]`}
-						component="input"
-					/>
-				</span>
-			);
-		});
-	}
-
 	handleFormSubmit(values){
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
@@ -78,8 +62,6 @@ class EditModal extends Component {
 				if (elem[0] == nextProps.index)
 					return true;
 			});
-			// const userTags = userPost[nextProps.index];
-			console.log('particuar post', post);
 			const initialValues = {title: post[0][1].title, content: post[0][1].content};
 			Object.assign(initialValues, {tags: post[0][1].tags});
 			console.log(initialValues);
@@ -97,24 +79,28 @@ class EditModal extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						<form className="form-group" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-							<Field 
-								label="Post Title"
-								placeholder="Post Title"
-								name="title"
-								component={this.renderInput}
-							/><br />
-							<Field
-								label="Post Content"
-								placeholder="Post Content"
-								name="content"
-								component={this.renderTextarea}
-							/>
-							<br />
-							<div>
-								<label>Tags</label>
-								<FormGroup>{ this.listTags() }</FormGroup>
-							</div>
-							<br />
+							<div className="row">
+								<div className="col-sm-12">
+									<Field 
+										label="Post Title"
+										placeholder="Post Title"
+										name="title"
+										component={this.renderInput}
+									/><br />
+									<Field
+										label="Post Content"
+										placeholder="Post Content"
+										name="content"
+										component={this.renderTextarea}
+									/>
+								</div>
+							</div><br />
+							<div className="row">
+								<div className="col-sm-12">
+									<Tags
+									/>
+								</div>
+							</div><br />
 							<div className="btn-group">
 								<button className="btn btn-success" type="submit">Update</button>
 								<a className="btn btn-default" onClick={() => this.props.closeEditModal()}>Cancel</a>
