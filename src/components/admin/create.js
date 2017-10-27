@@ -6,12 +6,6 @@ import { connect } from 'react-redux';
 import { AddPost, FetchUserPosts } from '../../actions/posts';
 import Tags from './tags';
 
-export const fields = [
-	'title',
-	'content',
-	'tags[]'
-];
-
 class Create extends Component {
 	constructor(props) {
 		super(props);
@@ -126,7 +120,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
 	validate: validate,
-	fields: fields,
 	form: 'postCreateForm'
 })(
 	connect(mapStateToProps, mapDispatchToProps)(Create));

@@ -37,7 +37,7 @@ class Tags extends Component {
 			return (
 				<span key={index}>
 					<big>
-						<span className="label label-primary">
+						<span className="label label-warning">
 							{elem[1].name}
 						</span>
 						<Field 

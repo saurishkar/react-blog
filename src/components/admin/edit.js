@@ -3,6 +3,7 @@ import { Modal, Checkbox, FormGroup } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import {UpdatePost, FetchUserPosts} from '../../actions/posts';
 import Tags from './tags';
@@ -10,6 +11,24 @@ import Tags from './tags';
 class EditModal extends Component {
 	constructor(props) {
 		super(props);
+		this.state={
+			selectedTags: {}
+		};
+		this.handleCheckTag = this.handleCheckTag.bind(this);
+	}
+
+	handleCheckTag(event, element) {
+		if (event.target.checked) {
+			if (!this.state.selectedTags[element[0]]) {
+				this.setState({
+					selectedTags: Object.assign(this.state.selectedTags, {[element[0]]: element[1]})
+				});
+			}
+		} else {
+			this.setState({
+				selectedTags: _.omit(this.state.selectedTags, element[0])
+			});
+		}
 	}
 
 	renderInput(field) {
@@ -43,9 +62,11 @@ class EditModal extends Component {
 	}
 
 	handleFormSubmit(values){
+		console.log('Updated Values', values);
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
+		values.tags = this.state.selectedTags;
 		const promise = this.props.UpdatePost(this.props.index, values);
 		promise.then(() => {
 			this.props.FetchUserPosts();
@@ -64,7 +85,9 @@ class EditModal extends Component {
 			});
 			const initialValues = {title: post[0][1].title, content: post[0][1].content};
 			Object.assign(initialValues, {tags: post[0][1].tags});
-			console.log(initialValues);
+			this.setState({
+				selectedTags: Object.assign({}, post[0][1].tags)
+			});
 			this.props.initialize(initialValues);
 		}
 	}
@@ -98,6 +121,7 @@ class EditModal extends Component {
 							<div className="row">
 								<div className="col-sm-12">
 									<Tags
+										handleChange = {this.handleCheckTag}
 									/>
 								</div>
 							</div><br />
