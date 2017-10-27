@@ -6,22 +6,26 @@ import { connect } from 'react-redux';
 import { AddPost, FetchUserPosts } from '../../actions/posts';
 import Tags from './tags';
 
+export const fields = [
+	'title',
+	'content',
+	'tags[]'
+];
+
 class Create extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedTags: []
+			selectedTags: {}
 		};
 		this.handleCheckTag = this.handleCheckTag.bind(this);
 	}
 
-	handleCheckTag(event, key) {
+	handleCheckTag(event, element) {
 		if (event.target.checked) {
-			if (!this.state.selectedTags.filter((elem) => {
-				return elem == key? true: false;	
-			}).length) {
+			if (!this.state.selectedTags[element[0]]) {
 				this.setState({
-					selectedTags: [...this.state.selectedTags, key]
+					selectedTags: Object.assign(this.state.selectedTags, {[element[0]]: element[1]})
 				});
 			}
 		}
@@ -63,7 +67,7 @@ class Create extends Component {
 	render() {
 		const { handleSubmit } = this.props;
 		return (
-			<div className="container form">
+			<div className="form text-center">
 				<form className="form-group" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 					<div className="row">
 						<div className="col-sm-6">
@@ -122,6 +126,7 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
 	validate: validate,
+	fields: fields,
 	form: 'postCreateForm'
 })(
 	connect(mapStateToProps, mapDispatchToProps)(Create));

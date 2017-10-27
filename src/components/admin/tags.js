@@ -8,7 +8,7 @@ class Tags extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tag: ''
+			tagName: ''
 		};
 		this.renderTags = this.renderTags.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -16,15 +16,15 @@ class Tags extends Component {
 
 	handleClick(event) {
 		event.preventDefault();
-		if(this.state.tag != '') {
+		if(this.state.tagName != '') {
 			const tagObj = {
-				name: this.state.tag
+				name: this.state.tagName
 			};
 			const promise = this.props.CreateTag(tagObj);
 			promise.then((response) => {
 				this.props.FetchTags();
 				this.setState({
-					tag: ''
+					tagName: ''
 				});
 			});
 		}
@@ -42,8 +42,8 @@ class Tags extends Component {
 						<input 
 							className="tag-check"
 							type="checkbox" 
-							name={`check_${elem[0]}`} 
-							onChange = {(e) => this.props.handleChange(e, elem[0])}
+							name={`tag[${index}].checkbox`} 
+							onChange = {(e) => this.props.handleChange(e, elem)}
 						/>
 					</big>
 				</span>
@@ -65,17 +65,17 @@ class Tags extends Component {
 							<span className="input-group-addon">Tag Name</span>
 							<input 
 								type="text" 
-								name="tag_name" 
+								name="tagName" 
 								className="form-control" 
-								onChange={(event) => this.setState({tag: event.target.value})}
-								value={this.state.tag}
+								onChange={(event) => this.setState({tagName: event.target.value})}
+								value={this.state.tagName}
 							/>
 						</div>
 					</div>
 					<div className="col-sm-2 no-gutters">
 						<button 
 							readOnly={this.state.tag ? '': 'disabled'} 
-							className="btn btn-sm btn-default form-control"
+							className="btn btn-md btn-default form-control"
 							onClick={(event) => this.handleClick(event)}
 						>	
 								Create

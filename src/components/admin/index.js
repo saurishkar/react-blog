@@ -98,7 +98,6 @@ class Index extends Component {
 				</tr>
 			);
 		});
-		// console.log('Fetch',this.props.userPosts[this.state.selectedPost]);
 		return (
 			<div>
 				<div className="header-nav"><NavbarMain /></div>

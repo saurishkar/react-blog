@@ -50,7 +50,7 @@ class EditModal extends Component {
 					<Field 
 						key={index}
 						type="checkbox"
-						name={`tags_${elem[0]}`}
+						name={`tags[${elem[0]}]`}
 						component="input"
 					/>
 				</span>
@@ -81,9 +81,7 @@ class EditModal extends Component {
 			// const userTags = userPost[nextProps.index];
 			console.log('particuar post', post);
 			const initialValues = {title: post[0][1].title, content: post[0][1].content};
-			post[0][1].tags.map((elem) => {
-				Object.assign(initialValues, {[`tags_${elem}`]: true}); 
-			});
+			Object.assign(initialValues, {tags: post[0][1].tags});
 			console.log(initialValues);
 			this.props.initialize(initialValues);
 		}
