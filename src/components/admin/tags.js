@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Field } from 'redux-form';
 
 import { FetchTags, CreateTag } from '../../actions/tags';
 
@@ -8,7 +9,7 @@ class Tags extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tag: ''
+			tagName: ''
 		};
 		this.renderTags = this.renderTags.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -16,15 +17,15 @@ class Tags extends Component {
 
 	handleClick(event) {
 		event.preventDefault();
-		if(this.state.tag != '') {
+		if(this.state.tagName != '') {
 			const tagObj = {
-				name: this.state.tag
+				name: this.state.tagName
 			};
 			const promise = this.props.CreateTag(tagObj);
 			promise.then((response) => {
 				this.props.FetchTags();
 				this.setState({
-					tag: ''
+					tagName: ''
 				});
 			});
 		}
@@ -36,14 +37,15 @@ class Tags extends Component {
 			return (
 				<span key={index}>
 					<big>
-						<span className="label label-primary">
+						<span className="label label-warning">
 							{elem[1].name}
 						</span>
-						<input 
+						<Field 
 							className="tag-check"
 							type="checkbox" 
-							name={`check_${elem[0]}`} 
-							onChange = {(e) => this.props.handleChange(e, elem[0])}
+							name={`tags[${elem[0]}]`} 
+							onChange = {(e) => this.props.handleChange(e, elem)}
+							component ="input"
 						/>
 					</big>
 				</span>
@@ -60,22 +62,22 @@ class Tags extends Component {
 			<div>
 				<label>Tags</label>
 				<div className="row">
-					<div className="col-sm-10 no-gutters">
+					<div className="col-sm-10" style={{'paddingRight': '0px'}}>
 						<div className="input-group">
 							<span className="input-group-addon">Tag Name</span>
 							<input 
 								type="text" 
-								name="tag_name" 
+								name="tagName" 
 								className="form-control" 
-								onChange={(event) => this.setState({tag: event.target.value})}
-								value={this.state.tag}
+								onChange={(event) => this.setState({tagName: event.target.value})}
+								value={this.state.tagName}
 							/>
 						</div>
 					</div>
-					<div className="col-sm-2 no-gutters">
+					<div className="col-sm-2" style={{'paddingLeft': '0px'}}>
 						<button 
 							readOnly={this.state.tag ? '': 'disabled'} 
-							className="btn btn-sm btn-default form-control"
+							className="btn btn-md btn-default form-control"
 							onClick={(event) => this.handleClick(event)}
 						>	
 								Create

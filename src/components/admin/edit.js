@@ -3,13 +3,32 @@ import { Modal, Checkbox, FormGroup } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import {UpdatePost, FetchUserPosts} from '../../actions/posts';
+import Tags from './tags';
 
 class EditModal extends Component {
 	constructor(props) {
 		super(props);
-		this.listTags = this.listTags.bind(this);
+		this.state={
+			selectedTags: {}
+		};
+		this.handleCheckTag = this.handleCheckTag.bind(this);
+	}
+
+	handleCheckTag(event, element) {
+		if (event.target.checked) {
+			if (!this.state.selectedTags[element[0]]) {
+				this.setState({
+					selectedTags: Object.assign(this.state.selectedTags, {[element[0]]: element[1]})
+				});
+			}
+		} else {
+			this.setState({
+				selectedTags: _.omit(this.state.selectedTags, element[0])
+			});
+		}
 	}
 
 	renderInput(field) {
@@ -42,26 +61,12 @@ class EditModal extends Component {
 		);
 	}
 
-	listTags() {
-		return this.props.tags.map((elem, index) => {
-			return (
-				<span key={index} className="tag">
-					<small>{elem[1].name}</small>&nbsp;
-					<Field 
-						key={index}
-						type="checkbox"
-						name={`tags_${elem[0]}`}
-						component="input"
-					/>
-				</span>
-			);
-		});
-	}
-
 	handleFormSubmit(values){
+		console.log('Updated Values', values);
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
+		values.tags = this.state.selectedTags;
 		const promise = this.props.UpdatePost(this.props.index, values);
 		promise.then(() => {
 			this.props.FetchUserPosts();
@@ -71,20 +76,19 @@ class EditModal extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('Received Props', nextProps);
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
-			const userPost = this.props.posts;
+			const userPost = this.props.userPosts;
 			const post = userPost.filter((elem) => {
 				if (elem[0] == nextProps.index)
 					return true;
 			});
-			// const userTags = userPost[nextProps.index];
-			console.log('particuar post', post);
 			const initialValues = {title: post[0][1].title, content: post[0][1].content};
-			post[0][1].tags.map((elem) => {
-				Object.assign(initialValues, {[`tags_${elem}`]: true}); 
+			Object.assign(initialValues, {tags: post[0][1].tags});
+			this.setState({
+				selectedTags: Object.assign({}, post[0][1].tags)
 			});
-			console.log(initialValues);
 			this.props.initialize(initialValues);
 		}
 	}
@@ -99,24 +103,29 @@ class EditModal extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						<form className="form-group" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-							<Field 
-								label="Post Title"
-								placeholder="Post Title"
-								name="title"
-								component={this.renderInput}
-							/><br />
-							<Field
-								label="Post Content"
-								placeholder="Post Content"
-								name="content"
-								component={this.renderTextarea}
-							/>
-							<br />
-							<div>
-								<label>Tags</label>
-								<FormGroup>{ this.listTags() }</FormGroup>
-							</div>
-							<br />
+							<div className="row">
+								<div className="col-sm-12">
+									<Field 
+										label="Post Title"
+										placeholder="Post Title"
+										name="title"
+										component={this.renderInput}
+									/><br />
+									<Field
+										label="Post Content"
+										placeholder="Post Content"
+										name="content"
+										component={this.renderTextarea}
+									/>
+								</div>
+							</div><br />
+							<div className="row">
+								<div className="col-sm-12">
+									<Tags
+										handleChange = {this.handleCheckTag}
+									/>
+								</div>
+							</div><br />
 							<div className="btn-group">
 								<button className="btn btn-success" type="submit">Update</button>
 								<a className="btn btn-default" onClick={() => this.props.closeEditModal()}>Cancel</a>

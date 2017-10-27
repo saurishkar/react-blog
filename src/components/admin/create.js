@@ -10,18 +10,16 @@ class Create extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedTags: []
+			selectedTags: {}
 		};
 		this.handleCheckTag = this.handleCheckTag.bind(this);
 	}
 
-	handleCheckTag(event, key) {
+	handleCheckTag(event, element) {
 		if (event.target.checked) {
-			if (!this.state.selectedTags.filter((elem) => {
-				return elem == key? true: false;	
-			}).length) {
+			if (!this.state.selectedTags[element[0]]) {
 				this.setState({
-					selectedTags: [...this.state.selectedTags, key]
+					selectedTags: Object.assign(this.state.selectedTags, {[element[0]]: element[1]})
 				});
 			}
 		}
@@ -63,7 +61,7 @@ class Create extends Component {
 	render() {
 		const { handleSubmit } = this.props;
 		return (
-			<div className="container form">
+			<div className="form text-center">
 				<form className="form-group" onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 					<div className="row">
 						<div className="col-sm-6">
@@ -87,7 +85,7 @@ class Create extends Component {
 						</div>
 					</div><br />
 					<div className="btn-group">
-						<button className="btn btn-danger" type="submit">Add</button>
+						<button className="btn btn-danger" type="submit">Create</button>
 						<a className="btn btn-default" onClick={this.props.onButtonClick}>Cancel</a>
 					</div>
 				</form>
