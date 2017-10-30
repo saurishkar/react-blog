@@ -9,6 +9,7 @@ import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
 import * as config from '../../env';
+import messages from '../../constants/validation-messages';
 
 class UserLogin extends React.Component {
 
@@ -85,11 +86,11 @@ function validate(values) {
 	const errors = [];
 
 	if(!values.email) {
-		errors.email = 'Email is Required';
+		errors.email = messages.user.email;
 	}
 
 	if(!values.password) {
-		errors.password = 'Password is Required';
+		errors.password = messages.user.password;
 	}
 
 	return errors;
