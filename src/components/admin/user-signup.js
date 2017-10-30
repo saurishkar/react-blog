@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+
+import messages from '../../constants/validation-messages';
 
 class UserSignup extends Component {
 	constructor(props) {
@@ -107,25 +110,31 @@ function validate(values) {
 	const errors = {};
 	
 	if (!values.firstname)
-		errors.firstname = 'First Name is Required';
+		errors.firstname = messages.user.firstname;
 	
 	if (!values.lastname)
-		errors.lastname = 'Last Name is Required';
+		errors.lastname = messages.user.lastname;
 		
 	if (!values.email)
-		errors.email = 'Email Address is Required';
+		errors.email = messages.user.email;
 		
 	if (!values.password)
-		errors.password = 'Password is Required';
+		errors.password = messages.user.password;
 		
 	if (!values.password_confirm)
-		errors.password_confirm = 'Password is Required';
+		errors.password_confirm = messages.user.password;
 	
 	return errors;
 }
 
+function mapDispatchToProps(dispatch) {
+	return dispatch => {
+
+	};
+}
 
 export default reduxForm({
 	validate: validate,
 	form: 'UserSignupForm'
-})(UserSignup);
+})(
+	connect(null, mapDispatchToProps)(UserSignup));
