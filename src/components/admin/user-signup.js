@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
+import UserAPI from '../../apis/auth';
+import { Login } from '../../actions/auth';
 import messages from '../../constants/validation-messages';
 
 class UserSignup extends Component {
@@ -32,6 +34,8 @@ class UserSignup extends Component {
 		const promise = this.props.Signup(formData);
 		promise.then((response) => {
 			if(response.uid) {
+				this.props.closeModal();
+				this.props.reset();
 				this.props.Login(formData);
 			}
 		});
@@ -104,7 +108,7 @@ function validate(values) {
 	if (!values.password_confirm)
 		errors.password_confirm = messages.user.password;
 	
-	if( values.password != values.pasword_confirm) {
+	if( values.password != values.password_confirm) {
 		errors.password = messages.user.password_match;
 		errors.password_confirm = messages.user.password_match;
 	}
@@ -116,20 +120,17 @@ function mapDispatchToProps(dispatch) {
 		Signup: (formData) => {
 			const userSignupPromise = UserAPI.signup(formData);
 			return userSignupPromise;
-			// const userLoginPromise = UserAPI.login(formData);
-			// userLoginPromise.then((response) => {
-			// 	if(response.uid) {
-			// 		localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
-			// 		dispatch(Login());
-			// 	}
-			// });
-			
-			// return userLoginPromise;
 		},
-		// initializeUser: () => {
-		// 	dispatch(Login());
-		// 	dispatch(FetchUserPosts());
-		// }
+		Login: (formData) => {
+			const userLoginPromise = UserAPI.login(formData);
+			userLoginPromise.then((response) => {
+				if(response.uid) {
+					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
+					dispatch(Login());
+				}
+			});
+			return userLoginPromise;
+		}
 	};
 }
 
