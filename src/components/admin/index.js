@@ -80,6 +80,7 @@ class Index extends Component {
 	}
 
 	render() {
+		console.log(this.props);
 		const list = this.props.userPosts;
 		const renderPosts = list.map((elem, index) => {
 			return (

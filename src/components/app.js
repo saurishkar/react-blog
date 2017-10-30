@@ -8,6 +8,7 @@ import Home from './admin/home';
 import Main from './main';
 import * as config from '../env';
 import Routes from '../constants/routes';
+import NotFound from './not-found';
 
 class App extends Component {
 	constructor(props) {
@@ -26,6 +27,7 @@ class App extends Component {
 					<Route path={Routes.index} component={Index} />
 					<Route exact path={Routes.home} component={Home} />
 					<Route exact path="/" component={Main} />
+					<Route path="*" component={NotFound} />
 				</Switch>
 			</div>
 		);
