@@ -8,6 +8,10 @@ const UserAPI = {
 	logout: () => {
 		const res = firebase.auth().signOut();
 		return res;
+	},
+	signup: (userData) => {
+		const res = firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password);
+		return res;
 	}
 };
 

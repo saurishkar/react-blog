@@ -28,8 +28,13 @@ class UserSignup extends Component {
 		);
 	}
 
-	handleFormSubmit() {
-		console.log('345');
+	handleFormSubmit(formData) {
+		const promise = this.props.Signup(formData);
+		promise.then((response) => {
+			if(response.uid) {
+				this.props.Login(formData);
+			}
+		});
 	}
 
 	render() {
@@ -44,24 +49,6 @@ class UserSignup extends Component {
 							</Modal.Header>
 							<Modal.Body>
 								<div className="row">
-									<div className="col-sm-6">
-										<Field 
-											type="text"
-											component={this.renderField}
-											name="firstname"
-											placeholder="First Name"
-											label="First Name"
-										/>
-									</div>
-									<div className="col-sm-6">
-										<Field 
-											type="text"
-											component={this.renderField}
-											name="lastname"
-											placeholder="Last Name"
-											label="Last Name"
-										/>
-									</div>
 									<div className="col-sm-12">
 										<Field 
 											type="email"
@@ -106,14 +93,7 @@ class UserSignup extends Component {
 }
 
 function validate(values) {
-	console.log('123');
 	const errors = {};
-	
-	if (!values.firstname)
-		errors.firstname = messages.user.firstname;
-	
-	if (!values.lastname)
-		errors.lastname = messages.user.lastname;
 		
 	if (!values.email)
 		errors.email = messages.user.email;
@@ -124,12 +104,32 @@ function validate(values) {
 	if (!values.password_confirm)
 		errors.password_confirm = messages.user.password;
 	
+	if( values.password != values.pasword_confirm) {
+		errors.password = messages.user.password_match;
+		errors.password_confirm = messages.user.password_match;
+	}
 	return errors;
 }
 
 function mapDispatchToProps(dispatch) {
-	return dispatch => {
-
+	return {
+		Signup: (formData) => {
+			const userSignupPromise = UserAPI.signup(formData);
+			return userSignupPromise;
+			// const userLoginPromise = UserAPI.login(formData);
+			// userLoginPromise.then((response) => {
+			// 	if(response.uid) {
+			// 		localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
+			// 		dispatch(Login());
+			// 	}
+			// });
+			
+			// return userLoginPromise;
+		},
+		// initializeUser: () => {
+		// 	dispatch(Login());
+		// 	dispatch(FetchUserPosts());
+		// }
 	};
 }
 
