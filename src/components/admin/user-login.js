@@ -10,7 +10,7 @@ import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
 import * as config from '../../env';
 
-class Auth extends React.Component {
+class UserLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -123,6 +123,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
 	validate: validate,
-	form: 'loginAdminForm'
-})(connect(mapStateToProps, mapDispatchToProps)(Auth)
+	form: 'loginUserForm'
+})(connect(mapStateToProps, mapDispatchToProps)(UserLogin)
 );

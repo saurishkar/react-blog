@@ -4,30 +4,47 @@ import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Auth from '../admin/auth';
+import UserLogin from '../admin/user-login';
+import UserSignup from '../admin/user-signup';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
 import { FetchAllPosts } from '../../actions/posts';
+import Routes from '../../constants/routes';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showModal: false
+			showLoginModal: false,
+			showSignupModal: false
 		};
-		this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
+		this.openLoginModal = this.openLoginModal.bind(this);
+		this.closeLoginModal = this.closeLoginModal.bind(this);
+		this.openSignupModal = this.openSignupModal.bind(this);
+		this.closeSignupModal = this.closeSignupModal.bind(this);
 	}
 
-	openModal() {
+	openLoginModal() {
 		this.setState({
-			showModal: true
+			showLoginModal: true
 		});
 	}
 
-	closeModal() {
+	closeLoginModal() {
 		this.setState({
-			showModal: false
+			showLoginModal: false
+		});
+	}
+
+	openSignupModal() {
+		this.setState({
+			showSignupModal: true
+		});
+	}
+
+	closeSignupModal() {
+		this.setState({
+			showSignupModal: false
 		});
 	}
 
@@ -37,7 +54,7 @@ class NavbarMain extends React.Component {
 			if(this.props.auth && this.props.auth.user) {
 				return (
 					<ul className="list-unstyled navbar-nav">
-						<li className="nav-item"><Link to="/blog">My Posts</Link></li>
+						<li className="nav-item"><Link to={Routes.index}>My Posts</Link></li>
 						<ul className="list-unstyled navbar-nav align-right">
 							<li className="nav-item">{this.props.auth.user.email}</li>
 							<li className="nav-item">
@@ -49,15 +66,25 @@ class NavbarMain extends React.Component {
 			}
 
 			return (
-				<li 
-					className="align-right" 
-					tabIndex="0" 
-					role="button" 
-					onClick={() => this.openModal()} 
-					style={{ color: '#aaa'}}
-				>
+				<ul className="align-right list-unstyled navbar-nav">
+					<li
+						tabIndex="0"
+						role="button"
+						onClick={() => this.openSignupModal()}
+						style={{ color: '#aaa'}}
+					>
+					SignUp
+					</li>
+
+					<li 
+						tabIndex="0" 
+						role="button" 
+						onClick={() => this.openLoginModal()} 
+						style={{ color: '#aaa'}}
+					>
 					Login
-				</li>
+					</li>
+				</ul>
 			);
 		};
 		return (
@@ -69,14 +96,18 @@ class NavbarMain extends React.Component {
 						</Navbar.Brand>
 					</Navbar.Header>
 					<ul className="list-unstyled navbar-nav">
-						<li className="nav-item"><Link to="/">Home</Link></li>
-						<li className="nav-item"><Link to="/about">About</Link></li>
+						<li className="nav-item"><Link to={Routes.home}>Home</Link></li>
+						<li className="nav-item"><Link to={Routes.about}>About</Link></li>
 						{renderUserSession()}
 					</ul>
 				</Navbar>
-				<Auth 
-					showModal={this.state.showModal}
-					closeModal={this.closeModal}
+				<UserLogin 
+					showModal={this.state.showLoginModal}
+					closeModal={this.closeLoginModal}
+				/>
+				<UserSignup
+					showModal={this.state.showSignupModal}
+					closeModal={this.closeSignupModal}
 				/>
 			</div>
 		);
