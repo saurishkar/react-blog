@@ -62,7 +62,6 @@ class EditModal extends Component {
 	}
 
 	handleFormSubmit(values){
-		console.log('Updated Values', values);
 		const currentUser = this.props.auth.user;
 		values.author_email = currentUser.email;
 		values.last_updated = new Date().toLocaleString();
@@ -76,7 +75,6 @@ class EditModal extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('Received Props', nextProps);
 		if (nextProps.showEditModal === true && nextProps.showEditModal != this.props.showEditModal)
 		{
 			const userPost = this.props.userPosts;
