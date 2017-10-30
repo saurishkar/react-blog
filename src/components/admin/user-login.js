@@ -9,8 +9,9 @@ import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
 import * as config from '../../env';
+import messages from '../../constants/validation-messages';
 
-class Auth extends React.Component {
+class UserLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -85,11 +86,11 @@ function validate(values) {
 	const errors = [];
 
 	if(!values.email) {
-		errors.email = 'Email is Required';
+		errors.email = messages.user.email;
 	}
 
 	if(!values.password) {
-		errors.password = 'Password is Required';
+		errors.password = messages.user.password;
 	}
 
 	return errors;
@@ -123,6 +124,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
 	validate: validate,
-	form: 'loginAdminForm'
-})(connect(mapStateToProps, mapDispatchToProps)(Auth)
+	form: 'loginUserForm'
+})(connect(mapStateToProps, mapDispatchToProps)(UserLogin)
 );

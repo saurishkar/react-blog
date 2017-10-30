@@ -17,11 +17,7 @@ ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(reducers)}>
 		<BrowserRouter>
 			<CookiesProvider>
-				<div>
-					<Switch>
-						<Route exact path="/" component={App} />
-					</Switch>	
-				</div>
+				<App />
 			</CookiesProvider>
 		</BrowserRouter>
 	</Provider>

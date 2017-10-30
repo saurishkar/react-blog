@@ -9,10 +9,11 @@ li{
 	position:absolute;
 	right:0px;
 }
-.form{
-	margin:20px auto;
+.form-input{
+	margin:0px auto 15px auto;
 	padding: auto;
 }
+
 textarea{
 	max-height: 200px;
 	min-height:200px;
