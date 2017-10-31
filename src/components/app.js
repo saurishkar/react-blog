@@ -10,6 +10,7 @@ import * as config from '../env';
 import Routes from '../constants/routes';
 import NotFound from './not-found';
 import Auth from './admin/auth';
+import PasswordReset from './admin/password-reset';
 
 class App extends Component {
 	constructor(props) {
@@ -27,8 +28,10 @@ class App extends Component {
 					<Route path={Routes.about} component={About} />
 					<Route path={Routes.index} component={Auth(Index)} />
 					<Route exact path={Routes.home} component={Home} />
+					<Route exact path={Routes.password_reset} component={PasswordReset} />
 					<Route exact path="/" component={Main} />
 					<Route path="*" component={NotFound} />
+
 				</Switch>
 			</div>
 		);

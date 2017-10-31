@@ -12,7 +12,6 @@ export function mapStateToProps({auth}) {
 export function mapDispatchToProps(dispatch) {
 	return {
 		Login: (formData) => {
-
 			const userLoginPromise = UserAPI.login(formData);
 			userLoginPromise.then((response) => {
 				if(response.uid) {
@@ -26,6 +25,9 @@ export function mapDispatchToProps(dispatch) {
 		initializeUser: () => {
 			dispatch(Login());
 			dispatch(FetchUserPosts());
+		},
+		ForgotPassword: (formData) => {
+			const forgotPassPromise = UserAPI.forgotPass(formData);
 		}
 	};
 }

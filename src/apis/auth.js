@@ -12,6 +12,10 @@ const UserAPI = {
 	signup: (userData) => {
 		const res = firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password);
 		return res;
+	},
+	forgotPass: (userData) => {
+		// API Call to firebase to send a password reset mail to the registered email id.
+		// Check the sendPasswordResetEmail() function in firebase API
 	}
 };
 

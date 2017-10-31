@@ -49,7 +49,7 @@ class UserLogin extends React.Component {
 	render() {
 		const { handleSubmit } = this.props;
 		return (
-			<Modal bsSize="sm" show={this.props.showModal} onHide={()=>this.props.closeModal()}>
+			<Modal show={this.props.showModal} onHide={()=>this.props.closeModal()}>
 				<form onSubmit={handleSubmit(this.handleFormSubmit)}>
 					<Modal.Header closeButton>
 						<h4 className="text-center">Login</h4>
@@ -73,7 +73,14 @@ class UserLogin extends React.Component {
 						</div>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button className="btn btn-danger text-center form-control" type="submit">Login</Button>
+						<div className="row text-center">
+							<div className="col-sm-6">
+								<Button className="btn btn-primary form-control" type="submit">Login</Button>
+							</div>
+							<div className="col-sm-6">
+								<Button className="btn btn-danger form-control">Forgot Password ?</Button>
+							</div>
+						</div>
 					</Modal.Footer>
 				</form>
 			</Modal>
