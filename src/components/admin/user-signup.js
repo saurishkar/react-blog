@@ -115,27 +115,7 @@ function validate(values) {
 	return errors;
 }
 
-function mapDispatchToProps(dispatch) {
-	return {
-		Signup: (formData) => {
-			const userSignupPromise = UserAPI.signup(formData);
-			return userSignupPromise;
-		},
-		Login: (formData) => {
-			const userLoginPromise = UserAPI.login(formData);
-			userLoginPromise.then((response) => {
-				if(response.uid) {
-					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
-					dispatch(Login());
-				}
-			});
-			return userLoginPromise;
-		}
-	};
-}
-
 export default reduxForm({
 	validate: validate,
 	form: 'UserSignupForm'
-})(
-	connect(null, mapDispatchToProps)(UserSignup));
+})(UserSignup);
