@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
-import * as config from '../../env';
 import messages from '../../constants/validation-messages';
 
 class UserLogin extends React.Component {
@@ -97,33 +96,7 @@ function validate(values) {
 	
 }
 
-function mapStateToProps({auth}) {
-	return {auth};
-}
-
-function mapDispatchToProps(dispatch) {
-	return {
-		Login: (formData) => {
-
-			const userLoginPromise = UserAPI.login(formData);
-			userLoginPromise.then((response) => {
-				if(response.uid) {
-					localStorage.setItem('loggedInUser', JSON.stringify({user: {email: response.email, uid: response.uid}}));
-					dispatch(Login());
-				}
-			});
-			
-			return userLoginPromise;
-		},
-		initializeUser: () => {
-			dispatch(Login());
-			dispatch(FetchUserPosts());
-		}
-	};
-}
-
 export default reduxForm({
 	validate: validate,
 	form: 'loginUserForm'
-})(connect(mapStateToProps, mapDispatchToProps)(UserLogin)
-);
+})(UserLogin);

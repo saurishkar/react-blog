@@ -108,15 +108,15 @@ class Index extends Component {
 		return (
 			<div>
 				<div className="header-nav"><NavbarMain /></div>
-				{list.length > 0 ?
-					<div className="container">
-						<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
-						<Collapse in={this.state.isOpen}>
-							<div>
-								<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
-							</div>
-						</Collapse><br />
-					
+				
+				<div className="container">
+					<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
+					<Collapse in={this.state.isOpen}>
+						<div>
+							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
+						</div>
+					</Collapse><br />
+					{list.length > 0 ?
 						<table>
 							<thead>
 								<tr>
@@ -131,20 +131,20 @@ class Index extends Component {
 								{renderPosts}
 							</tbody>
 						</table>
-
-						<DeleteModal 
-							showDeleteModal={this.state.showDeleteModal}
-							closeDeleteModal={this.closeDeleteModal}
-							deletePost = {this.deletePost}
-						/>
-						<EditModal
-							showEditModal={this.state.showEditModal}
-							index = {this.state.selectedPost}
-							closeEditModal = {this.closeEditModal}
-						/>
-					</div>
-					: <h4 className="text-center">{'No Data Available'}</h4>
-				}
+						: <h4 className="text-center">{'No Data Available'}</h4>
+					}
+					<DeleteModal 
+						showDeleteModal={this.state.showDeleteModal}
+						closeDeleteModal={this.closeDeleteModal}
+						deletePost = {this.deletePost}
+					/>
+					<EditModal
+						showEditModal={this.state.showEditModal}
+						index = {this.state.selectedPost}
+						closeEditModal = {this.closeEditModal}
+					/>
+						
+				</div>
 			</div>
 		);
 	}

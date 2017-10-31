@@ -4,8 +4,8 @@ import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import UserLogin from '../admin/user-login';
-import UserSignup from '../admin/user-signup';
+import UserSignupConnector from '../../containers/user-signup-connector';
+import UserLoginConnector from '../../containers/user-login-connector';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
 import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
@@ -104,11 +104,11 @@ class NavbarMain extends React.Component {
 						{renderUserSession()}
 					</ul>
 				</Navbar>
-				<UserLogin 
+				<UserLoginConnector
 					showModal={this.state.showLoginModal}
 					closeModal={this.closeLoginModal}
 				/>
-				<UserSignup
+				<UserSignupConnector
 					showModal={this.state.showSignupModal}
 					closeModal={this.closeSignupModal}
 				/>
