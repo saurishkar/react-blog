@@ -8,7 +8,7 @@ import UserLogin from '../admin/user-login';
 import UserSignup from '../admin/user-signup';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
-import { FetchAllPosts } from '../../actions/posts';
+import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
 import Routes from '../../constants/routes';
 
 class NavbarMain extends React.Component {
@@ -49,7 +49,6 @@ class NavbarMain extends React.Component {
 	}
 
 	render() {
-
 		const renderUserSession = () => {
 			if(this.props.auth && this.props.auth.user) {
 				return (
@@ -58,7 +57,11 @@ class NavbarMain extends React.Component {
 						<ul className="list-unstyled navbar-nav align-right">
 							<li className="nav-item">{this.props.auth.user.email}</li>
 							<li className="nav-item">
-								<a tabIndex="0" role="button"  onClick={() => this.props.logout()}>Logout</a>
+								<a 
+									tabIndex="0"
+									role="button" 
+									onClick={() => this.props.Logout()}
+								>Logout</a>
 							</li>
 						</ul>
 					</ul>
@@ -92,7 +95,7 @@ class NavbarMain extends React.Component {
 				<Navbar fixedTop={false}>
 					<Navbar.Header>
 						<Navbar.Brand>
-							<a href="#">Learn To React</a>
+							<a href="#">The React Blog</a>
 						</Navbar.Brand>
 					</Navbar.Header>
 					<ul className="list-unstyled navbar-nav">
@@ -115,12 +118,13 @@ class NavbarMain extends React.Component {
 }
 
 function mapStateToProps(state) {
+	// console.log('ownprops', ownProps);
 	return {auth: state.auth};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		logout: () => {
+		Logout: () => {
 			const signOutPromise = UserAPI.logout();
 			signOutPromise.then(() => {
 				localStorage.clear('loggedInUser');
