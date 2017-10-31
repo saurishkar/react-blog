@@ -79,6 +79,13 @@ class Index extends Component {
 		this.props.FetchUserPosts();
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const { history } = this.props;
+		if (!nextProps.auth.user) {
+			history.push('/');
+		}
+	}
+
 	render() {
 		const list = this.props.userPosts;
 		const renderPosts = list.map((elem, index) => {
@@ -101,14 +108,15 @@ class Index extends Component {
 		return (
 			<div>
 				<div className="header-nav"><NavbarMain /></div>
-				<div className="container">
-					<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
-					<Collapse in={this.state.isOpen}>
-						<div>
-							<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
-						</div>
-					</Collapse><br />
-					{list.length > 0 ?
+				{list.length > 0 ?
+					<div className="container">
+						<button className="btn btn-info" onClick={this.handleButtonClick}>Create a New Post</button>
+						<Collapse in={this.state.isOpen}>
+							<div>
+								<Create onButtonClick = {() => this.setState({ isOpen: !this.state.isOpen })} />
+							</div>
+						</Collapse><br />
+					
 						<table>
 							<thead>
 								<tr>
@@ -123,20 +131,20 @@ class Index extends Component {
 								{renderPosts}
 							</tbody>
 						</table>
-						: <h4 className="text-center">{'No Data Available'}</h4>
-					}
 
-					<DeleteModal 
-						showDeleteModal={this.state.showDeleteModal}
-						closeDeleteModal={this.closeDeleteModal}
-						deletePost = {this.deletePost}
-					/>
-					<EditModal
-						showEditModal={this.state.showEditModal}
-						index = {this.state.selectedPost}
-						closeEditModal = {this.closeEditModal}
-					/>
-				</div>
+						<DeleteModal 
+							showDeleteModal={this.state.showDeleteModal}
+							closeDeleteModal={this.closeDeleteModal}
+							deletePost = {this.deletePost}
+						/>
+						<EditModal
+							showEditModal={this.state.showEditModal}
+							index = {this.state.selectedPost}
+							closeEditModal = {this.closeEditModal}
+						/>
+					</div>
+					: <h4 className="text-center">{'No Data Available'}</h4>
+				}
 			</div>
 		);
 	}
@@ -146,8 +154,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ DeletePost, FetchUserPosts }, dispatch);
 }
 
-function mapStateToProps({ userPosts }) {
-	return { userPosts };
+function mapStateToProps({ userPosts, auth }) {
+	return { userPosts, auth };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
