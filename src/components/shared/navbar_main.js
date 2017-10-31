@@ -118,7 +118,6 @@ class NavbarMain extends React.Component {
 }
 
 function mapStateToProps(state) {
-	// console.log('ownprops', ownProps);
 	return {auth: state.auth};
 }
 
