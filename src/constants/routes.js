@@ -1,7 +1,8 @@
-const Routes = {
+const ROUTES = {
 	index: '/index',
 	home: '/home',
-	about: '/about'
+	about: '/about',
+	password_reset: '/user/:userKey/password-reset' 
 };
 
-export default Routes;
+export default ROUTES;

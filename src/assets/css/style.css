@@ -69,3 +69,13 @@ big{
 .tag{
 	margin-right: 10px;
 }
+.password-reset {
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 15px;
+	border: 1px solid #EEE;
+}
+.password-reset input{
+	margin: 10px auto 0px auto;
+	padding: 5px;
+}

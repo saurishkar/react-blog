@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import UserAPI from '../../apis/auth';
 import { Login } from '../../actions/auth';
-import messages from '../../constants/validation-messages';
+import MESSAGES from '../../constants/validation-messages';
 
 class UserSignup extends Component {
 	constructor(props) {
@@ -100,18 +100,14 @@ function validate(values) {
 	const errors = {};
 		
 	if (!values.email)
-		errors.email = messages.user.email;
+		errors.email = MESSAGES.user.email;
 		
 	if (!values.password)
-		errors.password = messages.user.password;
+		errors.password = MESSAGES.user.password;
 		
 	if (!values.password_confirm)
-		errors.password_confirm = messages.user.password;
+		errors.password_confirm = MESSAGES.user.password;
 	
-	if( values.password != values.password_confirm) {
-		errors.password = messages.user.password_match;
-		errors.password_confirm = messages.user.password_match;
-	}
 	return errors;
 }
 

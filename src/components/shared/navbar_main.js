@@ -4,30 +4,35 @@ import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import UserSignupConnector from '../../containers/user-signup-connector';
-import UserLoginConnector from '../../containers/user-login-connector';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
-import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
 import Routes from '../../constants/routes';
+import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
+import UserLoginConnector from '../../containers/user-login-connector';
+import UserSignupConnector from '../../containers/user-signup-connector';
+import PasswordForgotConnector from '../../containers/password-forgot-connector';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showLoginModal: false,
-			showSignupModal: false
+			showSignupModal: false,
+			showForgotPasswordModal: false
 		};
 		this.openLoginModal = this.openLoginModal.bind(this);
 		this.closeLoginModal = this.closeLoginModal.bind(this);
 		this.openSignupModal = this.openSignupModal.bind(this);
 		this.closeSignupModal = this.closeSignupModal.bind(this);
+		this.openForgotPasswordModal = this.openForgotPasswordModal.bind(this);
+		this.closeForgotPasswordModal = this.closeForgotPasswordModal.bind(this);
 	}
 
 	openLoginModal() {
 		this.setState({
 			showLoginModal: true
 		});
+		this.closeForgotPasswordModal();
 	}
 
 	closeLoginModal() {
@@ -45,6 +50,19 @@ class NavbarMain extends React.Component {
 	closeSignupModal() {
 		this.setState({
 			showSignupModal: false
+		});
+	}
+
+	openForgotPasswordModal() {
+		this.setState({
+			showForgotPasswordModal: true
+		});
+		this.closeLoginModal();
+	}
+
+	closeForgotPasswordModal() {
+		this.setState({
+			showForgotPasswordModal: false
 		});
 	}
 
@@ -107,10 +125,16 @@ class NavbarMain extends React.Component {
 				<UserLoginConnector
 					showModal={this.state.showLoginModal}
 					closeModal={this.closeLoginModal}
+					showForgotPasswordModal={this.openForgotPasswordModal}
 				/>
 				<UserSignupConnector
 					showModal={this.state.showSignupModal}
 					closeModal={this.closeSignupModal}
+				/>
+				<PasswordForgotConnector
+					openModal = {this.state.showForgotPasswordModal}
+					closeModal = {this.closeForgotPasswordModal}
+					showLoginModal = {this.openLoginModal}
 				/>
 			</div>
 		);
