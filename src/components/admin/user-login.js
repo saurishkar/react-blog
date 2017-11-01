@@ -14,6 +14,9 @@ class UserLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state ={
+			showForgotPasswordModal: false
+		};
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 	}
 
@@ -49,41 +52,49 @@ class UserLogin extends React.Component {
 	render() {
 		const { handleSubmit } = this.props;
 		return (
-			<Modal show={this.props.showModal} onHide={()=>this.props.closeModal()}>
-				<form onSubmit={handleSubmit(this.handleFormSubmit)}>
-					<Modal.Header closeButton>
-						<h4 className="text-center">Login</h4>
-					</Modal.Header>
-					<Modal.Body>
-						<div className="login-form">
-							<Field 
-								label="Email"
-								name="email"
-								type="email"
-								placeholder="Email"
-								component={this.renderField}
-							/>
-							<Field 
-								label="Password"
-								name="password"
-								type="password"
-								placeholder="Password"
-								component={this.renderField}
-							/>
-						</div>
-					</Modal.Body>
-					<Modal.Footer>
-						<div className="row text-center">
-							<div className="col-sm-6">
-								<Button className="btn btn-primary form-control" type="submit">Login</Button>
+			<div>
+				<Modal show={this.props.showModal} onHide={()=>this.props.closeModal()}>
+					<form onSubmit={handleSubmit(this.handleFormSubmit)}>
+						<Modal.Header closeButton>
+							<h4 className="text-center">Login</h4>
+						</Modal.Header>
+						<Modal.Body>
+							<div className="login-form">
+								<Field 
+									label="Email"
+									name="email"
+									type="email"
+									placeholder="Email"
+									component={this.renderField}
+								/>
+								<Field 
+									label="Password"
+									name="password"
+									type="password"
+									placeholder="Password"
+									component={this.renderField}
+								/>
 							</div>
-							<div className="col-sm-6">
-								<Button className="btn btn-danger form-control">Forgot Password ?</Button>
+						</Modal.Body>
+						<Modal.Footer>
+							<div className="row text-center">
+								<div className="col-sm-12">
+									<Button className="btn btn-primary form-control" type="submit">Login</Button>
+								</div><br />
+								<div className="col-sm-6 col-sm-offset-3">
+									<a 
+										tabIndex="0"
+										role="button"
+										className="btn btn-light"
+										onClick = {() => this.props.showForgotPasswordModal()}
+									>Forgot Password ?
+									</a>
+								</div>
 							</div>
-						</div>
-					</Modal.Footer>
-				</form>
-			</Modal>
+						</Modal.Footer>
+					</form>
+				</Modal>
+			</div>
 		);
 	}
 }
