@@ -8,33 +8,51 @@ class PasswordForgot extends Component{
 		super(props);
 	}
 
+	renderField(field) {
+
+		return (
+			<div>
+				<label>{field.label}</label>
+				<input {...field.input} 
+					type={field.type} 
+					name={field.name}
+					placeholder={field.placeholder}
+					className={`form-control ${ field.meta.error && field.meta.touched ? 'error':''}`}
+				/>
+				<span className="text-danger"><small>{field.meta.touched && field.meta.error}</small></span><br />
+			</div>
+		);
+	}
+
 	render() {
 		return (
 			<div>
 				<Modal show={this.props.openModal} onHide={() => this.props.closeModal()}>
-					<form className="text-center forgot-password">
+					<form className="forgot-password">
 						<Modal.Header closeButton>
-							<h4>Forgot Password ? </h4>
+							<h4 className="text-center">Forgot Password ? </h4>
 						</Modal.Header>
 						<Modal.Body>
 							<Field	
 								type="email"
 								placeholder="Email Address"
-								component="input"
-								className="form-control"
+								component={this.renderField}
 								name="email"
+								label="Email Address"
 							/>
 						</Modal.Body>
 						<Modal.Footer>
 							<div className="row text-center">
 								<div className="col-sm-6 col-sm-offset-3">
-									<Button className="btn btn-primary">Send Password Reset Link</Button><br />
-								</div><br />
+									<Button className="btn btn-primary form-control">Send Password Reset Link</Button>
+								</div>
 								<div className="col-sm-6 col-sm-offset-3">
 									<a 
-										onClick={() => this.props.showLoginModal()}
 										role="button"
 										tabIndex="0"
+										className="btn btn-light"
+										onClick={() => this.props.showLoginModal()}
+										
 									>Back To Login
 									</a>
 								</div>
