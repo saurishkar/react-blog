@@ -1,7 +1,6 @@
 # React-Blog
 
 ## 1. General Details
--------------------------------
 
 ### A Blog Post App using **ReactJS** and **Firebase**
 
@@ -9,26 +8,23 @@
 
 
 ### Front-End Stack
----------------------------
 
 * ReactJS
 * SaSS ( > Not now but most certainly in the near future. )
 
 
 ### Database
----------------------------
 
 * Google Firebase API
 
 
 ### Features Implemented
----------------------------
 
 1.  #### Posts
 
-	 - Create
-	 - Edit 
-	 - Delete
+	- [x] Create
+	- [x] Edit 
+	- [x] Delete
 
 2. #### Tags
 
@@ -43,69 +39,61 @@
 
 
 ### Upcoming Features
----------------------------
 
 1. #### User Profile
 
-   - [] Stats
-   - [] Post Upvotes
-   - [] Change Password
-   - [] Change Email
+   	- [] Stats
+   	- [] Post Upvotes
+   	- [] Change Password
+   	- [] Change Email
 
 2. #### Auth
 
-  - [] Google Authentication
-  - [] Facebook Authentication
+  	- [] Google Authentication
+  	- [] Facebook Authentication
 
 3. #### Post
 
-  - [] Single Page View of a Post
+  	- [] Single Page View of a Post
 
 4. #### General
 
-  - [] UI Designs ( ** _Since beauty is always appreciated_ ** )
-  - [] Backend Error Messages
-  - [] Loader
+  	- [] UI Designs ( **_Since beauty is always appreciated_** )
+  	- [] Backend Error Messages
+  	- [] Loader
 
 
 ### License
----------------------------
 
-  - #### MIT License
+  #### MIT License
 
 
 
 ## 2. Installation
--------------------------------
 
 
 ### Clone This Repository 
-----------------------------
 ``` 
 git clone git@github.com:saurishkar/react-blog.git
 cd react-blog
 ```
 
 ### Install Node Dependencies
------------------------------
 ```
 npm install
 ```
 
 ### Set up Environment Variables
---------------------------------
 ```
 touch .env
 ```
 
 ### List of Environment Variables
----------------------------------
 ```
 To be Modified Soon...
 ```
 
 ### Start the Front-End Server
-------------------------------
 ```
 npm start
 ``` 
