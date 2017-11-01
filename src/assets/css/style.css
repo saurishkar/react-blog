@@ -76,6 +76,6 @@ big{
 	border: 1px solid #EEE;
 }
 .password-reset input{
-	margin: 10px auto;
+	margin: 10px auto 0px auto;
 	padding: 5px;
 }

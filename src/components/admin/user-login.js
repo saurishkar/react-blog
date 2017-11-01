@@ -100,7 +100,6 @@ function validate(values) {
 	}
 
 	return errors;
-	
 }
 
 export default reduxForm({

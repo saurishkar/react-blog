@@ -10,7 +10,7 @@ import * as config from '../env';
 import ROUTES from '../constants/routes';
 import NotFound from './not-found';
 import Auth from './admin/auth';
-import PasswordReset from './admin/password-reset';
+import PasswordResetConnector from '../containers/password-reset-connector';
 
 class App extends Component {
 	constructor(props) {
@@ -24,7 +24,7 @@ class App extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route path={ROUTES.password_reset} component={PasswordReset} />
+				<Route path={ROUTES.password_reset} component={PasswordResetConnector} />
 				<Route exact path={ROUTES.about} component={About} />
 				<Route exact path={ROUTES.index} component={Auth(Index)} />
 				<Route exact path={ROUTES.home} component={Home} />

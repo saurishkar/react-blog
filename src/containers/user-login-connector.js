@@ -27,7 +27,7 @@ export function mapDispatchToProps(dispatch) {
 			dispatch(FetchUserPosts());
 		},
 		ForgotPassword: (formData) => {
-			const forgotPassPromise = UserAPI.forgotPass(formData);
+			const forgotPassPromise = UserAPI.forgotPassword(formData);
 		}
 	};
 }
