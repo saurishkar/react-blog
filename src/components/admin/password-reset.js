@@ -16,7 +16,7 @@ class PasswordReset extends Component {
 						<div className="col-sm-12">
 							<Field 
 								label="Password"
-								placeholder="Password"
+								placeholder="New Password"
 								type="password"
 								component="input"
 								className="form-control"
@@ -26,7 +26,7 @@ class PasswordReset extends Component {
 						<div className="col-sm-12">
 							<Field 
 								label="Password Confirmation"
-								placeholder="Confirm Password"
+								placeholder="Confirm New Password"
 								type="password"
 								component="input"
 								className="form-control"
