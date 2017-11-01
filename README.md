@@ -1,25 +1,25 @@
 # React-Blog
 
 
-##A Blog Post App using **ReactJS** and **Firebase**
+## A Blog Post App using **ReactJS** and **Firebase**
 
 > All hail to ReactJS, we can now build up faster and efficient UI apps and more. This is a simple representation of what are the basic functionalities and working of different features of React and its siblings, mainly React-Router and the coolest Redux.
 
 
-###Front-End Stack
+### Front-End Stack
 ---------------------------
 
 1. ReactJS
 2. SaSS ( > Not now but most certainly in the near future. )
 
 
-###Database
+### Database
 ---------------------------
 
 1. Google Firebase API
 
 
-###Features Implemented
+### Features Implemented
 ---------------------------
 
 1. Posts
@@ -40,7 +40,7 @@
 	3. Forgot Password
 
 
-###Upcoming Features
+### Upcoming Features
 ---------------------------
 
 1. User Profile
@@ -66,7 +66,7 @@
 	3. Loader
 
 
-###License
+### License
 ---------------------------
 
 MIT License
