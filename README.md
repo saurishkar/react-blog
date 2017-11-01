@@ -1,100 +1,114 @@
 # React-Blog
 
-1. General Details
+## 1. General Details
 -------------------------------
 
-	### A Blog Post App using **ReactJS** and **Firebase**
+### A Blog Post App using **ReactJS** and **Firebase**
 
-	> All hail to ReactJS, we can now build up faster and efficient UI apps and more. This is a simple representation of what are the basic functionalities and working of different features of React and its siblings, mainly React-Router and the coolest Redux.
-
-
-	#### Front-End Stack
-	---------------------------
-
-		* ReactJS
-		* SaSS ( > Not now but most certainly in the near future. )
+> All hail to ReactJS, we can now build up faster and efficient UI apps and more. This is a simple representation of what are the basic functionalities and working of different features of React and its siblings, mainly React-Router and the coolest Redux.
 
 
-	#### Database
-	---------------------------
+### Front-End Stack
+---------------------------
 
-		* Google Firebase API
-
-
-	#### Features Implemented
-	---------------------------
-
-		* Posts
-
-			[x] Create
-			[x] Edit 
-			[x] Delete
-
-		* Tags
-		
-			[x] Create
-			[x] Assign / Remove Tags to Posts
-
-		* User
-		
-			[x] SignUp
-			[x] SignIn
-			[x] Forgot Password
+* ReactJS
+* SaSS ( > Not now but most certainly in the near future. )
 
 
-	#### Upcoming Features
-	---------------------------
+### Database
+---------------------------
 
-		* User Profile
-		
-			[] Stats
-			[] Post Upvotes
-			[] Change Password
-			[] Change Email
-
-		* Auth
-		
-			[] Google Authentication
-			[] Facebook Authentication
-
-		* Post
-		
-			[] Single Page View of a Post
-
-		* General
-
-			[] UI Designs ( > Since beauty is always appreciated )
-			[] Backend Error Messages
-			[] Loader
+* Google Firebase API
 
 
-	#### License
-	---------------------------
+### Features Implemented
+---------------------------
 
-		* MIT License
+1.  #### Posts
+
+	 - Create
+	 - Edit 
+	 - Delete
+
+2. #### Tags
+
+	- [x] Create
+	- [x] Assign / Remove Tags to Posts
+
+3. #### User
+
+	- [x] SignUp
+	- [x] SignIn
+	- [x] Forgot Password
 
 
-2. Installation
+### Upcoming Features
+---------------------------
+
+1. #### User Profile
+
+   - [] Stats
+   - [] Post Upvotes
+   - [] Change Password
+   - [] Change Email
+
+2. #### Auth
+
+  - [] Google Authentication
+  - [] Facebook Authentication
+
+3. #### Post
+
+  - [] Single Page View of a Post
+
+4. #### General
+
+  - [] UI Designs ( ** _Since beauty is always appreciated_ ** )
+  - [] Backend Error Messages
+  - [] Loader
+
+
+### License
+---------------------------
+
+  - #### MIT License
+
+
+
+## 2. Installation
 -------------------------------
 
-	1. ##### Clone This Repository 
 
-		```git clone git@github.com:saurishkar/react-blog.git```
-		```cd react-blog```
+### Clone This Repository 
+----------------------------
+``` 
+git clone git@github.com:saurishkar/react-blog.git
+cd react-blog
+```
 
-	2. ##### Install Node Dependencies
+### Install Node Dependencies
+-----------------------------
+```
+npm install
+```
 
-		```npm install```
+### Set up Environment Variables
+--------------------------------
+```
+touch .env
+```
 
-	3. ##### Set up Environment Variables
+### List of Environment Variables
+---------------------------------
+```
+To be Modified Soon...
+```
 
-		```touch .env```
+### Start the Front-End Server
+------------------------------
+```
+npm start
+``` 
 
-		###### List of Environment Variables
-	
-		> Coming Soon...
-	
-	4. ##### Start the Front-End Server
 
-		```npm start```
-		 
+Made with :musical_note: and :coffee:
