@@ -12,14 +12,6 @@ export default config;
 export const passwordResetConfig = {
 	actionCodeSettings: {
 		url: '', // URL you want to create to fill the details of the reset password
-		iOS: {
-			bundleId: 'com.example.ios'
-		},
-		android: {
-			packageName: 'com.example.android',
-			installApp: true,
-			minimumVersion: '12'
-		},
 		handleCodeInApp: true
 	}
 };

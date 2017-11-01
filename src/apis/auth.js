@@ -19,6 +19,8 @@ const UserAPI = {
 	},
 	forgotPassword: (userData) => {
 		// firebase API call to send a password reset link to user's email
+		const res = firebase.auth().sendPasswordResetEmail(userData.email);
+		return res;
 	}
 };
 

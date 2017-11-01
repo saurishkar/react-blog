@@ -4,13 +4,13 @@ import NavbarSub from './navbar_sub';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import UserSignupConnector from '../../containers/user-signup-connector';
-import UserLoginConnector from '../../containers/user-login-connector';
 import UserAPI from '../../apis/auth';
 import { Logout } from '../../actions/auth';
-import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
 import Routes from '../../constants/routes';
-import PasswordForgot from '../admin/password-forgot';
+import { FetchAllPosts, FetchUserPosts } from '../../actions/posts';
+import UserLoginConnector from '../../containers/user-login-connector';
+import UserSignupConnector from '../../containers/user-signup-connector';
+import PasswordForgotConnector from '../../containers/password-forgot-connector';
 
 class NavbarMain extends React.Component {
 	constructor(props) {
@@ -131,7 +131,7 @@ class NavbarMain extends React.Component {
 					showModal={this.state.showSignupModal}
 					closeModal={this.closeSignupModal}
 				/>
-				<PasswordForgot 
+				<PasswordForgotConnector
 					openModal = {this.state.showForgotPasswordModal}
 					closeModal = {this.closeForgotPasswordModal}
 					showLoginModal = {this.openLoginModal}

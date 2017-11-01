@@ -6,6 +6,8 @@ class PasswordForgot extends Component{
 	
 	constructor(props) {
 		super(props);
+
+		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 	}
 
 	renderField(field) {
@@ -24,11 +26,21 @@ class PasswordForgot extends Component{
 		);
 	}
 
+	handleFormSubmit(formData) {
+		const promise = this.props.ForgotPassword(formData);
+		promise.then((response) => {
+			this.props.reset();
+			this.props.closeModal();
+		});
+	}
+
 	render() {
+		const { handleSubmit } = this.props;
+
 		return (
 			<div>
 				<Modal show={this.props.openModal} onHide={() => this.props.closeModal()}>
-					<form className="forgot-password">
+					<form className="forgot-password" onSubmit={handleSubmit(this.handleFormSubmit)}>
 						<Modal.Header closeButton>
 							<h4 className="text-center">Forgot Password ? </h4>
 						</Modal.Header>
@@ -44,7 +56,11 @@ class PasswordForgot extends Component{
 						<Modal.Footer>
 							<div className="row text-center">
 								<div className="col-sm-6 col-sm-offset-3">
-									<Button className="btn btn-primary form-control">Send Password Reset Link</Button>
+									<Button 
+										type="submit" 
+										className="btn btn-primary form-control"
+									>Send Password Reset Link
+									</Button>
 								</div>
 								<div className="col-sm-6 col-sm-offset-3">
 									<a 
