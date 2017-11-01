@@ -6,12 +6,13 @@ const webpack = require('webpack');
 module.exports = {
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js'
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js',
+		publicPath: '/'
 	},
 	devtool: 'source-maps',
 	devServer: {
-		contentBase: './dist',
+		contentBase: './build',
 		historyApiFallback: true,
 	},
 	module: {
@@ -23,6 +24,6 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({ title: 'React Ecommerce App', template: './src/assets/index.html'}),
-		new CleanWebpackPlugin(['dist'])
+		new CleanWebpackPlugin(['build'])
 	]
 };
