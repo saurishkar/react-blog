@@ -42,32 +42,32 @@
 
 1. #### User Profile
 
-   	- [] Stats
-   	- [] Post Upvotes
-   	- [] Change Password
-   	- [] Change Email
+   	- [ ] Stats
+   	- [ ] Post Upvotes
+   	- [ ] Change Password
+   	- [ ] Change Email
 
 2. #### Auth
 
-  	- [] Google Authentication
-  	- [] Facebook Authentication
+  	- [ ] Google Authentication
+  	- [ ] Facebook Authentication
 
 3. #### Post
 
-  	- [] Single Page View of a Post
+  	- [ ] Single Page View of a Post
 
 4. #### General
 
-  	- [] UI Designs ( **_Since beauty is always appreciated_** )
-  	- [] Backend Error Messages
-  	- [] Loader
+  	- [ ] UI Designs ( **_Since beauty is always appreciated_** )
+  	- [ ] Backend Error Messages
+  	- [ ] Loader
 
 
 ### License
 
   #### MIT License
 
-
+----------------------------------------------------------------------------
 
 ## 2. Installation
 
@@ -98,5 +98,5 @@ To be Modified Soon...
 npm start
 ``` 
 
-
+----------------------------------------------------------------------------
 Made with :musical_note: and :coffee:
