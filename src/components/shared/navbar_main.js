@@ -70,57 +70,47 @@ class NavbarMain extends React.Component {
 		const renderUserSession = () => {
 			if(this.props.auth && this.props.auth.user) {
 				return (
-					<ul className="list-unstyled navbar-nav">
-						<li className="nav-item"><Link to={Routes.index}>My Posts</Link></li>
-						<ul className="list-unstyled navbar-nav align-right">
-							<li className="nav-item">{this.props.auth.user.email}</li>
-							<li className="nav-item">
-								<a 
-									tabIndex="0"
-									role="button" 
-									onClick={() => this.props.Logout()}
-								>Logout</a>
-							</li>
-						</ul>
-					</ul>
+					<div>
+						<Nav>
+							<NavItem href={Routes.index}>My Posts</NavItem>
+						</Nav>
+						
+						<Nav pullRight>
+							<NavItem >{this.props.auth.user.email}</NavItem>
+							<NavItem onClick={() => this.props.Logout()}>
+							Logout
+							</NavItem>
+						</Nav>
+					</div>
 				);
 			}
 
 			return (
-				<ul className="align-right list-unstyled navbar-nav">
-					<li
-						tabIndex="0"
-						role="button"
-						onClick={() => this.openSignupModal()}
-						style={{ color: '#aaa'}}
-					>
-					SignUp
-					</li>
-
-					<li 
-						tabIndex="0" 
-						role="button" 
-						onClick={() => this.openLoginModal()} 
-						style={{ color: '#aaa'}}
-					>
-					Login
-					</li>
-				</ul>
+				<Nav pullRight>
+					<NavItem onClick={() => this.openSignupModal()}>
+						SignUp
+					</NavItem>
+					<NavItem onClick={() => this.openLoginModal()}>
+						Login
+					</NavItem>
+				</Nav>
 			);
 		};
 		return (
 			<div>
-				<Navbar fixedTop={false}>
+				<Navbar fixedTop={true} inverse={true}>
 					<Navbar.Header>
 						<Navbar.Brand>
 							<a href="#">The React Blog</a>
 						</Navbar.Brand>
 					</Navbar.Header>
-					<ul className="list-unstyled navbar-nav">
-						<li className="nav-item"><Link to={Routes.home}>Home</Link></li>
-						<li className="nav-item"><Link to={Routes.about}>About</Link></li>
+					<Navbar.Collapse>
+						<Nav>
+							<NavItem href={Routes.home}>Home</NavItem>
+							<NavItem href={Routes.about}>About</NavItem>
+						</Nav>
 						{renderUserSession()}
-					</ul>
+					</Navbar.Collapse>
 				</Navbar>
 				<UserLoginConnector
 					showModal={this.state.showLoginModal}

@@ -2,13 +2,7 @@
 .content{
 	height:400px;
 }
-li{
-	margin: 15px;
-}
-.align-right{
-	position:absolute;
-	right:0px;
-}
+
 .form-input{
 	margin:0px auto 15px auto;
 	padding: auto;
