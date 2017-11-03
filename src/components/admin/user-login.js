@@ -71,20 +71,14 @@ class UserLogin extends React.Component {
 							</div>
 						</Modal.Body>
 						<Modal.Footer>
-							<div className="row text-center">
-								<div className="col-sm-12">
-									<Button raised color="primary" type="submit">Login</Button>
-								</div><br />
-								<div className="col-sm-6 col-sm-offset-3">
-									<a 
-										tabIndex="0"
-										role="button"
-										className="btn btn-light"
-										onClick = {() => this.props.showForgotPasswordModal()}
-									>Forgot Password ?
-									</a>
-								</div>
-							</div>
+							<a 
+								tabIndex="0"
+								role="button"
+								className="btn btn-light"
+								onClick = {() => this.props.showForgotPasswordModal()}
+							>Forgot Password ?
+							</a>
+							<Button raised color="primary" type="submit">Login</Button><br />
 						</Modal.Footer>
 					</form>
 				</Modal>

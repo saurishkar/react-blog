@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { TextField, Button } from 'material-ui';
 
 import UserAPI from '../../apis/auth';
 import { Login } from '../../actions/auth';
@@ -15,16 +16,16 @@ class UserSignup extends Component {
 	renderField(field) {
 		return (
 			<div>
-				<div className="form-input">
-					<label>{field.label}</label>
-					<input 
-						type={field.type}
+				<div className="user-signup">
+					<TextField 
+						hintText={field.label}
 						name={field.name}
-						placeholder={field.placeholder}
-						className={`form-control ${field.meta.touched && field.meta.error ? 'error' : ''}`}
-						{...field.input}
+						floatingLabelText={field.label}
+						errorText={field.meta.touched && field.meta.error}
+						type={field.type}
+						fullWidth={true}
+						{...field}
 					/>
-					<span className="text-danger"><small>{field.meta.touched && field.meta.error}</small></span><br />
 				</div>
 			</div>
 		);
@@ -58,16 +59,17 @@ class UserSignup extends Component {
 											type="email"
 											component={this.renderField}
 											name="email"
-											placeholder="Email Address"
-											label="Email"
+											label="Email Address"
 										/>
 									</div>
+								</div>
+								<br />
+								<div className="row">
 									<div className="col-sm-6">
 										<Field 
 											type="password"
 											component={this.renderField}
 											name="password"
-											placeholder="Password"
 											label="Password"
 										/>
 									</div>
@@ -76,17 +78,14 @@ class UserSignup extends Component {
 											type="password"
 											component={this.renderField}
 											name="password_confirm"
-											placeholder="Password Confirmation"
 											label="Password Confirmation"
 										/>
 									</div>
 								</div>
+								<br />
 							</Modal.Body>
 							<Modal.Footer>
-								<div className="btn-group text-center">
-									<button className="btn btn-primary" type="submit">Register</button>
-									<div className="btn btn-danger" onClick={() => this.props.closeModal()}>Cancel</div>
-								</div>
+								<Button raised color="primary" type="submit">Register</Button>
 							</Modal.Footer>
 						</form>
 					</div>
