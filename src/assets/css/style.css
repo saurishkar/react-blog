@@ -7,11 +7,23 @@ body{
 	position:relative;
 	margin-bottom: 100px;
 }
-
-.content{
-	height:400px;
+.post-head span{
+	margin-left: 10px;
+}
+.post-head{
+	margin-bottom: 50px;
+}
+.post-body{
+	height:150px;
+	text-overflow: ellipsis;
+	text-align:justify;
 }
 
+.jumbotron{
+	background-color: #111;
+	box-shadow: 2px 5px 10px #333;
+	color: #AAA;
+}
 textarea{
 	max-height: 200px;
 	min-height:200px;
@@ -36,10 +48,6 @@ p{
 	padding:10px;
 }
 
-.btn-group{
-	margin:auto;
-}
-
 .login-form{
 	margin:10px;
 }
@@ -50,7 +58,7 @@ p{
 .posts{
 	margin: 0px;
 	padding: 0px;
-	text-align: justfied;
+	text-align: justify;
 }
 
 .label{
