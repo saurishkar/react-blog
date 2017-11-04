@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
+import { TextField } from 'redux-form-material-ui';
+import { Button } from 'material-ui';
+
+import MESSAGES from '../../constants/validation-messages';
 
 class PasswordForgot extends Component{
 	
@@ -8,22 +12,6 @@ class PasswordForgot extends Component{
 		super(props);
 
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
-	}
-
-	renderField(field) {
-
-		return (
-			<div>
-				<label>{field.label}</label>
-				<input {...field.input} 
-					type={field.type} 
-					name={field.name}
-					placeholder={field.placeholder}
-					className={`form-control ${ field.meta.error && field.meta.touched ? 'error':''}`}
-				/>
-				<span className="text-danger"><small>{field.meta.touched && field.meta.error}</small></span><br />
-			</div>
-		);
 	}
 
 	handleFormSubmit(formData) {
@@ -48,31 +36,27 @@ class PasswordForgot extends Component{
 							<Field	
 								type="email"
 								placeholder="Email Address"
-								component={this.renderField}
+								component={TextField}
 								name="email"
 								label="Email Address"
+								fullWidth={true}
 							/>
 						</Modal.Body>
 						<Modal.Footer>
-							<div className="row text-center">
-								<div className="col-sm-6 col-sm-offset-3">
-									<Button 
-										type="submit" 
-										className="btn btn-primary form-control"
-									>Send Password Reset Link
-									</Button>
-								</div>
-								<div className="col-sm-6 col-sm-offset-3">
-									<a 
-										role="button"
-										tabIndex="0"
-										className="btn btn-light"
-										onClick={() => this.props.showLoginModal()}
+							<a 
+								role="button"
+								tabIndex="0"
+								className="btn btn-light"
+								onClick={() => this.props.showLoginModal()}
 										
-									>Back To Login
-									</a>
-								</div>
-							</div>
+							>Back To Login
+							</a>
+							<Button 
+								type="submit" 
+								raised
+								color="primary"
+							>Send Password Reset Link
+							</Button>
 						</Modal.Footer>
 					</form>
 				</Modal>
@@ -81,6 +65,16 @@ class PasswordForgot extends Component{
 	}
 }
 
+function validate(values) {
+	const errors = {};
+
+	if(!values.email) {
+		errors.email = MESSAGES.user.email;
+	}
+	return errors;
+}
+
 export default reduxForm({
-	form: 'ForgotPassword'
+	form: 'ForgotPassword',
+	validate: validate
 })(PasswordForgot);
