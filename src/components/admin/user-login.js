@@ -4,12 +4,13 @@ import { reduxForm, Field } from 'redux-form';
 import { Modal } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Button, TextField, Input} from 'material-ui';
+import { TextField } from 'redux-form-material-ui';
+import {Button} from 'material-ui';
 
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
-import messages from '../../constants/validation-messages';
+import MESSAGES from '../../constants/validation-messages';
 
 class UserLogin extends React.Component {
 
@@ -34,21 +35,6 @@ class UserLogin extends React.Component {
 		}
 	}
 
-	renderField(field) {
-
-		return (
-			<TextField 
-				hintText={field.label}
-				name={field.name}
-				floatingLabelText={field.label}
-				errorText={field.meta.touched && field.meta.error}
-				type={field.type}
-				fullWidth={true}
-				{...field}
-			/>
-		);
-	}
-
 	render() {
 		const { handleSubmit } = this.props;
 		return (
@@ -61,11 +47,21 @@ class UserLogin extends React.Component {
 						<Modal.Body>
 							<div className="login-form">
 								<div>
-									<Field label="Email" name="email" type="email" component={this.renderField} />
+									<Field 
+										label="Email" 
+										name="email" 
+										fullWidth={true} 
+										type="email" 
+										component={TextField} />
 								</div>
 								<br />
 								<div>
-									<Field label="Password" name="password" type="password" component={this.renderField} />
+									<Field 
+										label="Password" 
+										name="password" 
+										fullWidth={true} 
+										type="password" 
+										component={TextField} />
 								</div>
 								<br/>
 							</div>
@@ -88,14 +84,14 @@ class UserLogin extends React.Component {
 }
 
 function validate(values) {
-	const errors = [];
-
+	const errors = {};
+	console.log('values', values);
 	if(!values.email) {
-		errors.email = messages.user.email;
+		errors.email = MESSAGES.user.email;
 	}
 
 	if(!values.password) {
-		errors.password = messages.user.password;
+		errors.password = MESSAGES.user.password;
 	}
 
 	return errors;

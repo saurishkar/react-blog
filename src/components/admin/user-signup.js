@@ -15,19 +15,15 @@ class UserSignup extends Component {
 
 	renderField(field) {
 		return (
-			<div>
-				<div className="user-signup">
-					<TextField 
-						hintText={field.label}
-						name={field.name}
-						floatingLabelText={field.label}
-						errorText={field.meta.touched && field.meta.error}
-						type={field.type}
-						fullWidth={true}
-						{...field}
-					/>
-				</div>
-			</div>
+			<TextField 
+				hintText={field.label}
+				name={field.input.name}
+				floatingLabelText={field.label}
+				errorText={field.meta.touched && field.meta.error}
+				type={field.type}
+				fullWidth={true}
+				{...field}
+			/>
 		);
 	}
 
