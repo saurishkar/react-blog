@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { TextField, Button } from 'material-ui';
+import { Button } from 'material-ui';
+import { TextField } from 'redux-form-material-ui';
 
 import UserAPI from '../../apis/auth';
 import { Login } from '../../actions/auth';
@@ -11,20 +12,6 @@ import MESSAGES from '../../constants/validation-messages';
 class UserSignup extends Component {
 	constructor(props) {
 		super(props);
-	}
-
-	renderField(field) {
-		return (
-			<TextField 
-				hintText={field.label}
-				name={field.input.name}
-				floatingLabelText={field.label}
-				errorText={field.meta.touched && field.meta.error}
-				type={field.type}
-				fullWidth={true}
-				{...field}
-			/>
-		);
 	}
 
 	handleFormSubmit(formData) {
@@ -53,9 +40,10 @@ class UserSignup extends Component {
 									<div className="col-sm-12">
 										<Field 
 											type="email"
-											component={this.renderField}
+											component={TextField}
 											name="email"
 											label="Email Address"
+											fullWidth={true}
 										/>
 									</div>
 								</div>
@@ -64,17 +52,19 @@ class UserSignup extends Component {
 									<div className="col-sm-6">
 										<Field 
 											type="password"
-											component={this.renderField}
+											component={TextField}
 											name="password"
 											label="Password"
+											fullWidth={true}
 										/>
 									</div>
 									<div className="col-sm-6">
 										<Field 
 											type="password"
-											component={this.renderField}
+											component={TextField}
 											name="password_confirm"
 											label="Password Confirmation"
+											fullWidth={true}
 										/>
 									</div>
 								</div>
