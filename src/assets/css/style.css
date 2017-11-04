@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-
+@import url("https://fonts.googleapis.com/css?family=Abel|Cinzel|Poiret+One");
 body{
 	font-family: 'Roboto';
 }
+
 .header-nav{
 	position:relative;
 	margin-bottom: 100px;
@@ -85,3 +86,90 @@ big{
 	margin: 10px auto 0px auto;
 	padding: 5px;
 }
+img {
+	max-width: 25vw;
+	position:absolute;
+	right: 0;
+}
+
+.page-body {
+  background-color: #222;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.main {
+  margin-left: -200px;
+  margin-top: -200px;
+  background-color: #777777;
+  width: 400px;
+  height: 400px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  box-shadow: 2px 5px 15px #000;
+}
+.main .quad {
+  width: 200px;
+  height: 200px;
+  border-radius: 0px 100px 100px 100px;
+  z-index: 2;
+  background-color: #bbbbbb;
+}
+.main .quad .sub-quad-1, .main .quad .sub-quad-2, .main .quad .sub-quad-3, .main .quad .sub-quad-4 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -110px;
+  width: 100px;
+  height: 25px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  z-index: 6;
+}
+.main .quad .sub-quad-2 {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.main .quad .sub-quad-3 {
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+.main .quad .sub-quad-4 {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+.main h1 {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  bottom: -18px;
+  font-size: 100px;
+  font-family: 'Poiret One';
+}
+.main h4 {
+  font-size: 60px;
+  margin-right: 10px;
+  left: 65%;
+  padding: 5px;
+  position: absolute;
+  bottom: -50px;
+  font-family: 'Abel';
+  color: #aaaaaa;
+}
+.main h3 {
+  position: absolute;
+  padding: 0px;
+  font-size: 55px;
+  z-index: 4;
+  left: 50%;
+  margin-left: -282.5px;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  color: #444444;
+}
+
