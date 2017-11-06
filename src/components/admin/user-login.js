@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 import { instanceOf } from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { TextField } from 'redux-form-material-ui';
+import {Button} from 'material-ui';
 
 import { Login } from '../../actions/auth';
 import UserAPI from '../../apis/auth';
 import { FetchUserPosts } from '../../actions/posts';
-import messages from '../../constants/validation-messages';
+import MESSAGES from '../../constants/validation-messages';
 
 class UserLogin extends React.Component {
 
@@ -33,22 +35,6 @@ class UserLogin extends React.Component {
 		}
 	}
 
-	renderField(field) {
-
-		return (
-			<div>
-				<label>{field.label}</label>
-				<input {...field.input} 
-					type={field.type} 
-					name={field.name}
-					placeholder={field.placeholder}
-					className={`form-control ${ field.meta.error && field.meta.touched ? 'error':''}`}
-				/>
-				<span className="text-danger"><small>{field.meta.touched && field.meta.error}</small></span><br />
-			</div>
-		);
-	}
-
 	render() {
 		const { handleSubmit } = this.props;
 		return (
@@ -60,37 +46,35 @@ class UserLogin extends React.Component {
 						</Modal.Header>
 						<Modal.Body>
 							<div className="login-form">
-								<Field 
-									label="Email"
-									name="email"
-									type="email"
-									placeholder="Email"
-									component={this.renderField}
-								/>
-								<Field 
-									label="Password"
-									name="password"
-									type="password"
-									placeholder="Password"
-									component={this.renderField}
-								/>
+								<div>
+									<Field 
+										label="Email" 
+										name="email" 
+										fullWidth={true} 
+										type="email" 
+										component={TextField} />
+								</div>
+								<br />
+								<div>
+									<Field 
+										label="Password" 
+										name="password" 
+										fullWidth={true} 
+										type="password" 
+										component={TextField} />
+								</div>
+								<br/>
 							</div>
 						</Modal.Body>
 						<Modal.Footer>
-							<div className="row text-center">
-								<div className="col-sm-12">
-									<Button className="btn btn-primary form-control" type="submit">Login</Button>
-								</div><br />
-								<div className="col-sm-6 col-sm-offset-3">
-									<a 
-										tabIndex="0"
-										role="button"
-										className="btn btn-light"
-										onClick = {() => this.props.showForgotPasswordModal()}
-									>Forgot Password ?
-									</a>
-								</div>
-							</div>
+							<a 
+								tabIndex="0"
+								role="button"
+								className="btn btn-light"
+								onClick = {() => this.props.showForgotPasswordModal()}
+							>Forgot Password ?
+							</a>
+							<Button raised color="primary" type="submit">Login</Button><br />
 						</Modal.Footer>
 					</form>
 				</Modal>
@@ -100,14 +84,14 @@ class UserLogin extends React.Component {
 }
 
 function validate(values) {
-	const errors = [];
-
+	const errors = {};
+	console.log('values', values);
 	if(!values.email) {
-		errors.email = messages.user.email;
+		errors.email = MESSAGES.user.email;
 	}
 
 	if(!values.password) {
-		errors.password = messages.user.password;
+		errors.password = MESSAGES.user.password;
 	}
 
 	return errors;

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { Button } from 'material-ui';
+import { TextField } from 'redux-form-material-ui';
 
 import UserAPI from '../../apis/auth';
 import { Login } from '../../actions/auth';
@@ -10,24 +12,6 @@ import MESSAGES from '../../constants/validation-messages';
 class UserSignup extends Component {
 	constructor(props) {
 		super(props);
-	}
-
-	renderField(field) {
-		return (
-			<div>
-				<div className="form-input">
-					<label>{field.label}</label>
-					<input 
-						type={field.type}
-						name={field.name}
-						placeholder={field.placeholder}
-						className={`form-control ${field.meta.touched && field.meta.error ? 'error' : ''}`}
-						{...field.input}
-					/>
-					<span className="text-danger"><small>{field.meta.touched && field.meta.error}</small></span><br />
-				</div>
-			</div>
-		);
 	}
 
 	handleFormSubmit(formData) {
@@ -56,37 +40,38 @@ class UserSignup extends Component {
 									<div className="col-sm-12">
 										<Field 
 											type="email"
-											component={this.renderField}
+											component={TextField}
 											name="email"
-											placeholder="Email Address"
-											label="Email"
-										/>
-									</div>
-									<div className="col-sm-6">
-										<Field 
-											type="password"
-											component={this.renderField}
-											name="password"
-											placeholder="Password"
-											label="Password"
-										/>
-									</div>
-									<div className="col-sm-6">
-										<Field 
-											type="password"
-											component={this.renderField}
-											name="password_confirm"
-											placeholder="Password Confirmation"
-											label="Password Confirmation"
+											label="Email Address"
+											fullWidth={true}
 										/>
 									</div>
 								</div>
+								<br />
+								<div className="row">
+									<div className="col-sm-6">
+										<Field 
+											type="password"
+											component={TextField}
+											name="password"
+											label="Password"
+											fullWidth={true}
+										/>
+									</div>
+									<div className="col-sm-6">
+										<Field 
+											type="password"
+											component={TextField}
+											name="password_confirm"
+											label="Password Confirmation"
+											fullWidth={true}
+										/>
+									</div>
+								</div>
+								<br />
 							</Modal.Body>
 							<Modal.Footer>
-								<div className="btn-group text-center">
-									<button className="btn btn-primary" type="submit">Register</button>
-									<div className="btn btn-danger" onClick={() => this.props.closeModal()}>Cancel</div>
-								</div>
+								<Button raised color="primary" type="submit">Register</Button>
 							</Modal.Footer>
 						</form>
 					</div>

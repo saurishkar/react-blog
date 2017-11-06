@@ -6,7 +6,7 @@ import About from './admin/about';
 import Index from './admin/index';
 import Home from './admin/home';
 import Main from './main';
-import * as config from '../env';
+import config from '../env';
 import ROUTES from '../constants/routes';
 import NotFound from './not-found';
 import Auth from './admin/auth';
@@ -18,7 +18,7 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-		firebase.initializeApp(config.FIREBASE);
+		firebase.initializeApp(config);
 	}
 
 	render() {

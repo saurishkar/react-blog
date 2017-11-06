@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
-import * as config from '../env';
+import config from '../env';
 
-const firedb = firebase.initializeApp(config.FIREBASE).database();
+const firedb = firebase.initializeApp(config).database();
 
 const FirebaseApi = {
 	AddPost: (data) => {
